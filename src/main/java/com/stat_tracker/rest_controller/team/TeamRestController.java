@@ -1,4 +1,4 @@
-package com.stat_tracker.rest_controller;
+package com.stat_tracker.rest_controller.team;
 
 import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.service.team.TeamService;

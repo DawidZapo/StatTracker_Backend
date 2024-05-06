@@ -5,6 +5,7 @@ import com.stat_tracker.entity.team.Team;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "player")
 public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

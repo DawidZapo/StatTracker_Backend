@@ -1,4 +1,4 @@
-package com.stat_tracker.rest_controller;
+package com.stat_tracker.rest_controller.player;
 
 import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.service.player.PlayerService;
