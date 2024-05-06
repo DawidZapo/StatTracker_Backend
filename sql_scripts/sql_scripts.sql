@@ -44,7 +44,9 @@ CREATE TABLE player (
 CREATE TABLE stat_team (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     team_id BIGINT,
-    FOREIGN KEY (team_id) REFERENCES Team(id)
+    game_id BIGINT,
+    FOREIGN KEY (team_id) REFERENCES Team(id),
+    FOREIGN KEY (game_id) REFERENCES game(id)
 );
 
 CREATE TABLE stat_player (
@@ -61,9 +63,19 @@ CREATE TABLE stat_player (
     foreign key (stat_team_id) references stat_team(id)
 );
 
+CREATE TABLE Game (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    home_id BIGINT,
+    away_id BIGINT,
+    FOREIGN KEY (home_id) REFERENCES stat_team(id),
+    FOREIGN KEY (away_id) references stat_team(id)
+);
+
 CREATE TABLE plays (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    game_id BIGINT,
     stat_player_id BIGINT,
+    FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
 );
 

@@ -1,6 +1,8 @@
 package com.stat_tracker.entity.team;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.StatPlayer;
 import jakarta.persistence.*;
 
@@ -17,8 +19,16 @@ public class StatTeam {
     @JoinColumn(name = "team_id")
     private Team team;
     @OneToMany(mappedBy = "statTeam")
-    @JsonBackReference
+    @JsonManagedReference
     private List<StatPlayer> statPlayers;
+
+    @OneToOne(mappedBy = "home")
+    @JsonIgnore
+    private Game homeGame;
+
+    @OneToOne(mappedBy = "away")
+    @JsonIgnore
+    private Game awayGame;
 
     public Long getId() {
         return id;
@@ -30,5 +40,13 @@ public class StatTeam {
 
     public List<StatPlayer> getStatPlayers() {
         return statPlayers;
+    }
+
+    public Game getHomeGame() {
+        return homeGame;
+    }
+
+    public Game getAwayGame() {
+        return awayGame;
     }
 }

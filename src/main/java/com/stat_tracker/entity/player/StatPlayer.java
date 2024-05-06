@@ -1,6 +1,6 @@
 package com.stat_tracker.entity.player;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stat_tracker.entity.plays.Play;
 import com.stat_tracker.entity.team.StatTeam;
 import jakarta.persistence.*;
@@ -20,7 +20,7 @@ public class StatPlayer {
     private Player player;
     @ManyToOne
     @JoinColumn(name = "stat_team_id")
-    @JsonManagedReference
+    @JsonIgnore
     private StatTeam statTeam;
     @Column(name = "shirt_number")
     private Integer shirtNumber;
@@ -31,6 +31,7 @@ public class StatPlayer {
     @Column(name = "time_on_court")
     private Duration timeOnCourt;
     @OneToMany(mappedBy = "statPlayer")
+    @JsonIgnore
     private List<Play> plays;
     @Column(name = "eval")
     private Integer eval;

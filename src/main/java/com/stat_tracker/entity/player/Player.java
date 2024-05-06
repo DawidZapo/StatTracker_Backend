@@ -1,6 +1,6 @@
 package com.stat_tracker.entity.player;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stat_tracker.entity.team.Team;
 import jakarta.persistence.*;
 
@@ -21,7 +21,7 @@ public class Player {
     private Double weight;
     @ManyToOne
     @JoinColumn(name = "current_team_id")
-    @JsonManagedReference
+    @JsonIgnore
     private Team currentTeam;
 
     public Long getId() {
