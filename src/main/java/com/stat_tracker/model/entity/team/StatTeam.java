@@ -1,9 +1,9 @@
-package com.stat_tracker.entity.team;
+package com.stat_tracker.model.entity.team;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.stat_tracker.entity.game.Game;
-import com.stat_tracker.entity.player.StatPlayer;
+import com.stat_tracker.model.entity.game.Game;
+import com.stat_tracker.model.entity.player.StatPlayer;
 import jakarta.persistence.*;
 
 import java.util.List;

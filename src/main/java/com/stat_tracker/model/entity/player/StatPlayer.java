@@ -1,8 +1,8 @@
-package com.stat_tracker.entity.player;
+package com.stat_tracker.model.entity.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.stat_tracker.entity.plays.Play;
-import com.stat_tracker.entity.team.StatTeam;
+import com.stat_tracker.model.entity.plays.Play;
+import com.stat_tracker.model.entity.team.StatTeam;
 import jakarta.persistence.*;
 
 import java.time.Duration;

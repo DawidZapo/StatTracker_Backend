@@ -1,6 +1,6 @@
 package com.stat_tracker.rest_controller.player;
 
-import com.stat_tracker.entity.player.Player;
+import com.stat_tracker.model.entity.player.Player;
 import com.stat_tracker.service.player.PlayerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

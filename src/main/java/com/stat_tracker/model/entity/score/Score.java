@@ -1,6 +1,6 @@
-package com.stat_tracker.entity.score;
+package com.stat_tracker.model.entity.score;
 
-import com.stat_tracker.entity.team.StatTeam;
+import com.stat_tracker.model.entity.team.StatTeam;
 
 import java.util.List;
 

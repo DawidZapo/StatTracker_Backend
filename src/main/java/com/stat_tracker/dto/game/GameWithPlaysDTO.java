@@ -1,6 +1,6 @@
 package com.stat_tracker.dto.game;
 
-import com.stat_tracker.entity.plays.Play;
+import com.stat_tracker.model.entity.plays.Play;
 
 import java.util.List;
 

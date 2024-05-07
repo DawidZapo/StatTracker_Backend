@@ -1,6 +1,6 @@
 package com.stat_tracker.service.player;
 
-import com.stat_tracker.entity.player.Player;
+import com.stat_tracker.model.entity.player.Player;
 import com.stat_tracker.repository.player.PlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

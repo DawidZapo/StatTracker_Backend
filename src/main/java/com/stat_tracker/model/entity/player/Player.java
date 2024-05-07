@@ -1,7 +1,7 @@
-package com.stat_tracker.entity.player;
+package com.stat_tracker.model.entity.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.stat_tracker.entity.team.Team;
+import com.stat_tracker.model.entity.team.Team;
 import jakarta.persistence.*;
 
 @Entity
