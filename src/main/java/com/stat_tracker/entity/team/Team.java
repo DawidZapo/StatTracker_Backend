@@ -1,7 +1,7 @@
-package com.stat_tracker.model.entity.team;
+package com.stat_tracker.entity.team;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.stat_tracker.model.entity.player.Player;
+import com.stat_tracker.entity.player.Player;
 import jakarta.persistence.*;
 
 import java.util.List;

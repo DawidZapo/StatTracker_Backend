@@ -1,4 +1,4 @@
-package com.stat_tracker.model.security;
+package com.stat_tracker.security.entity;
 
 import jakarta.persistence.*;
 

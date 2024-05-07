@@ -1,8 +1,8 @@
-package com.stat_tracker.model.entity.game;
+package com.stat_tracker.entity.game;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.stat_tracker.model.entity.plays.Play;
-import com.stat_tracker.model.entity.team.StatTeam;
+import com.stat_tracker.entity.plays.Play;
+import com.stat_tracker.entity.team.StatTeam;
 import jakarta.persistence.*;
 
 import java.util.List;

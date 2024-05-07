@@ -1,6 +1,6 @@
 package com.stat_tracker.dto.game;
 
-import com.stat_tracker.model.entity.team.StatTeam;
+import com.stat_tracker.entity.team.StatTeam;
 
 public class GameWithStatTeamsDTO {
     private Long id;

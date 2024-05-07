@@ -1,5 +1,6 @@
-package com.stat_tracker.model.security;
+package com.stat_tracker.security.entity;
 
+import com.stat_tracker.security.entity.Role;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotBlank;

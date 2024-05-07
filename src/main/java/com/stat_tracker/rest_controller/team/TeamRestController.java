@@ -1,6 +1,6 @@
 package com.stat_tracker.rest_controller.team;
 
-import com.stat_tracker.model.entity.team.Team;
+import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

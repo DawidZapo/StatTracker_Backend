@@ -1,7 +1,7 @@
-package com.stat_tracker.repository.security;
+package com.stat_tracker.security.repository;
 
-import com.stat_tracker.model.security.ERole;
-import com.stat_tracker.model.security.Role;
+import com.stat_tracker.security.entity.ERole;
+import com.stat_tracker.security.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

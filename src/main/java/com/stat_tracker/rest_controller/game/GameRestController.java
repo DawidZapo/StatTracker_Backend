@@ -2,7 +2,7 @@ package com.stat_tracker.rest_controller.game;
 
 import com.stat_tracker.dto.game.GameWithPlaysDTO;
 import com.stat_tracker.dto.game.GameWithStatTeamsDTO;
-import com.stat_tracker.model.entity.game.Game;
+import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.service.game.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
