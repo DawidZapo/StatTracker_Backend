@@ -1,30 +1,35 @@
 CREATE database if not exists stat_tracker;
 USE stat_tracker;
 
-CREATE TABLE `users`
-(
-    `username` varchar(50) NOT NULL,
-    `password` char(68)    NOT NULL,
-    `enabled`  tinyint     NOT NULL,
-    PRIMARY KEY (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE users (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    email VARCHAR(50),
+    password VARCHAR(120),
+    username VARCHAR(20),
+    PRIMARY KEY (id),
+    UNIQUE KEY (email),
+    UNIQUE KEY (username)
+);
 
-INSERT INTO `users`
-VALUES ('admin', '{bcrypt}$2a$12$c7zJPY073qVBoPtEAnpzo.9AMQ0hNUxyORtkv2bAM.OwkhCsWt8b6', 1);
 
-CREATE TABLE `authorities`
-(
-    `username`  varchar(50) NOT NULL,
-    `authority` varchar(50) NOT NULL,
-    UNIQUE KEY `authorities4_idx_1` (`username`,`authority`),
-    CONSTRAINT `authorities4_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE roles (
+    id INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(20),
+    PRIMARY KEY (id)
+);
 
-INSERT INTO `authorities`
-VALUES ('admin', 'ROLE_EMPLOYEE'),
-       ('admin', 'ROLE_MANAGER'),
-       ('admin', 'ROLE_ADMIN');
 
+CREATE TABLE user_roles (
+    user_id BIGINT,
+    role_id INT,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (role_id) REFERENCES roles(id)
+);
+
+INSERT INTO roles(name) VALUES('ROLE_USER');
+INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
+INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
 CREATE TABLE Team (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
