@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.StatPlayer;
+import com.stat_tracker.entity.score.Score;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -21,14 +22,15 @@ public class StatTeam {
     @OneToMany(mappedBy = "statTeam")
     @JsonManagedReference
     private List<StatPlayer> statPlayers;
-
     @OneToOne(mappedBy = "home")
     @JsonIgnore
     private Game homeGame;
-
     @OneToOne(mappedBy = "away")
     @JsonIgnore
     private Game awayGame;
+    @OneToMany(mappedBy = "statTeam")
+    @JsonManagedReference
+    private List<Score> scores;
 
     public Long getId() {
         return id;
@@ -48,5 +50,9 @@ public class StatTeam {
 
     public Game getAwayGame() {
         return awayGame;
+    }
+
+    public List<Score> getScores() {
+        return scores;
     }
 }

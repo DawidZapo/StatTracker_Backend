@@ -31,7 +31,7 @@ INSERT INTO roles(name) VALUES('ROLE_USER');
 INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
-CREATE TABLE Team (
+CREATE TABLE team (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     team_name VARCHAR(100)
 );
@@ -68,7 +68,7 @@ CREATE TABLE stat_player (
     foreign key (stat_team_id) references stat_team(id)
 );
 
-CREATE TABLE Game (
+CREATE TABLE game (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     home_id BIGINT,
     away_id BIGINT,
@@ -83,5 +83,13 @@ CREATE TABLE plays (
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
 );
+
+CREATE TABLE score (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    stat_team_id BIGINT,
+    worth INT,
+    part INT,
+    FOREIGN KEY (stat_team_id) REFERENCES stat_team(id)
+)
 
 
