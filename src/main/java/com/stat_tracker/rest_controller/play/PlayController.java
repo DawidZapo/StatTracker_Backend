@@ -1,6 +1,6 @@
 package com.stat_tracker.rest_controller.play;
 
-import com.stat_tracker.entity.plays.Play;
+import com.stat_tracker.entity.plays_inheritance.Play;
 import com.stat_tracker.repository.play.PlayRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

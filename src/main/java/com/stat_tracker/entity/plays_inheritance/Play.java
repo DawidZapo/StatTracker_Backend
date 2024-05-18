@@ -7,22 +7,25 @@ import jakarta.persistence.*;
 
 import java.time.Duration;
 
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Play {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
     protected Long id;
-
     @ManyToOne
     @JoinColumn(name = "game_id")
     @JsonBackReference
     protected Game game;
     @ManyToOne
     @JoinColumn(name = "stat_player_id")
+    @JsonBackReference
     protected StatPlayer statPlayer;
     @Column(name = "duration")
     protected Duration duration;
+    @Column(name = "comments")
+    protected String comments;
 
     public Long getId() {
         return id;
@@ -54,5 +57,13 @@ public abstract class Play {
 
     public void setDuration(Duration duration) {
         this.duration = duration;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

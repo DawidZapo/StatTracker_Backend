@@ -1,11 +1,13 @@
 package com.stat_tracker.entity.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.stat_tracker.entity.plays.Play;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.stat_tracker.entity.plays_inheritance.Play;
 import com.stat_tracker.entity.team.StatTeam;
 import jakarta.persistence.*;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,9 +32,9 @@ public class StatPlayer {
     private Integer points;
     @Column(name = "time_on_court")
     private Duration timeOnCourt;
-    @OneToMany(mappedBy = "statPlayer")
-    @JsonIgnore
-    private List<Play> plays;
+    @OneToMany(mappedBy = "statPlayer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Play> plays = new ArrayList<>();
     @Column(name = "eval")
     private Integer eval;
     @Column(name = "plus_minus")
