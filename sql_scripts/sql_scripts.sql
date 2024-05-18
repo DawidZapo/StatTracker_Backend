@@ -99,21 +99,11 @@ CREATE TABLE shot_play (
     duration BIGINT,
     comments TEXT,
     shot_type VARCHAR(255),
+    hand VARCHAR(255),
     zone VARCHAR(255),
     made BOOLEAN,
     contested VARCHAR(255),
     worth INT,
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
-);
-
-CREATE TABLE rebound (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    game_id BIGINT,
-    stat_player_id BIGINT,
-    duration BIGINT,
-    comments TEXT,
-    is_offensive BOOLEAN,
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
 );

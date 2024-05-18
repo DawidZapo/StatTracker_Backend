@@ -1,6 +1,8 @@
 package com.stat_tracker.entity.plays_inheritance.enums;
 
 public enum Zone {
-    // to te finished
-    EXAMPLE_ONE, EXAMPLE,TWO
+    LEFT_CORNER, RIGHT_CORNER, LEFT_WING, RIGHT_WING, TOP_OF_THE_KEY, LEFT_SHORT_CORNER,
+    RIGHT_SHORT_CORNER, LEFT_SHORT_WING, RIGHT_SHORT_WING, SHORT_TOP_OF_THE_KEY, LEFT_LOW_POST,
+    RIGHT_LOW_POST, UNDER_BASKET, HIGH_POST
+
 }
