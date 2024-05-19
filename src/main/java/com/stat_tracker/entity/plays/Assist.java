@@ -7,15 +7,15 @@ import com.stat_tracker.entity.plays.enums.AssistType;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Assist")
+@Table(name = "assist")
 public class Assist extends Play {
     @ManyToOne
     @JoinColumn(name = "to_stat_player_id")
     @JsonBackReference
     private StatPlayer toStatPlayer;
-    @Column(name = "assist_type")
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private AssistType assistType;
+    private AssistType type;
 
     public StatPlayer getToStatPlayer() {
         return toStatPlayer;
@@ -25,11 +25,11 @@ public class Assist extends Play {
         this.toStatPlayer = toStatPlayer;
     }
 
-    public AssistType getAssistType() {
-        return assistType;
+    public AssistType getType() {
+        return type;
     }
 
-    public void setAssistType(AssistType assistType) {
-        this.assistType = assistType;
+    public void setType(AssistType assistType) {
+        this.type = assistType;
     }
 }

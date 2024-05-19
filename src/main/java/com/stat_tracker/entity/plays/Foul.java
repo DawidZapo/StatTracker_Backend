@@ -13,9 +13,9 @@ public class Foul extends Play {
     @JoinColumn(name = "foul_on_stat_player_id")
     @JsonBackReference
     private StatPlayer foulOnStatPlayer;
-    @Column(name = "foul_type")
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private FoulType foulType;
+    private FoulType type;
 
     public StatPlayer getFoulOnStatPlayer() {
         return foulOnStatPlayer;
@@ -25,11 +25,11 @@ public class Foul extends Play {
         this.foulOnStatPlayer = foulOnStatPlayer;
     }
 
-    public FoulType getFoulType() {
-        return foulType;
+    public FoulType getType() {
+        return type;
     }
 
-    public void setFoulType(FoulType foulType) {
-        this.foulType = foulType;
+    public void setType(FoulType foulType) {
+        this.type = foulType;
     }
 }

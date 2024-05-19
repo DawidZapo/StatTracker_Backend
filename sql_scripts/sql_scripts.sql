@@ -98,7 +98,7 @@ CREATE TABLE shot_play (
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
-    shot_type VARCHAR(255),
+    `type` VARCHAR(255),
     hand VARCHAR(255),
     zone VARCHAR(255),
     made BOOLEAN,
@@ -124,7 +124,7 @@ CREATE TABLE assist (
     duration BIGINT,
     comments TEXT,
     to_stat_player_id BIGINT,
-    assist_type VARCHAR(255),
+    `type` VARCHAR(255),
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
     FOREIGN KEY (to_stat_player_id) REFERENCES stat_player(id)
@@ -148,7 +148,7 @@ CREATE TABLE foul (
     duration BIGINT,
     comments TEXT,
     foul_on_stat_player_id BIGINT,
-    foul_type VARCHAR(255),
+    `type` VARCHAR(255),
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
     FOREIGN KEY (foul_on_stat_player_id) REFERENCES stat_player(id)
@@ -159,10 +159,10 @@ CREATE TABLE steal (
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
-    stolen_from_player_id BIGINT,
+    stolen_from_stat_player_id BIGINT,
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
-    FOREIGN KEY (stolen_from_player_id) REFERENCES stat_player(id)
+    FOREIGN KEY (stolen_from_stat_player_id) REFERENCES stat_player(id)
 );
 
 

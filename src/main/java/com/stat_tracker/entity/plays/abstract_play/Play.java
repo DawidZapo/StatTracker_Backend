@@ -5,8 +5,6 @@ import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.StatPlayer;
 import jakarta.persistence.*;
 
-import java.time.Duration;
-
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Play {
@@ -23,7 +21,7 @@ public abstract class Play {
     @JsonBackReference
     protected StatPlayer statPlayer;
     @Column(name = "duration")
-    protected Duration duration;
+    protected Long duration;
     @Column(name = "comments")
     protected String comments;
 
@@ -51,11 +49,11 @@ public abstract class Play {
         this.statPlayer = statPlayer;
     }
 
-    public Duration getDuration() {
+    public Long getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(Long duration) {
         this.duration = duration;
     }
 

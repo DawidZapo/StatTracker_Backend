@@ -3,6 +3,7 @@ package com.stat_tracker.rest_controller.player;
 import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.repository.player.StatPlayerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ public class StatPlayerController {
         this.statPlayerRepository = statPlayerRepository;
     }
     @GetMapping("/stat_players")
+    @PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
     public List<StatPlayer> getStatPlayers(){
         return statPlayerRepository.findAll();
     }

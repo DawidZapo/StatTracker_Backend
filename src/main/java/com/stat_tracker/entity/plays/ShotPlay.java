@@ -10,9 +10,9 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "shot_play")
 public class ShotPlay extends Play {
-    @Column(name = "shot_type")
+    @Column(name = "type")
     @Enumerated(EnumType.STRING)
-    private ShotType shotType;
+    private ShotType type;
     @Column(name = "hand")
     @Enumerated(EnumType.STRING)
     private Hand hand;
@@ -27,12 +27,12 @@ public class ShotPlay extends Play {
     @Column(name = "worth")
     private Integer worth;
 
-    public ShotType getShotType() {
-        return shotType;
+    public ShotType getType() {
+        return type;
     }
 
-    public void setShotType(ShotType shotType) {
-        this.shotType = shotType;
+    public void setType(ShotType shotType) {
+        this.type = shotType;
     }
 
     public Zone getZone() {
