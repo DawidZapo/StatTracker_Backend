@@ -1,4 +1,4 @@
-package com.stat_tracker.entity.plays_inheritance.enums;
+package com.stat_tracker.entity.plays.enums;
 
 public enum Zone {
     LEFT_CORNER, RIGHT_CORNER, LEFT_WING, RIGHT_WING, TOP_OF_THE_KEY, LEFT_SHORT_CORNER,

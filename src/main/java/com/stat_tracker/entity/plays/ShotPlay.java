@@ -1,14 +1,15 @@
-package com.stat_tracker.entity.plays_inheritance;
+package com.stat_tracker.entity.plays;
 
-import com.stat_tracker.entity.plays_inheritance.enums.Contested;
-import com.stat_tracker.entity.plays_inheritance.enums.Hand;
-import com.stat_tracker.entity.plays_inheritance.enums.ShotType;
-import com.stat_tracker.entity.plays_inheritance.enums.Zone;
+import com.stat_tracker.entity.plays.abstract_play.Play;
+import com.stat_tracker.entity.plays.enums.Contested;
+import com.stat_tracker.entity.plays.enums.Hand;
+import com.stat_tracker.entity.plays.enums.ShotType;
+import com.stat_tracker.entity.plays.enums.Zone;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "shot_play")
-public class ShotPlay extends Play{
+public class ShotPlay extends Play {
     @Column(name = "shot_type")
     @Enumerated(EnumType.STRING)
     private ShotType shotType;

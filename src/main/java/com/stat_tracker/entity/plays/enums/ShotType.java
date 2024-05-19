@@ -1,0 +1,6 @@
+package com.stat_tracker.entity.plays.enums;
+
+public enum ShotType {
+    JUMP_SHOT, FLOATER, UNDERHAND_LAYUP_, OVERHAND_LAYUP, JUMP_STOP, POST_LAYUP,
+    FADE_AWAY, STEP_BACK, RUNNER, SPIN_LAYUP, EURO_STEP_LAYUP, FREE_THROW
+}

@@ -1,4 +1,4 @@
-package com.stat_tracker.entity.plays_inheritance;
+package com.stat_tracker.entity.plays.abstract_play;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.stat_tracker.entity.game.Game;

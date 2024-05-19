@@ -2,7 +2,7 @@ package com.stat_tracker.entity.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.stat_tracker.entity.plays_inheritance.Play;
+import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.entity.team.StatTeam;
 import jakarta.persistence.*;
 

@@ -107,5 +107,62 @@ CREATE TABLE shot_play (
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
 );
+CREATE TABLE rebound (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    game_id BIGINT,
+    stat_player_id BIGINT,
+    duration BIGINT,
+    comments TEXT,
+    is_offensive boolean,
+    FOREIGN KEY (game_id) REFERENCES game(id),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
+);
+CREATE TABLE assist (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    game_id BIGINT,
+    stat_player_id BIGINT,
+    duration BIGINT,
+    comments TEXT,
+    to_stat_player_id BIGINT,
+    assist_type VARCHAR(255),
+    FOREIGN KEY (game_id) REFERENCES game(id),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
+    FOREIGN KEY (to_stat_player_id) REFERENCES stat_player(id)
+);
+CREATE TABLE `block` (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    game_id BIGINT,
+    stat_player_id BIGINT,
+    duration BIGINT,
+    comments TEXT,
+    blocked_stat_player_id BIGINT,
+    within_perimeter BOOLEAN,
+    FOREIGN KEY (game_id) REFERENCES game(id),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
+    FOREIGN KEY (blocked_stat_player_id) REFERENCES stat_player(id)
+);
+CREATE TABLE foul (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    game_id BIGINT,
+    stat_player_id BIGINT,
+    duration BIGINT,
+    comments TEXT,
+    foul_on_stat_player_id BIGINT,
+    foul_type VARCHAR(255),
+    FOREIGN KEY (game_id) REFERENCES game(id),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
+    FOREIGN KEY (foul_on_stat_player_id) REFERENCES stat_player(id)
+);
+CREATE TABLE steal (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    game_id BIGINT,
+    stat_player_id BIGINT,
+    duration BIGINT,
+    comments TEXT,
+    stolen_from_player_id BIGINT,
+    FOREIGN KEY (game_id) REFERENCES game(id),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
+    FOREIGN KEY (stolen_from_player_id) REFERENCES stat_player(id)
+);
 
 
