@@ -2,12 +2,12 @@ package com.stat_tracker.dto.game;
 
 import com.stat_tracker.entity.team.StatTeam;
 
-public class GameWithStatTeamsDTO {
+public class GameWithStatTeamsDto {
     private Long id;
     private StatTeam home;
     private StatTeam away;
 
-    public GameWithStatTeamsDTO(Long id, StatTeam home, StatTeam away) {
+    public GameWithStatTeamsDto(Long id, StatTeam home, StatTeam away) {
         this.id = id;
         this.home = home;
         this.away = away;

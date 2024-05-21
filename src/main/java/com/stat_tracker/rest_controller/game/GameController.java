@@ -1,7 +1,7 @@
 package com.stat_tracker.rest_controller.game;
 
-import com.stat_tracker.dto.game.GameWithPlaysDTO;
-import com.stat_tracker.dto.game.GameWithStatTeamsDTO;
+import com.stat_tracker.dto.game.GameWithPlaysDto;
+import com.stat_tracker.dto.game.GameWithStatTeamsDto;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.service.game.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,12 @@ public class GameController {
         return ResponseEntity.ok(gameService.getAllGames());
     }
     @GetMapping("/game_with_plays/{id}")
-    public ResponseEntity<GameWithPlaysDTO> getGameWithPlays(@PathVariable Long id) {
+    public ResponseEntity<GameWithPlaysDto> getGameWithPlays(@PathVariable Long id) {
         return ResponseEntity.ok(gameService.getGameWithPlays(id));
     }
 
     @GetMapping("/game_with_stat_teams/{id}")
-    public ResponseEntity<GameWithStatTeamsDTO> getGameWithStatTeams(@PathVariable Long id){
+    public ResponseEntity<GameWithStatTeamsDto> getGameWithStatTeams(@PathVariable Long id){
         return ResponseEntity.ok(gameService.getGameWithStatsTeam(id));
     }
 

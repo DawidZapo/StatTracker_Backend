@@ -15,6 +15,12 @@ public class Team {
     private Long id;
     @Column(name = "team_name")
     private String name;
+    @Column(name = "location")
+    private String location;
+    @Column(name = "arena")
+    private String arena;
+    @Column(name = "address")
+    private String address;
     @OneToMany(mappedBy = "currentTeam")
     @JsonBackReference
     private List<Player> currentPlayers;
@@ -23,12 +29,48 @@ public class Team {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getArena() {
+        return arena;
+    }
+
+    public void setArena(String arena) {
+        this.arena = arena;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public List<Player> getCurrentPlayers() {
         return currentPlayers;
+    }
+
+    public void setCurrentPlayers(List<Player> currentPlayers) {
+        this.currentPlayers = currentPlayers;
     }
 
     @Override
@@ -36,6 +78,9 @@ public class Team {
         return "Team{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", arena='" + arena + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

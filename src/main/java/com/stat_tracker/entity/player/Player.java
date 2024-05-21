@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.stat_tracker.entity.team.Team;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "player")
 public class Player {
@@ -19,6 +21,11 @@ public class Player {
     private Double height;
     @Column(name = "weight")
     private Double weight;
+    @Column(name = "position")
+    @Enumerated(EnumType.STRING)
+    private Position position;
+    @Column(name = "birth")
+    private LocalDate birth;
     @ManyToOne
     @JoinColumn(name = "current_team_id")
     @JsonIgnore
@@ -48,6 +55,14 @@ public class Player {
         return currentTeam;
     }
 
+    public Position getPosition() {
+        return position;
+    }
+
+    public LocalDate getBirth() {
+        return birth;
+    }
+
     @Override
     public String toString() {
         return "Player{" +
@@ -56,6 +71,8 @@ public class Player {
                 ", lastName='" + lastName + '\'' +
                 ", height=" + height +
                 ", weight=" + weight +
+                ", position=" + position +
+                ", localDate=" + birth +
                 ", currentTeam=" + currentTeam +
                 '}';
     }

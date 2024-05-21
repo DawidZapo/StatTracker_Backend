@@ -33,7 +33,10 @@ INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
 CREATE TABLE team (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    team_name VARCHAR(100)
+    team_name VARCHAR(100),
+    location VARCHAR(255),
+    arena VARCHAR(255),
+    address VARCHAR(255)
 );
 
 CREATE TABLE player (
@@ -42,6 +45,8 @@ CREATE TABLE player (
     last_name VARCHAR(50),
     height DOUBLE,
     weight DOUBLE,
+    position VARCHAR(100),
+    birth DATE,
     current_team_id BIGINT,
     FOREIGN KEY (current_team_id) REFERENCES Team(id)
 );

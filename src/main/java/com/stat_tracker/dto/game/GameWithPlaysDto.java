@@ -4,11 +4,11 @@ import com.stat_tracker.entity.plays.abstract_play.Play;
 
 import java.util.List;
 
-public class GameWithPlaysDTO {
+public class GameWithPlaysDto {
     private Long id;
     private List<Play> plays;
 
-    public GameWithPlaysDTO(Long id, List<Play> plays) {
+    public GameWithPlaysDto(Long id, List<Play> plays) {
         this.id = id;
         this.plays = plays;
     }
