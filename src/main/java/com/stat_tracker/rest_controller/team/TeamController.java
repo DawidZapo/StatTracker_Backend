@@ -27,13 +27,7 @@ public class TeamController {
     @GetMapping("/team/{id}")
     public ResponseEntity<TeamDto> getTeamDto(@PathVariable Long id){
         return ResponseEntity.ok(teamService.getTeamDto(id));
-//        return ResponseEntity.ok("Hello");
     }
 
-
-//    @GetMapping("/team/{id}")
-//    public TeamDto getTeamDto(@PathVariable Long id){
-//        return teamService.getTeamDto(id);
-//    }
 
 }

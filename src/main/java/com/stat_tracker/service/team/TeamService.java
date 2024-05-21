@@ -7,9 +7,8 @@ import com.stat_tracker.repository.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
@@ -23,20 +22,28 @@ public class TeamService {
         return teamRepository.findAll();
     }
 
-    public TeamDto getTeamDto(Long id){
-        Optional<Team> teamOptional = teamRepository.findById(id);
-        if(teamOptional.isPresent()){
-            Team team = teamOptional.get();
+    public TeamDto getTeamDto(Long id) {
+        Team team = teamRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Team not found id: " + id));
 
-            List<PlayerDto> playerDtos = new ArrayList<>();
-            for(var player : team.getCurrentPlayers()){
-                playerDtos.add(new PlayerDto(player.getId(),player.getFirstName(),player.getLastName(), player.getHeight(),player.getWeight(), player.getPosition(),player.getBirth()));
-            }
+        List<PlayerDto> playerDtos = team.getCurrentPlayers().stream()
+                .map(player -> new PlayerDto(
+                        player.getId(),
+                        player.getFirstName(),
+                        player.getLastName(),
+                        player.getHeight(),
+                        player.getWeight(),
+                        player.getPosition(),
+                        player.getBirth()))
+                .collect(Collectors.toList());
 
-            return new TeamDto(team.getId(),team.getName(),team.getLocation(),team.getArena(),team.getAddress(),playerDtos);
-        }
-        else{
-            throw new RuntimeException("Team not found id: " + id);
-        }
+        return new TeamDto(
+                team.getId(),
+                team.getName(),
+                team.getLocation(),
+                team.getArena(),
+                team.getAddress(),
+                playerDtos);
     }
+
 }

@@ -16,8 +16,8 @@ public class PlayerController {
         this.playerService = playerService;
     }
     @GetMapping("/players")
-    public List<Player> getPlayers(){
-        return playerService.findALl();
+    public ResponseEntity<List<Player>> getPlayers(){
+        return ResponseEntity.ok(playerService.findALl());
     }
     @PostMapping("/player/save")
     public ResponseEntity<Player> savePlayer(@RequestBody Player player){
