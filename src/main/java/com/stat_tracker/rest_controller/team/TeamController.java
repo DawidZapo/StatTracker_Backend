@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins = "*", maxAge = 3600)
+
 public class TeamController {
     private TeamService teamService;
 
@@ -19,7 +19,7 @@ public class TeamController {
     public TeamController(TeamService teamService) {
         this.teamService = teamService;
     }
-    @GetMapping("/teams")
+    @GetMapping("/team/all")
     public ResponseEntity<List<Team>> getTeams(){
         return ResponseEntity.ok(teamService.findAll());
     }
