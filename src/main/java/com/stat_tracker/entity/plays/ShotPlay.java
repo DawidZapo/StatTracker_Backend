@@ -2,7 +2,6 @@ package com.stat_tracker.entity.plays;
 
 import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.entity.plays.enums.Contested;
-import com.stat_tracker.entity.plays.enums.Hand;
 import com.stat_tracker.entity.plays.enums.ShotType;
 import com.stat_tracker.entity.plays.enums.Zone;
 import jakarta.persistence.*;
@@ -13,9 +12,6 @@ public class ShotPlay extends Play {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private ShotType type;
-    @Column(name = "hand")
-    @Enumerated(EnumType.STRING)
-    private Hand hand;
     @Column(name = "zone")
     @Enumerated(EnumType.STRING)
     private Zone zone;
@@ -65,13 +61,5 @@ public class ShotPlay extends Play {
 
     public void setWorth(Integer worth) {
         this.worth = worth;
-    }
-
-    public Hand getHand() {
-        return hand;
-    }
-
-    public void setHand(Hand hand) {
-        this.hand = hand;
     }
 }

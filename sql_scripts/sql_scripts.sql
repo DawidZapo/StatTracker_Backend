@@ -103,8 +103,8 @@ CREATE TABLE shot_play (
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
-    `type` VARCHAR(255),
     hand VARCHAR(255),
+    `type` VARCHAR(255),
     zone VARCHAR(255),
     made BOOLEAN,
     contested VARCHAR(255),
@@ -118,6 +118,7 @@ CREATE TABLE rebound (
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
+    hand VARCHAR(255),
     is_offensive boolean,
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
@@ -128,6 +129,7 @@ CREATE TABLE assist (
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
+    hand VARCHAR(255),
     to_stat_player_id BIGINT,
     `type` VARCHAR(255),
     FOREIGN KEY (game_id) REFERENCES game(id),
@@ -140,6 +142,7 @@ CREATE TABLE `block` (
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
+    hand VARCHAR(255),
     blocked_stat_player_id BIGINT,
     within_perimeter BOOLEAN,
     FOREIGN KEY (game_id) REFERENCES game(id),
@@ -152,6 +155,7 @@ CREATE TABLE foul (
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
+    hand VARCHAR(255),
     foul_on_stat_player_id BIGINT,
     `type` VARCHAR(255),
     FOREIGN KEY (game_id) REFERENCES game(id),
@@ -164,10 +168,24 @@ CREATE TABLE steal (
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
-    stolen_from_stat_player_id BIGINT,
+    hand VARCHAR(255),
+    turnover_for_stat_player_id BIGINT,
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
-    FOREIGN KEY (stolen_from_stat_player_id) REFERENCES stat_player(id)
+    FOREIGN KEY (turnover_for_stat_player_id) REFERENCES stat_player(id)
+);
+CREATE TABLE turnover (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    game_id BIGINT,
+    stat_player_id BIGINT,
+    duration BIGINT,
+    comments TEXT,
+    hand VARCHAR(255),
+    steal_for_stat_player_id BIGINT,
+	`type` VARCHAR(255),
+    FOREIGN KEY (game_id) REFERENCES game(id),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
+    FOREIGN KEY (steal_for_stat_player_id) REFERENCES stat_player(id)
 );
 
 

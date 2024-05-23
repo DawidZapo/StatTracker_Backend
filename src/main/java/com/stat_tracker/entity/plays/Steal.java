@@ -12,15 +12,15 @@ import jakarta.persistence.Table;
 @Table(name = "steal")
 public class Steal extends Play {
     @ManyToOne
-    @JoinColumn(name = "stolen_from_stat_player_id")
+    @JoinColumn(name = "turnover_for_stat_player_id")
     @JsonBackReference
-    private StatPlayer stolenFromStatPlayer;
+    private StatPlayer turnoverForStatPlayer;
 
-    public StatPlayer getStolenFromStatPlayer() {
-        return stolenFromStatPlayer;
+    public StatPlayer getTurnoverForStatPlayer() {
+        return turnoverForStatPlayer;
     }
 
-    public void setStolenFromStatPlayer(StatPlayer stolenFromStatPlayer) {
-        this.stolenFromStatPlayer = stolenFromStatPlayer;
+    public void setTurnoverForStatPlayer(StatPlayer stolenFromStatPlayer) {
+        this.turnoverForStatPlayer = stolenFromStatPlayer;
     }
 }

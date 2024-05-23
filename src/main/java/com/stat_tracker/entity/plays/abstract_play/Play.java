@@ -3,6 +3,7 @@ package com.stat_tracker.entity.plays.abstract_play;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.StatPlayer;
+import com.stat_tracker.entity.plays.enums.Hand;
 import jakarta.persistence.*;
 
 @Entity
@@ -24,6 +25,9 @@ public abstract class Play {
     protected Long duration;
     @Column(name = "comments")
     protected String comments;
+    @Column(name = "hand")
+    @Enumerated(EnumType.STRING)
+    private Hand hand;
 
     public Long getId() {
         return id;
@@ -63,5 +67,13 @@ public abstract class Play {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public Hand getHand() {
+        return hand;
+    }
+
+    public void setHand(Hand hand) {
+        this.hand = hand;
     }
 }
