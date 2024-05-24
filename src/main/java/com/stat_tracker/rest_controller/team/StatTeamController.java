@@ -4,10 +4,7 @@ import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.service.team.StatTeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,8 +18,13 @@ public class StatTeamController {
     public StatTeamController(StatTeamService statTeamRestController) {
         this.statTeamService = statTeamRestController;
     }
-    @GetMapping("/stat_teams")
+    @GetMapping("/stat_team/all")
     public ResponseEntity<List<StatTeam>> getStatTeams(){
         return ResponseEntity.ok(statTeamService.findAll());
+    }
+
+    @GetMapping("/stat_team/{id}")
+    public ResponseEntity<StatTeam> getStatTeam(@PathVariable("id") Long id){
+        return ResponseEntity.ok(statTeamService.findStatTeam(id));
     }
 }

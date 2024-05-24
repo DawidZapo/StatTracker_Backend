@@ -1,6 +1,7 @@
 package com.stat_tracker.entity.team;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stat_tracker.entity.player.Player;
 import jakarta.persistence.*;
 
@@ -24,6 +25,10 @@ public class Team {
     @OneToMany(mappedBy = "currentTeam")
     @JsonBackReference
     private List<Player> currentPlayers;
+
+    @OneToMany(mappedBy = "team")
+    @JsonManagedReference
+    private List<StatTeam> statTeams;
 
     public Long getId() {
         return id;
@@ -71,6 +76,10 @@ public class Team {
 
     public void setCurrentPlayers(List<Player> currentPlayers) {
         this.currentPlayers = currentPlayers;
+    }
+
+    public List<StatTeam> getStatTeams() {
+        return statTeams;
     }
 
     @Override

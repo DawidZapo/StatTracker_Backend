@@ -66,7 +66,7 @@ CREATE TABLE stat_player (
     shirt_number INT,
     starting_five boolean,
     points INT,
-    time_on_court TIME,
+    time_on_court BIGINT,
     eval INT,
     plus_minus INT,
     foreign key (player_id) references player(id),
@@ -81,14 +81,6 @@ CREATE TABLE game (
     away_id BIGINT,
     FOREIGN KEY (home_id) REFERENCES stat_team(id),
     FOREIGN KEY (away_id) references stat_team(id)
-);
-
-CREATE TABLE plays (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    game_id BIGINT,
-    stat_player_id BIGINT,
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
 );
 
 CREATE TABLE score (

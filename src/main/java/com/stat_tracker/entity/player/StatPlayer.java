@@ -6,7 +6,6 @@ import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.entity.team.StatTeam;
 import jakarta.persistence.*;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +30,7 @@ public class StatPlayer {
     @Column(name = "points")
     private Integer points;
     @Column(name = "time_on_court")
-    private Duration timeOnCourt;
+    private Long timeOnCourt;
     @OneToMany(mappedBy = "statPlayer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Play> plays = new ArrayList<>();
@@ -64,7 +63,7 @@ public class StatPlayer {
         return points;
     }
 
-    public Duration getTimeOnCourt() {
+    public Long getTimeOnCourt() {
         return timeOnCourt;
     }
 

@@ -62,4 +62,13 @@ public class ShotPlay extends Play {
     public void setWorth(Integer worth) {
         this.worth = worth;
     }
+
+    public static int calculatePossibleWorthOfShot(Zone zone) {
+        return switch (zone) {
+            case LEFT_CORNER, RIGHT_CORNER, LEFT_WING, RIGHT_WING, TOP_OF_THE_KEY -> 3;
+            case FREE_THROW -> 1;
+            default -> 2;
+        };
+    }
+
 }
