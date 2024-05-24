@@ -66,6 +66,7 @@ public class TeamService {
         TeamWithStatsDto teamWithStatsDto = new TeamWithStatsDto();
         teamWithStatsDto.setId(team.getId());
         teamWithStatsDto.setName(team.getName());
+        teamWithStatsDto.setNumberOfGames(team.getStatTeams().size());
 
         for(var statTeam : team.getStatTeams()){
             for(var player : statTeam.getStatPlayers()){
@@ -132,6 +133,10 @@ public class TeamService {
                 }
 
                 teamWithStatsDto.setEval(teamWithStatsDto.getEval() + player.getEval());
+            }
+
+            for(var score : statTeam.getScores()){
+                teamWithStatsDto.setTotalPoints(teamWithStatsDto.getTotalPoints() + score.getWorth());
             }
         }
 
