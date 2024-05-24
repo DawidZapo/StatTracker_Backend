@@ -75,6 +75,8 @@ CREATE TABLE stat_player (
 
 CREATE TABLE game (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    date_time datetime,
+    is_official BOOLEAN,
     home_id BIGINT,
     away_id BIGINT,
     FOREIGN KEY (home_id) REFERENCES stat_team(id),

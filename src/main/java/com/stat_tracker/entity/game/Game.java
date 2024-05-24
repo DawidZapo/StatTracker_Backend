@@ -5,6 +5,7 @@ import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.entity.team.StatTeam;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 @Entity
 @Table(name = "game")
@@ -13,10 +14,13 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+    @Column(name = "date_time")
+    private LocalDateTime localDateTime;
+    @Column(name = "is_official")
+    private Boolean isOfficial;
     @OneToOne
     @JoinColumn(name = "home_id")
     private StatTeam home;
-
     @OneToOne
     @JoinColumn(name = "away_id")
     private StatTeam away;
@@ -38,5 +42,13 @@ public class Game {
 
     public List<Play> getPlays() {
         return plays;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public Boolean getOfficial() {
+        return isOfficial;
     }
 }
