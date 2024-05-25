@@ -71,7 +71,8 @@ CREATE TABLE stat_line (
     blocks INT,
     blocks_received INT,
     eval INT,
-    plus_minus INT
+    plus_minus INT,
+    possessions INT
 );
 
 CREATE TABLE stat_team (

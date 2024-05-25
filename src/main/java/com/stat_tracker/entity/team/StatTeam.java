@@ -66,4 +66,5 @@ public class StatTeam {
     public StatLine getStatLine() {
         return statLine;
     }
+
 }
