@@ -3,6 +3,7 @@ package com.stat_tracker.entity.player;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stat_tracker.entity.plays.abstract_play.Play;
+import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.StatTeam;
 import jakarta.persistence.*;
 
@@ -29,15 +30,12 @@ public class StatPlayer {
     private Boolean startingFive;
     @Column(name = "points")
     private Integer points;
-    @Column(name = "time_on_court")
-    private Long timeOnCourt;
     @OneToMany(mappedBy = "statPlayer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Play> plays = new ArrayList<>();
-    @Column(name = "eval")
-    private Integer eval;
-    @Column(name = "plus_minus")
-    private Integer plusMinus;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stat_line_id", referencedColumnName = "id")
+    private StatLine statLine;
 
     public Long getId() {
         return id;
@@ -63,20 +61,12 @@ public class StatPlayer {
         return points;
     }
 
-    public Long getTimeOnCourt() {
-        return timeOnCourt;
-    }
-
     public List<Play> getPlays() {
         return plays;
     }
 
-    public Integer getEval() {
-        return eval;
-    }
-
-    public Integer getPlusMinus() {
-        return plusMinus;
+    public StatLine getStatLine() {
+        return statLine;
     }
 
     @Override
@@ -88,10 +78,7 @@ public class StatPlayer {
                 ", shirtNumber=" + shirtNumber +
                 ", startingFive=" + startingFive +
                 ", points=" + points +
-                ", timeOnCourt=" + timeOnCourt +
                 ", plays=" + plays +
-                ", eval=" + eval +
-                ", plusMinus=" + plusMinus +
                 '}';
     }
 }

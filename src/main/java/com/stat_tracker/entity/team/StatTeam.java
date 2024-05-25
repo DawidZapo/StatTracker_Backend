@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.score.Score;
+import com.stat_tracker.entity.stat.StatLine;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -33,6 +34,10 @@ public class StatTeam {
     @OneToMany(mappedBy = "statTeam")
     @JsonManagedReference
     private List<Score> scores;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stat_line_id", referencedColumnName = "id")
+    private StatLine statLine;
+
 
     public Long getId() {
         return id;
@@ -56,5 +61,9 @@ public class StatTeam {
 
     public List<Score> getScores() {
         return scores;
+    }
+
+    public StatLine getStatLine() {
+        return statLine;
     }
 }

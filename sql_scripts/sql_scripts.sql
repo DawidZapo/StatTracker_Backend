@@ -51,12 +51,37 @@ CREATE TABLE player (
     FOREIGN KEY (current_team_id) REFERENCES Team(id)
 );
 
+CREATE TABLE stat_line (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    time_on_court_in_ms BIGINT,
+    two_attempted INT,
+    two_made INT,
+    three_attempted INT,
+    three_made INT,
+    free_throw_attempted INT,
+    free_throw_made INT,
+    total_points INT,
+    off_rebounds INT,
+    def_rebounds INT,
+    assists INT,
+    fouls INT,
+    forced_fouls INT,
+    turnovers INT,
+    steals INT,
+    blocks INT,
+    blocks_received INT,
+    eval INT,
+    plus_minus INT
+);
+
 CREATE TABLE stat_team (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     team_id BIGINT,
     game_id BIGINT,
+    stat_line_id BIGINT,
     FOREIGN KEY (team_id) REFERENCES Team(id),
-    FOREIGN KEY (game_id) REFERENCES game(id)
+    FOREIGN KEY (game_id) REFERENCES game(id),
+    FOREIGN KEY (stat_line_id) REFERENCES stat_line(id)
 );
 
 CREATE TABLE stat_player (
@@ -66,11 +91,10 @@ CREATE TABLE stat_player (
     shirt_number INT,
     starting_five boolean,
     points INT,
-    time_on_court BIGINT,
-    eval INT,
-    plus_minus INT,
+    stat_line_id BIGINT,
     foreign key (player_id) references player(id),
-    foreign key (stat_team_id) references stat_team(id)
+    foreign key (stat_team_id) references stat_team(id),
+    foreign key (stat_line_id) references stat_line(id)
 );
 
 CREATE TABLE game (
@@ -181,5 +205,4 @@ CREATE TABLE turnover (
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
     FOREIGN KEY (steal_for_stat_player_id) REFERENCES stat_player(id)
 );
-
 

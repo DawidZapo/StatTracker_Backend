@@ -1,6 +1,6 @@
 package com.stat_tracker.dto.team;
 
-public class TeamWithStatsDto {
+public class TeamWithStatsTotalsDto {
     private Long id;
     private String name;
     private int numberOfGames = 0;
@@ -22,7 +22,7 @@ public class TeamWithStatsDto {
     private int blocksReceived = 0;
     private int eval = 0;
 
-    public TeamWithStatsDto() {
+    public TeamWithStatsTotalsDto() {
     }
 
 

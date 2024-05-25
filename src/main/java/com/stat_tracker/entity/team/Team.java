@@ -25,7 +25,6 @@ public class Team {
     @OneToMany(mappedBy = "currentTeam")
     @JsonBackReference
     private List<Player> currentPlayers;
-
     @OneToMany(mappedBy = "team")
     @JsonManagedReference
     private List<StatTeam> statTeams;
