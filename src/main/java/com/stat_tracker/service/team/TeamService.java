@@ -69,6 +69,33 @@ public class TeamService {
         return teamToReturn;
     }
 
+    public TeamWithStatsTotalsDto findTeamOpponentWithStatsTotalsDto(Long id){
+        Team team = findTeam(id);
+
+        TeamWithStatsTotalsDto teamToReturn = new TeamWithStatsTotalsDto();
+        teamToReturn.setId(-1L);
+        teamToReturn.setName("Opponents");
+        teamToReturn.setNumberOfGames(team.getStatTeams().size());
+
+        StatLine stats;
+
+        for(var statTeam : team.getStatTeams()){
+            if(statTeam.getHomeGame() != null){
+                stats = statTeam.getHomeGame().getAway().getStatLine();
+                updateTeamStats(teamToReturn, stats);
+            }
+            else if(statTeam.getAwayGame() != null){
+                stats = statTeam.getAwayGame().getHome().getStatLine();
+                updateTeamStats(teamToReturn, stats);
+            }
+            else{
+                throw new RuntimeException("StatTeam does not belong to either home or away game");
+            }
+        }
+
+        return teamToReturn;
+    }
+
     private TeamWithStatsTotalsDto createTeamWithStatsTotalsToReturn(Team team){
         TeamWithStatsTotalsDto teamToReturn = new TeamWithStatsTotalsDto();
         teamToReturn.setId(team.getId());

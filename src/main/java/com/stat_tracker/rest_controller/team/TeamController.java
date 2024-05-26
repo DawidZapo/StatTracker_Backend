@@ -31,7 +31,12 @@ public class TeamController {
     }
 
     @GetMapping("/team/totals/{id}")
-    public ResponseEntity<TeamWithStatsTotalsDto> getTeamWithStatsDto(@PathVariable("id") Long id){
+    public ResponseEntity<TeamWithStatsTotalsDto> getTeamWithStatsTotalsDto(@PathVariable("id") Long id){
         return ResponseEntity.ok(teamService.findTeamWithStatsTotalsDto(id));
+    }
+
+    @GetMapping("/team/opponent_totals/{id}")
+    public ResponseEntity<TeamWithStatsTotalsDto> getTeamOpponentWithStatsTotalsDto(@PathVariable("id") Long id){
+        return ResponseEntity.ok(teamService.findTeamOpponentWithStatsTotalsDto(id));
     }
 }
