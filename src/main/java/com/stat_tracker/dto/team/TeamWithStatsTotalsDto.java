@@ -21,6 +21,7 @@ public class TeamWithStatsTotalsDto {
     private int blocks = 0;
     private int blocksReceived = 0;
     private int eval = 0;
+    private int possessions = 0;
 
     public TeamWithStatsTotalsDto() {
     }
@@ -184,5 +185,13 @@ public class TeamWithStatsTotalsDto {
 
     public void setEval(int eval) {
         this.eval = eval;
+    }
+
+    public int getPossessions() {
+        return possessions;
+    }
+
+    public void setPossessions(int possessions) {
+        this.possessions = possessions;
     }
 }
