@@ -2,15 +2,17 @@ package com.stat_tracker.service.team;
 
 import com.stat_tracker.dto.player.PlayerDto;
 import com.stat_tracker.dto.team.TeamDto;
+import com.stat_tracker.dto.team.TeamWithRecordsDto;
 import com.stat_tracker.dto.team.TeamWithStatsTotalsDto;
+import com.stat_tracker.dto.team.helper.Record;
 import com.stat_tracker.entity.stat.StatLine;
+import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.repository.team.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -69,7 +71,7 @@ public class TeamService {
         return teamToReturn;
     }
 
-    public TeamWithStatsTotalsDto findTeamOpponentWithStatsTotalsDto(Long id){
+    public TeamWithStatsTotalsDto findTeamOpponentWithStatsTotalsDto(Long id) {
         Team team = findTeam(id);
 
         TeamWithStatsTotalsDto teamToReturn = new TeamWithStatsTotalsDto();
@@ -77,23 +79,73 @@ public class TeamService {
         teamToReturn.setName("Opponents");
         teamToReturn.setNumberOfGames(team.getStatTeams().size());
 
-        StatLine stats;
+        team.getStatTeams().stream()
+                .map(this::getOpponentStats)
+                .forEach(stats -> updateTeamStats(teamToReturn, stats));
 
-        for(var statTeam : team.getStatTeams()){
+        return teamToReturn;
+    }
+
+    public TeamWithRecordsDto findTeamWithRecordsDto(Long id) {
+        Team team = findTeam(id);
+        TeamWithRecordsDto teamWithRecordsDto = new TeamWithRecordsDto();
+
+        Map<String, Record> recordMap = new HashMap<>();
+
+        for (var statTeam : team.getStatTeams()) {
+            StatLine stats = statTeam.getStatLine();
+
+            updateRecord(recordMap, "two_attempted", stats.getTwoAttempted(), statTeam);
+            updateRecord(recordMap, "two_made", stats.getTwoMade(), statTeam);
+            updateRecord(recordMap, "three_attempted", stats.getThreeAttempted(), statTeam);
+            updateRecord(recordMap, "three_made", stats.getThreeMade(), statTeam);
+            updateRecord(recordMap, "free_throw_attempted", stats.getFreeThrowAttempted(), statTeam);
+            updateRecord(recordMap, "free_throw_made", stats.getFreeThrowMade(), statTeam);
+            updateRecord(recordMap, "total_points", stats.getTotalPoints(), statTeam);
+            updateRecord(recordMap, "off_rebounds", stats.getOffRebounds(), statTeam);
+            updateRecord(recordMap, "def_rebounds", stats.getDefRebounds(), statTeam);
+            updateRecord(recordMap, "assists", stats.getAssists(), statTeam);
+            updateRecord(recordMap, "fouls", stats.getFouls(), statTeam);
+            updateRecord(recordMap, "forced_fouls", stats.getForcedFouls(), statTeam);
+            updateRecord(recordMap, "turnovers", stats.getTurnovers(), statTeam);
+            updateRecord(recordMap, "steals", stats.getSteals(), statTeam);
+            updateRecord(recordMap, "blocks", stats.getBlocks(), statTeam);
+            updateRecord(recordMap, "blocks_received", stats.getBlocksReceived(), statTeam);
+            updateRecord(recordMap, "eval", stats.getEval(), statTeam);
+            updateRecord(recordMap, "plus_minus", stats.getPlusMinus(), statTeam);
+            updateRecord(recordMap, "possessions", stats.getPossessions(), statTeam);
+        }
+
+        teamWithRecordsDto.setRecords(recordMap);
+        return teamWithRecordsDto;
+    }
+
+    private void updateRecord(Map<String, Record> recordMap, String statName, Integer statValue, StatTeam statTeam) {
+        if (statValue == null) return;
+
+        Record currentRecord = recordMap.get(statName);
+        if (currentRecord == null || statValue > currentRecord.getValue()) {
+            Record newRecord = new Record();
+            newRecord.setName(statName);
+            newRecord.setValue(statValue.doubleValue());
             if(statTeam.getHomeGame() != null){
-                stats = statTeam.getHomeGame().getAway().getStatLine();
-                updateTeamStats(teamToReturn, stats);
+                newRecord.setDate(statTeam.getHomeGame().getLocalDateTime().toString());
+                newRecord.setOpponent(statTeam.getHomeGame().getAway().getTeam().getName());
+                newRecord.setScore(statTeam.getStatLine().getTotalPoints() + " : "
+                + statTeam.getHomeGame().getAway().getStatLine().getTotalPoints());
             }
             else if(statTeam.getAwayGame() != null){
-                stats = statTeam.getAwayGame().getHome().getStatLine();
-                updateTeamStats(teamToReturn, stats);
+                newRecord.setDate(statTeam.getAwayGame().getLocalDateTime().toString());
+                newRecord.setOpponent(statTeam.getAwayGame().getHome().getTeam().getName());
+                newRecord.setScore(statTeam.getStatLine().getTotalPoints() + " : "
+                        + statTeam.getAwayGame().getHome().getStatLine().getTotalPoints());
             }
             else{
                 throw new RuntimeException("StatTeam does not belong to either home or away game");
             }
-        }
 
-        return teamToReturn;
+            recordMap.put(statName, newRecord);
+        }
     }
 
     private TeamWithStatsTotalsDto createTeamWithStatsTotalsToReturn(Team team){
@@ -123,6 +175,16 @@ public class TeamService {
         team.setBlocksReceived(team.getBlocksReceived() + stats.getBlocksReceived());
         team.setEval(team.getEval() + stats.getEval());
         team.setPossessions(team.getPossessions() + stats.getPossessions());
+    }
+
+    private StatLine getOpponentStats(StatTeam statTeam) {
+        if (statTeam.getHomeGame() != null) {
+            return statTeam.getHomeGame().getAway().getStatLine();
+        } else if (statTeam.getAwayGame() != null) {
+            return statTeam.getAwayGame().getHome().getStatLine();
+        } else {
+            throw new RuntimeException("StatTeam does not belong to either home or away game");
+        }
     }
 
 }

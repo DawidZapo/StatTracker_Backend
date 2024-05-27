@@ -1,6 +1,7 @@
 package com.stat_tracker.rest_controller.team;
 
 import com.stat_tracker.dto.team.TeamDto;
+import com.stat_tracker.dto.team.TeamWithRecordsDto;
 import com.stat_tracker.dto.team.TeamWithStatsTotalsDto;
 import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.service.team.TeamService;
@@ -38,5 +39,10 @@ public class TeamController {
     @GetMapping("/team/opponent_totals/{id}")
     public ResponseEntity<TeamWithStatsTotalsDto> getTeamOpponentWithStatsTotalsDto(@PathVariable("id") Long id){
         return ResponseEntity.ok(teamService.findTeamOpponentWithStatsTotalsDto(id));
+    }
+
+    @GetMapping("/team/records/{id}")
+    public ResponseEntity<TeamWithRecordsDto> getTeamRecordsDto(@PathVariable("id") Long id){
+        return ResponseEntity.ok(teamService.findTeamWithRecordsDto(id));
     }
 }
