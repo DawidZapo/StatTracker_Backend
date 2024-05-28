@@ -1,7 +1,11 @@
 package com.stat_tracker.utils;
 
+import com.stat_tracker.dto.player.PlayerWithStatsTotalsDto;
+import com.stat_tracker.dto.team.TeamWithPlayerStatsTotalsDto;
 import com.stat_tracker.dto.team.TeamWithStatsTotalsDto;
 import com.stat_tracker.dto.team.helper.Record;
+import com.stat_tracker.dto.team.helper.StatsTotals;
+import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
@@ -73,25 +77,26 @@ public class TeamUtils {
         return teamToReturn;
     }
 
-    public static void updateTeamStats(TeamWithStatsTotalsDto team, StatLine stats) {
-        team.setTotalPoints(team.getTotalPoints() + stats.getTotalPoints());
-        team.setTwoPointShotsAttempted(team.getTwoPointShotsAttempted() + stats.getTwoAttempted());
-        team.setTwoPointShotsMade(team.getTwoPointShotsMade() + stats.getTwoMade());
-        team.setThreePointShotsAttempted(team.getThreePointShotsAttempted() + stats.getThreeAttempted());
-        team.setThreePointShotsMade(team.getThreePointShotsMade() + stats.getThreeMade());
-        team.setFreeThrowsAttempted(team.getFreeThrowsAttempted() + stats.getFreeThrowAttempted());
-        team.setFreeThrowsMade(team.getFreeThrowsMade() + stats.getFreeThrowMade());
-        team.setOffRebounds(team.getOffRebounds() + stats.getOffRebounds());
-        team.setDefRebounds(team.getDefRebounds() + stats.getDefRebounds());
-        team.setAssists(team.getAssists() + stats.getAssists());
-        team.setFouls(team.getFouls() + stats.getFouls());
-        team.setForcedFouls(team.getForcedFouls() + stats.getForcedFouls());
-        team.setTurnOvers(team.getTurnOvers() + stats.getTurnovers());
-        team.setSteals(team.getSteals() + stats.getSteals());
-        team.setBlocks(team.getBlocks() + stats.getBlocks());
-        team.setBlocksReceived(team.getBlocksReceived() + stats.getBlocksReceived());
-        team.setEval(team.getEval() + stats.getEval());
-        team.setPossessions(team.getPossessions() + stats.getPossessions());
+    public static void updateStatsTotals(StatsTotals item, StatLine stats) {
+        item.setTotalPoints(item.getTotalPoints() + stats.getTotalPoints());
+        item.setTwoPointShotsAttempted(item.getTwoPointShotsAttempted() + stats.getTwoAttempted());
+        item.setTwoPointShotsMade(item.getTwoPointShotsMade() + stats.getTwoMade());
+        item.setThreePointShotsAttempted(item.getThreePointShotsAttempted() + stats.getThreeAttempted());
+        item.setThreePointShotsMade(item.getThreePointShotsMade() + stats.getThreeMade());
+        item.setFreeThrowsAttempted(item.getFreeThrowsAttempted() + stats.getFreeThrowAttempted());
+        item.setFreeThrowsMade(item.getFreeThrowsMade() + stats.getFreeThrowMade());
+        item.setOffRebounds(item.getOffRebounds() + stats.getOffRebounds());
+        item.setDefRebounds(item.getDefRebounds() + stats.getDefRebounds());
+        item.setAssists(item.getAssists() + stats.getAssists());
+        item.setFouls(item.getFouls() + stats.getFouls());
+        item.setForcedFouls(item.getForcedFouls() + stats.getForcedFouls());
+        item.setTurnOvers(item.getTurnOvers() + stats.getTurnovers());
+        item.setSteals(item.getSteals() + stats.getSteals());
+        item.setBlocks(item.getBlocks() + stats.getBlocks());
+        item.setBlocksReceived(item.getBlocksReceived() + stats.getBlocksReceived());
+        item.setEval(item.getEval() + stats.getEval());
+        item.setPossessions(item.getPossessions() + stats.getPossessions());
+        item.setNumberOfGames(item.getNumberOfGames() + 1);
     }
 
     public static StatLine getOpponentStats(StatTeam statTeam) {
@@ -102,5 +107,19 @@ public class TeamUtils {
         } else {
             throw new RuntimeException("StatTeam does not belong to either home or away game");
         }
+    }
+
+    public static PlayerWithStatsTotalsDto findPlayerWithStatsTotalsInTeam(Long id, TeamWithPlayerStatsTotalsDto team) {
+        return team.getPlayers().stream()
+                .filter(player -> id.equals(player.getId()))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public static PlayerWithStatsTotalsDto createPlayerWithStatsTotalsDto(StatPlayer statPlayer){
+        PlayerWithStatsTotalsDto playerDto = new PlayerWithStatsTotalsDto();
+        playerDto.setId(statPlayer.getPlayer().getId());
+        playerDto.setFullName(statPlayer.getPlayer().getFullName());
+        return playerDto;
     }
 }

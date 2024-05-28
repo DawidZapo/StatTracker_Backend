@@ -1,7 +1,9 @@
 package com.stat_tracker.service.team;
 
 import com.stat_tracker.dto.player.PlayerDto;
+import com.stat_tracker.dto.player.PlayerWithStatsTotalsDto;
 import com.stat_tracker.dto.team.TeamDto;
+import com.stat_tracker.dto.team.TeamWithPlayerStatsTotalsDto;
 import com.stat_tracker.dto.team.TeamWithRecordsDto;
 import com.stat_tracker.dto.team.TeamWithStatsTotalsDto;
 import com.stat_tracker.dto.team.helper.Record;
@@ -69,7 +71,7 @@ public class TeamService {
 
         TeamWithStatsTotalsDto teamToReturn = TeamUtils.createTeamWithStatsTotalsToReturn(team);
 
-        team.getStatTeams().forEach(statTeam -> TeamUtils.updateTeamStats(teamToReturn, statTeam.getStatLine()));
+        team.getStatTeams().forEach(statTeam -> TeamUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
 
         return teamToReturn;
     }
@@ -84,7 +86,7 @@ public class TeamService {
 
         team.getStatTeams().stream()
                 .map(TeamUtils::getOpponentStats)
-                .forEach(stats -> TeamUtils.updateTeamStats(teamToReturn, stats));
+                .forEach(stats -> TeamUtils.updateStatsTotals(teamToReturn, stats));
 
         return teamToReturn;
     }
@@ -124,6 +126,32 @@ public class TeamService {
 
         teamWithRecordsDto.setRecords(recordList);
         return teamWithRecordsDto;
+    }
+
+    public TeamWithPlayerStatsTotalsDto findTeamWithPlayerStatsTotals(Long id){
+        Team team = findTeam(id);
+        TeamWithPlayerStatsTotalsDto teamWithPlayerStatsTotalsDto =  new TeamWithPlayerStatsTotalsDto();
+
+        for (var statTeam : team.getStatTeams()) {
+            for (var statPlayer : statTeam.getStatPlayers()) {
+
+                PlayerWithStatsTotalsDto playerDto = TeamUtils.findPlayerWithStatsTotalsInTeam(statPlayer.getPlayer().getId(), teamWithPlayerStatsTotalsDto);
+                if (playerDto == null) {
+                    playerDto = TeamUtils.createPlayerWithStatsTotalsDto(statPlayer);
+                    teamWithPlayerStatsTotalsDto.addPlayer(playerDto);
+                }
+
+                StatLine statLine = statPlayer.getStatLine();
+                TeamUtils.updateStatsTotals(playerDto, statLine);
+
+                playerDto.setTimeOnCourt(playerDto.getTimeOnCourt() + statLine.getTimeOnCourtInMs());
+                if(statPlayer.getStartingFive()){
+                    playerDto.incrementNumberOfGames();
+                }
+            }
+        }
+
+        return teamWithPlayerStatsTotalsDto;
     }
 
 

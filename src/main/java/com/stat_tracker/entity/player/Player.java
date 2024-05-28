@@ -76,4 +76,8 @@ public class Player {
                 ", currentTeam=" + currentTeam +
                 '}';
     }
+
+    public String getFullName(){
+        return this.firstName + " " + this.lastName;
+    }
 }

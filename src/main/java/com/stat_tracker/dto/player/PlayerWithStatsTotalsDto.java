@@ -1,11 +1,13 @@
-package com.stat_tracker.dto.team;
+package com.stat_tracker.dto.player;
 
 import com.stat_tracker.dto.team.helper.StatsTotals;
 
-public class TeamWithStatsTotalsDto implements StatsTotals {
+public class PlayerWithStatsTotalsDto implements StatsTotals {
     private Long id;
-    private String name;
+    private String fullName;
     private int numberOfGames = 0;
+    private long timeOnCourt = 0L;
+    private int startingFive = 0;
     private int totalPoints = 0;
     private int twoPointShotsAttempted = 0;
     private int twoPointShotsMade = 0;
@@ -25,9 +27,13 @@ public class TeamWithStatsTotalsDto implements StatsTotals {
     private int eval = 0;
     private int possessions = 0;
 
-    public TeamWithStatsTotalsDto() {
+    public String getFullName() {
+        return fullName;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
     public Long getId() {
         return id;
@@ -35,14 +41,6 @@ public class TeamWithStatsTotalsDto implements StatsTotals {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getNumberOfGames() {
@@ -189,11 +187,32 @@ public class TeamWithStatsTotalsDto implements StatsTotals {
         this.eval = eval;
     }
 
+    @Override
     public int getPossessions() {
-        return possessions;
+        return this.possessions;
     }
 
+    @Override
     public void setPossessions(int possessions) {
         this.possessions = possessions;
+    }
+
+    public long getTimeOnCourt() {
+        return timeOnCourt;
+    }
+
+    public void setTimeOnCourt(long timeOnCourt) {
+        this.timeOnCourt = timeOnCourt;
+    }
+
+    public int getStartingFive() {
+        return startingFive;
+    }
+
+    public void setStartingFive(int startingFive) {
+        this.startingFive = startingFive;
+    }
+    public void incrementNumberOfGames(){
+        this.numberOfGames = this.numberOfGames + 1;
     }
 }
