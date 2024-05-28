@@ -24,7 +24,7 @@ public class PlayerWithStatsTotalsDto implements StatsTotals {
     private int steals = 0;
     private int blocks = 0;
     private int blocksReceived = 0;
-    private int eval = 0;
+    private int evaluation = 0;
     private int possessions = 0;
 
     public String getFullName() {
@@ -179,12 +179,12 @@ public class PlayerWithStatsTotalsDto implements StatsTotals {
         this.blocksReceived = blocksReceived;
     }
 
-    public int getEval() {
-        return eval;
+    public int getEvaluation() {
+        return evaluation;
     }
 
-    public void setEval(int eval) {
-        this.eval = eval;
+    public void setEvaluation(int evaluation) {
+        this.evaluation = evaluation;
     }
 
     @Override

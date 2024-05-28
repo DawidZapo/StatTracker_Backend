@@ -28,8 +28,6 @@ public class StatPlayer {
     private Integer shirtNumber;
     @Column(name = "starting_five")
     private Boolean startingFive;
-    @Column(name = "points")
-    private Integer points;
     @OneToMany(mappedBy = "statPlayer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Play> plays = new ArrayList<>();
@@ -57,10 +55,6 @@ public class StatPlayer {
         return startingFive;
     }
 
-    public Integer getPoints() {
-        return points;
-    }
-
     public List<Play> getPlays() {
         return plays;
     }
@@ -77,7 +71,6 @@ public class StatPlayer {
                 ", statTeam=" + statTeam +
                 ", shirtNumber=" + shirtNumber +
                 ", startingFive=" + startingFive +
-                ", points=" + points +
                 ", plays=" + plays +
                 '}';
     }

@@ -181,12 +181,12 @@ public class TeamWithStatsTotalsDto implements StatsTotals {
         this.blocksReceived = blocksReceived;
     }
 
-    public int getEval() {
+    public int getEvaluation() {
         return eval;
     }
 
-    public void setEval(int eval) {
-        this.eval = eval;
+    public void setEvaluation(int evaluation) {
+        this.eval = evaluation;
     }
 
     public int getPossessions() {

@@ -73,9 +73,9 @@ public interface StatsTotals {
 
     void setBlocksReceived(int blocksReceived);
 
-    int getEval();
+    int getEvaluation();
 
-    void setEval(int eval);
+    void setEvaluation(int evaluation);
     int getPossessions();
     void setPossessions(int possessions);
 }

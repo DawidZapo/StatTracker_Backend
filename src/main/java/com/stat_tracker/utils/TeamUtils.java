@@ -94,7 +94,7 @@ public class TeamUtils {
         item.setSteals(item.getSteals() + stats.getSteals());
         item.setBlocks(item.getBlocks() + stats.getBlocks());
         item.setBlocksReceived(item.getBlocksReceived() + stats.getBlocksReceived());
-        item.setEval(item.getEval() + stats.getEval());
+        item.setEvaluation(item.getEvaluation() + stats.getEval());
         item.setPossessions(item.getPossessions() + stats.getPossessions());
         item.setNumberOfGames(item.getNumberOfGames() + 1);
     }
