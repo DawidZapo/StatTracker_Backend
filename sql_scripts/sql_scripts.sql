@@ -2,20 +2,20 @@ CREATE database if not exists stat_tracker;
 USE stat_tracker;
 
 CREATE TABLE users (
-    id BIGINT NOT NULL AUTO_INCREMENT,
+    order BIGINT NOT NULL AUTO_INCREMENT,
     email VARCHAR(50),
     password VARCHAR(120),
     username VARCHAR(20),
-    PRIMARY KEY (id),
+    PRIMARY KEY (order),
     UNIQUE KEY (email),
     UNIQUE KEY (username)
 );
 
 
 CREATE TABLE roles (
-    id INT NOT NULL AUTO_INCREMENT,
+    order INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(20),
-    PRIMARY KEY (id)
+    PRIMARY KEY (order)
 );
 
 
@@ -23,8 +23,8 @@ CREATE TABLE user_roles (
     user_id BIGINT,
     role_id INT,
     PRIMARY KEY (user_id, role_id),
-    FOREIGN KEY (user_id) REFERENCES users(id),
-    FOREIGN KEY (role_id) REFERENCES roles(id)
+    FOREIGN KEY (user_id) REFERENCES users(order),
+    FOREIGN KEY (role_id) REFERENCES roles(order)
 );
 
 INSERT INTO roles(name) VALUES('ROLE_USER');
@@ -32,7 +32,7 @@ INSERT INTO roles(name) VALUES('ROLE_MODERATOR');
 INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
 CREATE TABLE team (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     team_name VARCHAR(100),
     location VARCHAR(255),
     arena VARCHAR(255),
@@ -40,7 +40,7 @@ CREATE TABLE team (
 );
 
 CREATE TABLE player (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(50),
     last_name VARCHAR(50),
     height DOUBLE,
@@ -48,11 +48,11 @@ CREATE TABLE player (
     position VARCHAR(100),
     birth DATE,
     current_team_id BIGINT,
-    FOREIGN KEY (current_team_id) REFERENCES Team(id)
+    FOREIGN KEY (current_team_id) REFERENCES Team(order)
 );
 
 CREATE TABLE stat_line (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     time_on_court_in_ms BIGINT,
     two_attempted INT,
     two_made INT,
@@ -76,48 +76,48 @@ CREATE TABLE stat_line (
 );
 
 CREATE TABLE stat_team (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     team_id BIGINT,
     game_id BIGINT,
     stat_line_id BIGINT,
-    FOREIGN KEY (team_id) REFERENCES Team(id),
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_line_id) REFERENCES stat_line(id)
+    FOREIGN KEY (team_id) REFERENCES Team(order),
+    FOREIGN KEY (game_id) REFERENCES game(order),
+    FOREIGN KEY (stat_line_id) REFERENCES stat_line(order)
 );
 
 CREATE TABLE stat_player (
-	id BIGINT auto_increment primary key,
+	order BIGINT auto_increment primary key,
     player_id BIGINT,
     stat_team_id BIGINT,
     shirt_number INT,
     starting_five boolean,
     points INT,
     stat_line_id BIGINT,
-    foreign key (player_id) references player(id),
-    foreign key (stat_team_id) references stat_team(id),
-    foreign key (stat_line_id) references stat_line(id)
+    foreign key (player_id) references player(order),
+    foreign key (stat_team_id) references stat_team(order),
+    foreign key (stat_line_id) references stat_line(order)
 );
 
 CREATE TABLE game (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     date_time datetime,
     is_official BOOLEAN,
     home_id BIGINT,
     away_id BIGINT,
-    FOREIGN KEY (home_id) REFERENCES stat_team(id),
-    FOREIGN KEY (away_id) references stat_team(id)
+    FOREIGN KEY (home_id) REFERENCES stat_team(order),
+    FOREIGN KEY (away_id) references stat_team(order)
 );
 
 CREATE TABLE score (
-	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	order BIGINT AUTO_INCREMENT PRIMARY KEY,
     stat_team_id BIGINT,
     worth INT,
     part INT,
-    FOREIGN KEY (stat_team_id) REFERENCES stat_team(id)
+    FOREIGN KEY (stat_team_id) REFERENCES stat_team(order)
 );
 
 CREATE TABLE shot_play (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     game_id BIGINT,
     stat_player_id BIGINT,
     duration BIGINT,
@@ -128,22 +128,22 @@ CREATE TABLE shot_play (
     made BOOLEAN,
     contested VARCHAR(255),
     worth INT,
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
+    FOREIGN KEY (game_id) REFERENCES game(order),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(order)
 );
 CREATE TABLE rebound (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     game_id BIGINT,
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
     hand VARCHAR(255),
     is_offensive boolean,
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
+    FOREIGN KEY (game_id) REFERENCES game(order),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(order)
 );
 CREATE TABLE assist (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     game_id BIGINT,
     stat_player_id BIGINT,
     duration BIGINT,
@@ -151,12 +151,12 @@ CREATE TABLE assist (
     hand VARCHAR(255),
     to_stat_player_id BIGINT,
     `type` VARCHAR(255),
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
-    FOREIGN KEY (to_stat_player_id) REFERENCES stat_player(id)
+    FOREIGN KEY (game_id) REFERENCES game(order),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(order),
+    FOREIGN KEY (to_stat_player_id) REFERENCES stat_player(order)
 );
 CREATE TABLE `block` (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     game_id BIGINT,
     stat_player_id BIGINT,
     duration BIGINT,
@@ -164,12 +164,12 @@ CREATE TABLE `block` (
     hand VARCHAR(255),
     blocked_stat_player_id BIGINT,
     within_perimeter BOOLEAN,
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
-    FOREIGN KEY (blocked_stat_player_id) REFERENCES stat_player(id)
+    FOREIGN KEY (game_id) REFERENCES game(order),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(order),
+    FOREIGN KEY (blocked_stat_player_id) REFERENCES stat_player(order)
 );
 CREATE TABLE foul (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     game_id BIGINT,
     stat_player_id BIGINT,
     duration BIGINT,
@@ -177,24 +177,24 @@ CREATE TABLE foul (
     hand VARCHAR(255),
     foul_on_stat_player_id BIGINT,
     `type` VARCHAR(255),
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
-    FOREIGN KEY (foul_on_stat_player_id) REFERENCES stat_player(id)
+    FOREIGN KEY (game_id) REFERENCES game(order),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(order),
+    FOREIGN KEY (foul_on_stat_player_id) REFERENCES stat_player(order)
 );
 CREATE TABLE steal (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     game_id BIGINT,
     stat_player_id BIGINT,
     duration BIGINT,
     comments TEXT,
     hand VARCHAR(255),
     turnover_for_stat_player_id BIGINT,
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
-    FOREIGN KEY (turnover_for_stat_player_id) REFERENCES stat_player(id)
+    FOREIGN KEY (game_id) REFERENCES game(order),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(order),
+    FOREIGN KEY (turnover_for_stat_player_id) REFERENCES stat_player(order)
 );
 CREATE TABLE turnover (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order BIGINT AUTO_INCREMENT PRIMARY KEY,
     game_id BIGINT,
     stat_player_id BIGINT,
     duration BIGINT,
@@ -202,8 +202,8 @@ CREATE TABLE turnover (
     hand VARCHAR(255),
     steal_for_stat_player_id BIGINT,
 	`type` VARCHAR(255),
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
-    FOREIGN KEY (steal_for_stat_player_id) REFERENCES stat_player(id)
+    FOREIGN KEY (game_id) REFERENCES game(order),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(order),
+    FOREIGN KEY (steal_for_stat_player_id) REFERENCES stat_player(order)
 );
 

@@ -2,17 +2,17 @@ package com.stat_tracker.dto.team;
 
 import com.stat_tracker.dto.team.helper.Record;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 public class TeamWithRecordsDto {
-    Map<String, Record> records = new HashMap<>();
+    List<Record> records = new LinkedList<>();
 
-    public Map<String, Record> getRecords() {
+    public List<Record> getRecords() {
         return records;
     }
 
-    public void setRecords(Map<String, Record> records) {
+    public void setRecords(List<Record> records) {
         this.records = records;
     }
 }

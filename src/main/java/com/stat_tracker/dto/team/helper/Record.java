@@ -1,11 +1,20 @@
 package com.stat_tracker.dto.team.helper;
 
 public class Record {
+    int order;
     String name;
     Double value = 0.0;
     String date;
     String opponent;
     String score;
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
 
     public String getName() {
         return name;

@@ -6,13 +6,16 @@ import com.stat_tracker.dto.team.TeamWithRecordsDto;
 import com.stat_tracker.dto.team.TeamWithStatsTotalsDto;
 import com.stat_tracker.dto.team.helper.Record;
 import com.stat_tracker.entity.stat.StatLine;
-import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.repository.team.TeamRepository;
+import com.stat_tracker.utils.TeamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -64,9 +67,9 @@ public class TeamService {
     public TeamWithStatsTotalsDto findTeamWithStatsTotalsDto(Long id){
         Team team = findTeam(id);
 
-        TeamWithStatsTotalsDto teamToReturn = createTeamWithStatsTotalsToReturn(team);
+        TeamWithStatsTotalsDto teamToReturn = TeamUtils.createTeamWithStatsTotalsToReturn(team);
 
-        team.getStatTeams().forEach(statTeam -> updateTeamStats(teamToReturn, statTeam.getStatLine()));
+        team.getStatTeams().forEach(statTeam -> TeamUtils.updateTeamStats(teamToReturn, statTeam.getStatLine()));
 
         return teamToReturn;
     }
@@ -80,8 +83,8 @@ public class TeamService {
         teamToReturn.setNumberOfGames(team.getStatTeams().size());
 
         team.getStatTeams().stream()
-                .map(this::getOpponentStats)
-                .forEach(stats -> updateTeamStats(teamToReturn, stats));
+                .map(TeamUtils::getOpponentStats)
+                .forEach(stats -> TeamUtils.updateTeamStats(teamToReturn, stats));
 
         return teamToReturn;
     }
@@ -90,101 +93,39 @@ public class TeamService {
         Team team = findTeam(id);
         TeamWithRecordsDto teamWithRecordsDto = new TeamWithRecordsDto();
 
-        Map<String, Record> recordMap = new HashMap<>();
+        List<Record> recordList = new LinkedList<>();
 
         for (var statTeam : team.getStatTeams()) {
             StatLine stats = statTeam.getStatLine();
 
-            updateRecord(recordMap, "two_attempted", stats.getTwoAttempted(), statTeam);
-            updateRecord(recordMap, "two_made", stats.getTwoMade(), statTeam);
-            updateRecord(recordMap, "three_attempted", stats.getThreeAttempted(), statTeam);
-            updateRecord(recordMap, "three_made", stats.getThreeMade(), statTeam);
-            updateRecord(recordMap, "free_throw_attempted", stats.getFreeThrowAttempted(), statTeam);
-            updateRecord(recordMap, "free_throw_made", stats.getFreeThrowMade(), statTeam);
-            updateRecord(recordMap, "total_points", stats.getTotalPoints(), statTeam);
-            updateRecord(recordMap, "off_rebounds", stats.getOffRebounds(), statTeam);
-            updateRecord(recordMap, "def_rebounds", stats.getDefRebounds(), statTeam);
-            updateRecord(recordMap, "assists", stats.getAssists(), statTeam);
-            updateRecord(recordMap, "fouls", stats.getFouls(), statTeam);
-            updateRecord(recordMap, "forced_fouls", stats.getForcedFouls(), statTeam);
-            updateRecord(recordMap, "turnovers", stats.getTurnovers(), statTeam);
-            updateRecord(recordMap, "steals", stats.getSteals(), statTeam);
-            updateRecord(recordMap, "blocks", stats.getBlocks(), statTeam);
-            updateRecord(recordMap, "blocks_received", stats.getBlocksReceived(), statTeam);
-            updateRecord(recordMap, "eval", stats.getEval(), statTeam);
-            updateRecord(recordMap, "plus_minus", stats.getPlusMinus(), statTeam);
-            updateRecord(recordMap, "possessions", stats.getPossessions(), statTeam);
+            TeamUtils.updateRecord(recordList, "Attempted: 2PT", 1, stats.getTwoAttempted(), statTeam);
+            TeamUtils.updateRecord(recordList, "Made: 2PT",2, stats.getTwoMade(), statTeam);
+            TeamUtils.updateRecord(recordList, "Attempted: 3PT", 3, stats.getThreeAttempted(), statTeam);
+            TeamUtils.updateRecord(recordList, "Made 3PT", 4, stats.getThreeMade(), statTeam);
+            TeamUtils.updateRecord(recordList, "Attempted free throws",5, stats.getFreeThrowAttempted(), statTeam);
+            TeamUtils.updateRecord(recordList, "Made free throws",6, stats.getFreeThrowMade(), statTeam);
+            TeamUtils.updateRecord(recordList, "Total Points",7, stats.getTotalPoints(), statTeam);
+            TeamUtils.updateRecord(recordList, "Off. Rebounds",8, stats.getOffRebounds(), statTeam);
+            TeamUtils.updateRecord(recordList, "Def. Rebounds",9, stats.getDefRebounds(), statTeam);
+            TeamUtils.updateRecord(recordList, "Assists",10, stats.getAssists(), statTeam);
+            TeamUtils.updateRecord(recordList, "Fouls",11, stats.getFouls(), statTeam);
+            TeamUtils.updateRecord(recordList, "Forced Fouls",12, stats.getForcedFouls(), statTeam);
+            TeamUtils.updateRecord(recordList, "Turnovers",13, stats.getTurnovers(), statTeam);
+            TeamUtils.updateRecord(recordList, "Steals",14, stats.getSteals(), statTeam);
+            TeamUtils.updateRecord(recordList, "Blocks",15, stats.getBlocks(), statTeam);
+            TeamUtils.updateRecord(recordList, "Block Received",16, stats.getBlocksReceived(), statTeam);
+            TeamUtils.updateRecord(recordList, "Eval",17, stats.getEval(), statTeam);
+            TeamUtils.updateRecord(recordList, "+/-",18, stats.getPlusMinus(), statTeam);
+            TeamUtils.updateRecord(recordList, "Possessions",19, stats.getPossessions(), statTeam);
         }
 
-        teamWithRecordsDto.setRecords(recordMap);
+        recordList = recordList.stream().sorted(Comparator.comparing(Record::getOrder))
+                        .collect(Collectors.toList());
+
+        teamWithRecordsDto.setRecords(recordList);
         return teamWithRecordsDto;
     }
 
-    private void updateRecord(Map<String, Record> recordMap, String statName, Integer statValue, StatTeam statTeam) {
-        if (statValue == null) return;
 
-        Record currentRecord = recordMap.get(statName);
-        if (currentRecord == null || statValue > currentRecord.getValue()) {
-            Record newRecord = new Record();
-            newRecord.setName(statName);
-            newRecord.setValue(statValue.doubleValue());
-            if(statTeam.getHomeGame() != null){
-                newRecord.setDate(statTeam.getHomeGame().getLocalDateTime().toString());
-                newRecord.setOpponent(statTeam.getHomeGame().getAway().getTeam().getName());
-                newRecord.setScore(statTeam.getStatLine().getTotalPoints() + " : "
-                + statTeam.getHomeGame().getAway().getStatLine().getTotalPoints());
-            }
-            else if(statTeam.getAwayGame() != null){
-                newRecord.setDate(statTeam.getAwayGame().getLocalDateTime().toString());
-                newRecord.setOpponent(statTeam.getAwayGame().getHome().getTeam().getName());
-                newRecord.setScore(statTeam.getStatLine().getTotalPoints() + " : "
-                        + statTeam.getAwayGame().getHome().getStatLine().getTotalPoints());
-            }
-            else{
-                throw new RuntimeException("StatTeam does not belong to either home or away game");
-            }
-
-            recordMap.put(statName, newRecord);
-        }
-    }
-
-    private TeamWithStatsTotalsDto createTeamWithStatsTotalsToReturn(Team team){
-        TeamWithStatsTotalsDto teamToReturn = new TeamWithStatsTotalsDto();
-        teamToReturn.setId(team.getId());
-        teamToReturn.setName(team.getName());
-        teamToReturn.setNumberOfGames(team.getStatTeams().size());
-        return teamToReturn;
-    }
-
-    private void updateTeamStats(TeamWithStatsTotalsDto team, StatLine stats) {
-        team.setTotalPoints(team.getTotalPoints() + stats.getTotalPoints());
-        team.setTwoPointShotsAttempted(team.getTwoPointShotsAttempted() + stats.getTwoAttempted());
-        team.setTwoPointShotsMade(team.getTwoPointShotsMade() + stats.getTwoMade());
-        team.setThreePointShotsAttempted(team.getThreePointShotsAttempted() + stats.getThreeAttempted());
-        team.setThreePointShotsMade(team.getThreePointShotsMade() + stats.getThreeMade());
-        team.setFreeThrowsAttempted(team.getFreeThrowsAttempted() + stats.getFreeThrowAttempted());
-        team.setFreeThrowsMade(team.getFreeThrowsMade() + stats.getFreeThrowMade());
-        team.setOffRebounds(team.getOffRebounds() + stats.getOffRebounds());
-        team.setDefRebounds(team.getDefRebounds() + stats.getDefRebounds());
-        team.setAssists(team.getAssists() + stats.getAssists());
-        team.setFouls(team.getFouls() + stats.getFouls());
-        team.setForcedFouls(team.getForcedFouls() + stats.getForcedFouls());
-        team.setTurnOvers(team.getTurnOvers() + stats.getTurnovers());
-        team.setSteals(team.getSteals() + stats.getSteals());
-        team.setBlocks(team.getBlocks() + stats.getBlocks());
-        team.setBlocksReceived(team.getBlocksReceived() + stats.getBlocksReceived());
-        team.setEval(team.getEval() + stats.getEval());
-        team.setPossessions(team.getPossessions() + stats.getPossessions());
-    }
-
-    private StatLine getOpponentStats(StatTeam statTeam) {
-        if (statTeam.getHomeGame() != null) {
-            return statTeam.getHomeGame().getAway().getStatLine();
-        } else if (statTeam.getAwayGame() != null) {
-            return statTeam.getAwayGame().getHome().getStatLine();
-        } else {
-            throw new RuntimeException("StatTeam does not belong to either home or away game");
-        }
-    }
 
 }
