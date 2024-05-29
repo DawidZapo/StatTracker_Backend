@@ -47,7 +47,7 @@ public class TeamController {
         return ResponseEntity.ok(teamService.findTeamWithRecordsDto(id));
     }
 
-    @GetMapping("/team/player_records/{id}")
+    @GetMapping("/team/player_totals/{id}")
     public ResponseEntity<TeamWithPlayerStatsTotalsDto> getTeamWithPlayerStatsTotals(@PathVariable("id") Long id){
         return ResponseEntity.ok(teamService.findTeamWithPlayerStatsTotals(id));
     }

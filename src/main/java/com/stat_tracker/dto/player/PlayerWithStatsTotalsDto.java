@@ -212,7 +212,7 @@ public class PlayerWithStatsTotalsDto implements StatsTotals {
     public void setStartingFive(int startingFive) {
         this.startingFive = startingFive;
     }
-    public void incrementNumberOfGames(){
-        this.numberOfGames = this.numberOfGames + 1;
+    public void incrementStartingFive(){
+        this.startingFive = this.startingFive + 1;
     }
 }

@@ -146,7 +146,7 @@ public class TeamService {
 
                 playerDto.setTimeOnCourt(playerDto.getTimeOnCourt() + statLine.getTimeOnCourtInMs());
                 if(statPlayer.getStartingFive()){
-                    playerDto.incrementNumberOfGames();
+                    playerDto.incrementStartingFive();
                 }
             }
         }
