@@ -73,7 +73,6 @@ public class TeamUtils {
         TeamWithStatsTotalsDto teamToReturn = new TeamWithStatsTotalsDto();
         teamToReturn.setId(team.getId());
         teamToReturn.setName(team.getName());
-        teamToReturn.setNumberOfGames(team.getStatTeams().size());
         return teamToReturn;
     }
 
