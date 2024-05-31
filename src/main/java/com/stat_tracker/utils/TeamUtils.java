@@ -1,8 +1,8 @@
 package com.stat_tracker.utils;
 
 import com.stat_tracker.dto.player.PlayerWithStatsTotalsDto;
-import com.stat_tracker.dto.team.TeamWithPlayerStatsTotalsDto;
-import com.stat_tracker.dto.team.TeamWithStatsTotalsDto;
+import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
+import com.stat_tracker.dto.team.totals.TeamWithStatsTotalsDto;
 import com.stat_tracker.dto.team.helper.Record;
 import com.stat_tracker.dto.team.helper.StatsTotals;
 import com.stat_tracker.entity.player.StatPlayer;
@@ -13,24 +13,25 @@ import com.stat_tracker.entity.team.Team;
 import java.util.List;
 
 public class TeamUtils {
-    public static void updateRecord(List<Record> recordList, String statName, int order, Integer statValue, StatTeam statTeam) {
+    public static void updateRecord(List<Record> recordList, String statName, int order, Integer statValue, StatTeam statTeam, String playerFullName) {
         if (statValue == null) return;
 
         Record currentRecord = findRecordByName(recordList, statName);
 
         if (currentRecord == null || statValue > currentRecord.getValue()) {
-            Record newRecord = createNewRecord(statName,order,statValue,statTeam);
+            Record newRecord = createNewRecord(statName,order,statValue,statTeam, playerFullName);
 
             recordList.remove(currentRecord);
             recordList.add(newRecord);
         }
     }
 
-    public static Record createNewRecord(String statName, int order, double statValue, StatTeam statTeam){
+    public static Record createNewRecord(String statName, int order, double statValue, StatTeam statTeam, String playerFullName){
         Record newRecord = new Record();
         newRecord.setOrder(order);
         newRecord.setName(statName);
         newRecord.setValue(statValue);
+        newRecord.setPlayerFullName(playerFullName);
 
         if (statTeam.getHomeGame() != null) {
             populateHomeGameDetails(newRecord, statTeam);

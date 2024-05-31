@@ -1,4 +1,4 @@
-package com.stat_tracker.dto.team;
+package com.stat_tracker.dto.team.totals;
 
 import com.stat_tracker.dto.player.PlayerWithStatsTotalsDto;
 

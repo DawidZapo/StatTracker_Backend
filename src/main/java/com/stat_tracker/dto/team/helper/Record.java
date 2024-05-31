@@ -3,6 +3,7 @@ package com.stat_tracker.dto.team.helper;
 public class Record {
     int order;
     String name;
+    String playerFullName;
     Double value = 0.0;
     String date;
     String opponent;
@@ -54,5 +55,13 @@ public class Record {
 
     public void setScore(String score) {
         this.score = score;
+    }
+
+    public String getPlayerFullName() {
+        return playerFullName;
+    }
+
+    public void setPlayerFullName(String playerFullName) {
+        this.playerFullName = playerFullName;
     }
 }
