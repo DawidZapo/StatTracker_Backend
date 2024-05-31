@@ -10,6 +10,7 @@ import com.stat_tracker.dto.team.totals.TeamWithStatsTotalsDto;
 import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.repository.team.TeamRepository;
+import com.stat_tracker.utils.StatsUtils;
 import com.stat_tracker.utils.TeamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -96,26 +97,36 @@ public class TeamService {
 
         for (var statTeam : team.getStatTeams()) {
             StatLine stats = statTeam.getStatLine();
+            double twoPointPercentage = StatsUtils.calculatePercentage(stats.getTwoMade(), stats.getTwoAttempted());
+            double threePointPercentage = StatsUtils.calculatePercentage(stats.getThreeMade(), stats.getThreeAttempted());
+            double freeThrowPercentage = StatsUtils.calculatePercentage(stats.getFreeThrowMade(), stats.getFreeThrowAttempted());
+            double fieldGoalPercentage = StatsUtils.calculatePercentage(stats.getTwoMade() + stats.getThreeMade(), stats.getTwoAttempted() + stats.getThreeAttempted());
 
             TeamUtils.updateRecord(recordList, "Attempted 2PT", 1, stats.getTwoAttempted(), statTeam, null);
             TeamUtils.updateRecord(recordList, "Made 2PT",2, stats.getTwoMade(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Attempted 3PT", 3, stats.getThreeAttempted(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Made 3PT", 4, stats.getThreeMade(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Attempted free throws",5, stats.getFreeThrowAttempted(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Made free throws",6, stats.getFreeThrowMade(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Total Points",7, stats.getTotalPoints(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Off. Rebounds",8, stats.getOffRebounds(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Def. Rebounds",9, stats.getDefRebounds(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Assists",10, stats.getAssists(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Fouls",11, stats.getFouls(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Forced Fouls",12, stats.getForcedFouls(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Turnovers",13, stats.getTurnovers(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Steals",14, stats.getSteals(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Blocks",15, stats.getBlocks(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Block Received",16, stats.getBlocksReceived(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Eval",17, stats.getEval(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "+/-",18, stats.getPlusMinus(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Possessions",19, stats.getPossessions(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "2PT percentage", 3, twoPointPercentage, statTeam, null);
+            TeamUtils.updateRecord(recordList, "Attempted 3PT", 4, stats.getThreeAttempted(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Made 3PT", 5, stats.getThreeMade(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "3PT percentage", 6, threePointPercentage, statTeam, null);
+            TeamUtils.updateRecord(recordList, "Attempted free throws",7, stats.getFreeThrowAttempted(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Made free throws",8, stats.getFreeThrowMade(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Free throw percentage", 9, freeThrowPercentage, statTeam, null);
+            TeamUtils.updateRecord(recordList, "Attempted field goals", 10, stats.getTwoAttempted() + stats.getThreeAttempted(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Made field goals", 11, stats.getTwoMade() + stats.getThreeMade(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Field goal percentage", 12, fieldGoalPercentage, statTeam, null);
+            TeamUtils.updateRecord(recordList, "Total Points",13, stats.getTotalPoints(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Off. Rebounds",14, stats.getOffRebounds(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Def. Rebounds",15, stats.getDefRebounds(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Assists",16, stats.getAssists(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Fouls",17, stats.getFouls(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Forced Fouls",18, stats.getForcedFouls(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Turnovers",19, stats.getTurnovers(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Steals",20, stats.getSteals(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Blocks",21, stats.getBlocks(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Block Received",22, stats.getBlocksReceived(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Eval",23, stats.getEval(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "+/-",24, stats.getPlusMinus(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Possessions",25, stats.getPossessions(), statTeam, null);
         }
 
         recordList = recordList.stream().sorted(Comparator.comparing(Record::getOrder))
@@ -162,25 +173,37 @@ public class TeamService {
                 StatLine stats = statPlayer.getStatLine();
                 String playerFullName = statPlayer.getPlayer().getFullName();
 
+                double twoPointPercentage = StatsUtils.calculatePercentage(stats.getTwoMade(), stats.getTwoAttempted());
+                double threePointPercentage = StatsUtils.calculatePercentage(stats.getThreeMade(), stats.getThreeAttempted());
+                double freeThrowPercentage = StatsUtils.calculatePercentage(stats.getFreeThrowMade(), stats.getFreeThrowAttempted());
+                double fieldGoalPercentage = StatsUtils.calculatePercentage(stats.getTwoMade() + stats.getThreeMade(), stats.getTwoAttempted() + stats.getThreeAttempted());
+
+
                 TeamUtils.updateRecord(recordList, "Attempted 2PT", 1, stats.getTwoAttempted(), statTeam, playerFullName);
                 TeamUtils.updateRecord(recordList, "Made 2PT",2, stats.getTwoMade(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Attempted 3PT", 3, stats.getThreeAttempted(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Made 3PT", 4, stats.getThreeMade(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Attempted free throws",5, stats.getFreeThrowAttempted(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Made free throws",6, stats.getFreeThrowMade(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Total Points",7, stats.getTotalPoints(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Off. Rebounds",8, stats.getOffRebounds(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Def. Rebounds",9, stats.getDefRebounds(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Assists",10, stats.getAssists(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Fouls",11, stats.getFouls(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Forced Fouls",12, stats.getForcedFouls(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Turnovers",13, stats.getTurnovers(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Steals",14, stats.getSteals(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Blocks",15, stats.getBlocks(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Block Received",16, stats.getBlocksReceived(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Eval",17, stats.getEval(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "+/-",18, stats.getPlusMinus(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Possessions",19, stats.getPossessions(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "2PT percentage", 3, twoPointPercentage, statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Attempted 3PT", 4, stats.getThreeAttempted(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Made 3PT", 5, stats.getThreeMade(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "3PT percentage", 6, threePointPercentage, statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Attempted free throws",7, stats.getFreeThrowAttempted(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Made free throws",8, stats.getFreeThrowMade(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Free throw percentage", 9, freeThrowPercentage, statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Attempted field goals", 10, stats.getTwoAttempted() + stats.getThreeAttempted(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Made field goals", 11, stats.getTwoMade() + stats.getThreeMade(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Field goal percentage", 12, fieldGoalPercentage, statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Total Points",13, stats.getTotalPoints(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Off. Rebounds",14, stats.getOffRebounds(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Def. Rebounds",15, stats.getDefRebounds(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Assists",16, stats.getAssists(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Fouls",17, stats.getFouls(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Forced Fouls",18, stats.getForcedFouls(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Turnovers",19, stats.getTurnovers(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Steals",20, stats.getSteals(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Blocks",21, stats.getBlocks(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Block Received",22, stats.getBlocksReceived(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Eval",23, stats.getEval(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "+/-",24, stats.getPlusMinus(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Possessions",25, stats.getPossessions(), statTeam, playerFullName);
             }
         }
         recordList = recordList.stream().sorted(Comparator.comparing(Record::getOrder))

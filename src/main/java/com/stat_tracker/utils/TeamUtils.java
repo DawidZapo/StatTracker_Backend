@@ -14,6 +14,10 @@ import java.util.List;
 
 public class TeamUtils {
     public static void updateRecord(List<Record> recordList, String statName, int order, Integer statValue, StatTeam statTeam, String playerFullName) {
+
+        updateRecord(recordList, statName, order, statValue.doubleValue(), statTeam, playerFullName);
+    }
+    public static void updateRecord(List<Record> recordList, String statName, int order, Double statValue, StatTeam statTeam, String playerFullName){
         if (statValue == null) return;
 
         Record currentRecord = findRecordByName(recordList, statName);
@@ -25,6 +29,7 @@ public class TeamUtils {
             recordList.add(newRecord);
         }
     }
+
 
     public static Record createNewRecord(String statName, int order, double statValue, StatTeam statTeam, String playerFullName){
         Record newRecord = new Record();
