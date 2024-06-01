@@ -2,7 +2,7 @@ package com.stat_tracker.service.team;
 
 import com.stat_tracker.dto.player.PlayerDto;
 import com.stat_tracker.dto.player.PlayerWithStatsTotalsDto;
-import com.stat_tracker.dto.team.TeamDto;
+import com.stat_tracker.dto.team.TeamWithPlayersDto;
 import com.stat_tracker.dto.team.helper.Record;
 import com.stat_tracker.dto.team.records.TeamWithRecordsDto;
 import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
@@ -14,8 +14,12 @@ import com.stat_tracker.utils.StatsUtils;
 import com.stat_tracker.utils.TeamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,9 +34,8 @@ public class TeamService {
         return teamRepository.findAll();
     }
 
-    public TeamDto getTeamDto(Long id) {
-        Team team = teamRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Team not found id: " + id));
+    public TeamWithPlayersDto getTeamDto(Long id) {
+        Team team = findTeam(id);
 
         List<PlayerDto> playerDtos = team.getCurrentPlayers().stream()
                 .map(player -> new PlayerDto(
@@ -45,7 +48,7 @@ public class TeamService {
                         player.getBirth()))
                 .collect(Collectors.toList());
 
-        return new TeamDto(
+        return new TeamWithPlayersDto(
                 team.getId(),
                 team.getName(),
                 team.getLocation(),
@@ -55,13 +58,8 @@ public class TeamService {
     }
 
     public Team findTeam(Long id){
-        Optional<Team> optionalTeam = teamRepository.findById(id);
-        if(optionalTeam.isPresent()){
-            return optionalTeam.get();
-        }
-        else{
-            throw new RuntimeException("Team not found id: " + id);
-        }
+        return teamRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Team not found id: " + id));
     }
 
     public TeamWithStatsTotalsDto findTeamWithStatsTotalsDto(Long id){
@@ -211,6 +209,12 @@ public class TeamService {
         teamWithRecordsDto.setRecords(recordList);
 
         return teamWithRecordsDto;
+    }
+
+    @Transactional
+    public void saveTeamWithPlayersDto(TeamWithPlayersDto teamWithPlayersDto){
+        Team team = TeamUtils.teamWithPlayersDtoToTeam(teamWithPlayersDto);
+        teamRepository.save(team);
     }
 
 }

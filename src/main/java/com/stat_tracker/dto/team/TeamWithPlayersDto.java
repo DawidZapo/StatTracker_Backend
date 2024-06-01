@@ -4,7 +4,7 @@ import com.stat_tracker.dto.player.PlayerDto;
 
 import java.util.List;
 
-public class TeamDto {
+public class TeamWithPlayersDto {
     private Long id;
     private String name;
     private String location;
@@ -12,7 +12,7 @@ public class TeamDto {
     private String address;
     private List<PlayerDto> currentPlayers;
 
-    public TeamDto(Long id, String name, String location, String arena, String address, List<PlayerDto> currentPlayers) {
+    public TeamWithPlayersDto(Long id, String name, String location, String arena, String address, List<PlayerDto> currentPlayers) {
         this.id = id;
         this.name = name;
         this.location = location;
@@ -67,5 +67,17 @@ public class TeamDto {
 
     public void setCurrentPlayers(List<PlayerDto> currentPlayers) {
         this.currentPlayers = currentPlayers;
+    }
+
+    @Override
+    public String toString() {
+        return "TeamWithPlayersDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", arena='" + arena + '\'' +
+                ", address='" + address + '\'' +
+                ", currentPlayers=" + currentPlayers +
+                '}';
     }
 }

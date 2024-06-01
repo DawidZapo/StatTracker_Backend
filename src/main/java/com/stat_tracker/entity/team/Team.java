@@ -22,7 +22,7 @@ public class Team {
     private String arena;
     @Column(name = "address")
     private String address;
-    @OneToMany(mappedBy = "currentTeam")
+    @OneToMany(mappedBy = "currentTeam", cascade = CascadeType.ALL)
     @JsonBackReference
     private List<Player> currentPlayers;
     @OneToMany(mappedBy = "team")

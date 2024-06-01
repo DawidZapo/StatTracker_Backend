@@ -77,7 +77,43 @@ public class Player {
                 '}';
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setHeight(Double height) {
+        this.height = height;
+    }
+
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public void setBirth(LocalDate birth) {
+        this.birth = birth;
+    }
+
+    public void setCurrentTeam(Team currentTeam) {
+        this.currentTeam = currentTeam;
+    }
+
     public String getFullName(){
         return this.firstName + " " + this.lastName;
+    }
+
+    public void setTeam(Team team){
+        this.currentTeam = team;
     }
 }

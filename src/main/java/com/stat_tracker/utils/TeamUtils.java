@@ -1,15 +1,18 @@
 package com.stat_tracker.utils;
 
 import com.stat_tracker.dto.player.PlayerWithStatsTotalsDto;
-import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
-import com.stat_tracker.dto.team.totals.TeamWithStatsTotalsDto;
+import com.stat_tracker.dto.team.TeamWithPlayersDto;
 import com.stat_tracker.dto.team.helper.Record;
 import com.stat_tracker.dto.team.helper.StatsTotals;
+import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
+import com.stat_tracker.dto.team.totals.TeamWithStatsTotalsDto;
+import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TeamUtils {
@@ -126,5 +129,25 @@ public class TeamUtils {
         playerDto.setId(statPlayer.getPlayer().getId());
         playerDto.setFullName(statPlayer.getPlayer().getFullName());
         return playerDto;
+    }
+
+    public static Team teamWithPlayersDtoToTeam(TeamWithPlayersDto teamWithPlayersDto){
+        Team team = new Team();
+        team.setId(teamWithPlayersDto.getId());
+        team.setName(teamWithPlayersDto.getName());
+        team.setLocation(teamWithPlayersDto.getLocation());
+        team.setArena(teamWithPlayersDto.getArena());
+        team.setAddress(teamWithPlayersDto.getAddress());
+
+        List<Player> players = new ArrayList<>();
+        teamWithPlayersDto.getCurrentPlayers().forEach(playerDto -> {
+            Player player = PlayerUtils.playerDtoToPlayer(playerDto);
+            player.setTeam(team);
+            players.add(player);
+
+        });
+        team.setCurrentPlayers(players);
+
+        return team;
     }
 }

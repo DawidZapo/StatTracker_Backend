@@ -1,8 +1,8 @@
 package com.stat_tracker.rest_controller.team;
 
-import com.stat_tracker.dto.team.TeamDto;
-import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
+import com.stat_tracker.dto.team.TeamWithPlayersDto;
 import com.stat_tracker.dto.team.records.TeamWithRecordsDto;
+import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
 import com.stat_tracker.dto.team.totals.TeamWithStatsTotalsDto;
 import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.service.team.TeamService;
@@ -28,7 +28,7 @@ public class TeamController {
     }
 
     @GetMapping("/team/{id}")
-    public ResponseEntity<TeamDto> getTeamDto(@PathVariable Long id){
+    public ResponseEntity<TeamWithPlayersDto> getTeamDto(@PathVariable Long id){
         return ResponseEntity.ok(teamService.getTeamDto(id));
     }
 
@@ -55,5 +55,12 @@ public class TeamController {
     @GetMapping("/team/player_records/{id}")
     public ResponseEntity<TeamWithRecordsDto> getTeamWithPlayerRecords(@PathVariable("id") Long id){
         return ResponseEntity.ok(teamService.findTeamWithPlayerRecordsDto(id));
+    }
+
+    @PostMapping("/team/save")
+    public ResponseEntity<String> saveTeamWithPlayersDto(@RequestBody TeamWithPlayersDto teamWithPlayersDto){
+        System.out.println(teamWithPlayersDto);
+        teamService.saveTeamWithPlayersDto(teamWithPlayersDto);
+        return ResponseEntity.ok("Team saved");
     }
 }
