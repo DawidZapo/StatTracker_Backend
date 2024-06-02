@@ -1,6 +1,7 @@
 package com.stat_tracker.rest_controller.player;
 
 import com.stat_tracker.dto.player.PlayerDto;
+import com.stat_tracker.dto.player.PlayerWithTeamDto;
 import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.service.player.PlayerService;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,10 @@ public class PlayerController {
     public PlayerController(PlayerService playerService) {
         this.playerService = playerService;
     }
-    @GetMapping("/players")
-    public ResponseEntity<List<Player>> getPlayers(){
-        return ResponseEntity.ok(playerService.findALl());
+
+    @GetMapping("/player/all")
+    public ResponseEntity<List<PlayerWithTeamDto>> findAllPlayersWithTeamDto(){
+        return ResponseEntity.ok(playerService.findALlPlayersWithTeamDto());
     }
     @PostMapping("/player/save")
     public ResponseEntity<Player> savePlayer(@RequestBody Player player){

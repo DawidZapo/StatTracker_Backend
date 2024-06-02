@@ -5,13 +5,16 @@ import com.stat_tracker.entity.player.Position;
 import java.time.LocalDate;
 
 public class PlayerDto {
-    private Long id;
-    private String firstName;
-    private String lastName;
-    private Double height;
-    private Double weight;
-    private Position position;
-    private LocalDate birth;
+    protected Long id;
+    protected String firstName;
+    protected String lastName;
+    protected Double height;
+    protected Double weight;
+    protected Position position;
+    protected LocalDate birth;
+
+    public PlayerDto() {
+    }
 
     public PlayerDto(Long id, String firstName, String lastName, Double height, Double weight, Position position, LocalDate birth) {
         this.id = id;

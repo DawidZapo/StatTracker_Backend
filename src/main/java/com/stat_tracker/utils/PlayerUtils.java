@@ -1,6 +1,7 @@
 package com.stat_tracker.utils;
 
 import com.stat_tracker.dto.player.PlayerDto;
+import com.stat_tracker.dto.player.PlayerWithTeamDto;
 import com.stat_tracker.entity.player.Player;
 
 public class PlayerUtils {
@@ -15,5 +16,19 @@ public class PlayerUtils {
         player.setBirth(playerDto.getBirth());
 
         return player;
+    }
+
+    public static PlayerWithTeamDto createPlayerWithTeamDto(Player player){
+        PlayerWithTeamDto playerWithTeamDto = new PlayerWithTeamDto();
+        playerWithTeamDto.setId(player.getId());
+        playerWithTeamDto.setFirstName(player.getFirstName());
+        playerWithTeamDto.setLastName(player.getLastName());
+        playerWithTeamDto.setHeight(player.getHeight());
+        playerWithTeamDto.setWeight(player.getWeight());
+        playerWithTeamDto.setBirth(player.getBirth());
+        playerWithTeamDto.setPosition(player.getPosition());
+        playerWithTeamDto.setTeamName(player.getCurrentTeam().getName());
+
+        return playerWithTeamDto;
     }
 }

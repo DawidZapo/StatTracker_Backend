@@ -1,12 +1,14 @@
 package com.stat_tracker.service.player;
 
 import com.stat_tracker.dto.player.PlayerDto;
+import com.stat_tracker.dto.player.PlayerWithTeamDto;
 import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.repository.player.PlayerRepository;
 import com.stat_tracker.utils.PlayerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,8 +19,13 @@ public class PlayerService {
     public PlayerService(PlayerRepository playerRepository) {
         this.playerRepository = playerRepository;
     }
-    public List<Player> findALl(){
-        return playerRepository.findAll();
+    public List<PlayerWithTeamDto> findALlPlayersWithTeamDto(){
+        List<Player> players = playerRepository.findAll();
+        List<PlayerWithTeamDto> playerWithTeamDtos = new ArrayList<>();
+
+        players.forEach(player -> playerWithTeamDtos.add(PlayerUtils.createPlayerWithTeamDto(player)));
+
+        return playerWithTeamDtos;
     }
     public Player savePlayer(Player player){
         return playerRepository.save(player);
