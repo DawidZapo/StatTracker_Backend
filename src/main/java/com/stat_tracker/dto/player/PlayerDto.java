@@ -78,4 +78,17 @@ public class PlayerDto {
     public void setBirth(LocalDate birth) {
         this.birth = birth;
     }
+
+    @Override
+    public String toString() {
+        return "PlayerDto{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", height=" + height +
+                ", weight=" + weight +
+                ", position=" + position +
+                ", birth=" + birth +
+                '}';
+    }
 }

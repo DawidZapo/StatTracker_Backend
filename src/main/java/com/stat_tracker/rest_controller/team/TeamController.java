@@ -59,8 +59,7 @@ public class TeamController {
 
     @PostMapping("/team/save")
     public ResponseEntity<String> saveTeamWithPlayersDto(@RequestBody TeamWithPlayersDto teamWithPlayersDto){
-        System.out.println(teamWithPlayersDto);
         teamService.saveTeamWithPlayersDto(teamWithPlayersDto);
-        return ResponseEntity.ok("Team saved");
+        return ResponseEntity.ok("Team saved successfully");
     }
 }

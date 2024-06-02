@@ -78,7 +78,6 @@ public class TeamService {
         TeamWithStatsTotalsDto teamToReturn = new TeamWithStatsTotalsDto();
         teamToReturn.setId(-1L);
         teamToReturn.setName("Opponents");
-        teamToReturn.setNumberOfGames(team.getStatTeams().size());
 
         team.getStatTeams().stream()
                 .map(TeamUtils::getOpponentStats)
