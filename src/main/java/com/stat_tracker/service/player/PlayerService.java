@@ -1,7 +1,9 @@
 package com.stat_tracker.service.player;
 
+import com.stat_tracker.dto.player.PlayerDto;
 import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.repository.player.PlayerRepository;
+import com.stat_tracker.utils.PlayerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,5 +22,10 @@ public class PlayerService {
     }
     public Player savePlayer(Player player){
         return playerRepository.save(player);
+    }
+    public void removePlayerFromTeam(PlayerDto playerDto){
+        Player player = PlayerUtils.playerDtoToPlayer(playerDto);
+        player.setCurrentTeam(null);
+        playerRepository.save(player);
     }
 }

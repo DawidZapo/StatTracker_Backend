@@ -1,5 +1,6 @@
 package com.stat_tracker.rest_controller.player;
 
+import com.stat_tracker.dto.player.PlayerDto;
 import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.service.player.PlayerService;
 import org.springframework.http.ResponseEntity;
@@ -23,5 +24,11 @@ public class PlayerController {
     @PostMapping("/player/save")
     public ResponseEntity<Player> savePlayer(@RequestBody Player player){
         return ResponseEntity.ok(playerService.savePlayer(player));
+    }
+
+    @PostMapping("/player/remove_team")
+    public ResponseEntity<String> removePlayerFromTeam(@RequestBody PlayerDto playerDto){
+        playerService.removePlayerFromTeam(playerDto);
+        return ResponseEntity.ok("Player removed from team successfully");
     }
 }
