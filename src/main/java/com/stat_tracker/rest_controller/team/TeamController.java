@@ -52,9 +52,9 @@ public class TeamController {
         return ResponseEntity.ok(teamService.findTeamWithPlayerStatsTotals(id, season));
     }
 
-    @GetMapping("/team/player_records/{id}")
-    public ResponseEntity<TeamWithRecordsDto> getTeamWithPlayerRecords(@PathVariable("id") Long id){
-        return ResponseEntity.ok(teamService.findTeamWithPlayerRecordsDto(id));
+    @GetMapping("/team/player_records/{id}/{season}")
+    public ResponseEntity<TeamWithRecordsDto> getTeamWithPlayerRecords(@PathVariable("id") Long id,@PathVariable("season") String season){
+        return ResponseEntity.ok(teamService.findTeamWithPlayerRecordsDto(id, season));
     }
 
     @PostMapping("/team/save")
