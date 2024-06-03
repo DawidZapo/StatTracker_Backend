@@ -32,14 +32,14 @@ public class TeamController {
         return ResponseEntity.ok(teamService.getTeamDto(id));
     }
 
-    @GetMapping("/team/totals/{id}")
-    public ResponseEntity<TeamWithStatsTotalsDto> getTeamWithStatsTotalsDto(@PathVariable("id") Long id){
-        return ResponseEntity.ok(teamService.findTeamWithStatsTotalsDto(id));
+    @GetMapping("/team/totals/{id}/{season}")
+    public ResponseEntity<TeamWithStatsTotalsDto> getTeamWithStatsTotalsDto(@PathVariable("id") Long id, @PathVariable("season") String season){
+        return ResponseEntity.ok(teamService.findTeamWithStatsTotalsDto(id, season));
     }
 
-    @GetMapping("/team/opponent_totals/{id}")
-    public ResponseEntity<TeamWithStatsTotalsDto> getTeamOpponentWithStatsTotalsDto(@PathVariable("id") Long id){
-        return ResponseEntity.ok(teamService.findTeamOpponentWithStatsTotalsDto(id));
+    @GetMapping("/team/opponent_totals/{id}/{season}")
+    public ResponseEntity<TeamWithStatsTotalsDto> getTeamOpponentWithStatsTotalsDto(@PathVariable("id") Long id, @PathVariable("season") String season){
+        return ResponseEntity.ok(teamService.findTeamOpponentWithStatsTotalsDto(id, season));
     }
 
     @GetMapping("/team/records/{id}")
@@ -61,5 +61,10 @@ public class TeamController {
     public ResponseEntity<String> saveTeamWithPlayersDto(@RequestBody TeamWithPlayersDto teamWithPlayersDto){
         teamService.saveTeamWithPlayersDto(teamWithPlayersDto);
         return ResponseEntity.ok("Team saved successfully");
+    }
+
+    @GetMapping("/team/seasons/{id}")
+    public ResponseEntity<List<String>> getPossibleSeasonFromTeam(@PathVariable("id") Long id){
+        return ResponseEntity.ok(teamService.getPossibleSeasonFromTeam(id));
     }
 }

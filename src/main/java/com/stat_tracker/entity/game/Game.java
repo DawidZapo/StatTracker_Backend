@@ -16,6 +16,8 @@ public class Game {
     private Long id;
     @Column(name = "date_time")
     private LocalDateTime localDateTime;
+    @Column(name = "season")
+    private String season;
     @Column(name = "is_official")
     private Boolean isOfficial;
     @OneToOne
@@ -50,5 +52,9 @@ public class Game {
 
     public Boolean getOfficial() {
         return isOfficial;
+    }
+
+    public String getSeason() {
+        return season;
     }
 }

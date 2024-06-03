@@ -8,8 +8,10 @@ import com.stat_tracker.dto.team.records.TeamWithRecordsDto;
 import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
 import com.stat_tracker.dto.team.totals.TeamWithStatsTotalsDto;
 import com.stat_tracker.entity.stat.StatLine;
+import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.repository.team.TeamRepository;
+import com.stat_tracker.utils.StatTeamUtils;
 import com.stat_tracker.utils.StatsUtils;
 import com.stat_tracker.utils.TeamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,26 +64,49 @@ public class TeamService {
                 .orElseThrow(() -> new RuntimeException("Team not found id: " + id));
     }
 
-    public TeamWithStatsTotalsDto findTeamWithStatsTotalsDto(Long id){
+    public TeamWithStatsTotalsDto findTeamWithStatsTotalsDto(Long id, String season){
         Team team = findTeam(id);
 
         TeamWithStatsTotalsDto teamToReturn = TeamUtils.createTeamWithStatsTotalsToReturn(team);
 
-        team.getStatTeams().forEach(statTeam -> TeamUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
+        if(season.equals("all")){
+            team.getStatTeams().forEach(statTeam -> TeamUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
+        }
+        else if(season.matches("\\d{4}-\\d{4}")){
+            List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+
+            filteredStatTeams.forEach(statTeam -> TeamUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
+        }
+        else{
+            throw new RuntimeException("Season does not match format 'rrrr-rrrr' ");
+        }
 
         return teamToReturn;
     }
 
-    public TeamWithStatsTotalsDto findTeamOpponentWithStatsTotalsDto(Long id) {
+    public TeamWithStatsTotalsDto findTeamOpponentWithStatsTotalsDto(Long id , String season) {
         Team team = findTeam(id);
 
         TeamWithStatsTotalsDto teamToReturn = new TeamWithStatsTotalsDto();
         teamToReturn.setId(-1L);
         teamToReturn.setName("Opponents");
 
-        team.getStatTeams().stream()
-                .map(TeamUtils::getOpponentStats)
-                .forEach(stats -> TeamUtils.updateStatsTotals(teamToReturn, stats));
+        if(season.equals("all")){
+            team.getStatTeams().stream()
+                    .map(TeamUtils::getOpponentStats)
+                    .forEach(stats -> TeamUtils.updateStatsTotals(teamToReturn, stats));
+        }
+        else if(season.matches("\\d{4}-\\d{4}")){
+            List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+
+            filteredStatTeams.stream()
+                    .map(TeamUtils::getOpponentStats)
+                    .forEach(stats -> TeamUtils.updateStatsTotals(teamToReturn, stats));
+        }
+        else{
+            throw new RuntimeException("Season does not match format 'rrrr-rrrr' ");
+        }
+
 
         return teamToReturn;
     }
@@ -214,6 +239,32 @@ public class TeamService {
     public void saveTeamWithPlayersDto(TeamWithPlayersDto teamWithPlayersDto){
         Team team = TeamUtils.teamWithPlayersDtoToTeam(teamWithPlayersDto);
         teamRepository.save(team);
+    }
+
+    public List<String> getPossibleSeasonFromTeam(Long id){
+        Team team = findTeam(id);
+        List<String> seasons = new ArrayList<>();
+
+        for(var statTeam : team.getStatTeams()){
+            if(statTeam.getHomeGame() != null){
+                seasons.add(statTeam.getHomeGame().getSeason());
+            }
+            else if(statTeam.getAwayGame() != null){
+                seasons.add(statTeam.getAwayGame().getSeason());
+            }
+            else{
+                throw new RuntimeException("StatTeam does not belong to either home or away game");
+            }
+        }
+
+        seasons = seasons.stream()
+                .sorted((a, b) -> {
+                    int startYearA = Integer.parseInt(a.split("-")[0]);
+                    int startYearB = Integer.parseInt(b.split("-")[0]);
+                    return Integer.compare(startYearB, startYearA);
+                }).collect(Collectors.toList());
+
+        return seasons;
     }
 
 }

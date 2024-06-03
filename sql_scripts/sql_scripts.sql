@@ -100,6 +100,7 @@ CREATE TABLE stat_player (
 CREATE TABLE game (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     date_time datetime,
+    season VARCHAR(255),
     is_official BOOLEAN,
     home_id BIGINT,
     away_id BIGINT,
