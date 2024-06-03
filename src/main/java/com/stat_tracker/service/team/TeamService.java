@@ -69,17 +69,9 @@ public class TeamService {
 
         TeamWithStatsTotalsDto teamToReturn = TeamUtils.createTeamWithStatsTotalsToReturn(team);
 
-        if(season.equals("all")){
-            team.getStatTeams().forEach(statTeam -> TeamUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
-        }
-        else if(season.matches("\\d{4}-\\d{4}")){
-            List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+        List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
-            filteredStatTeams.forEach(statTeam -> TeamUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
-        }
-        else{
-            throw new RuntimeException("Season does not match format 'rrrr-rrrr' ");
-        }
+        filteredStatTeams.forEach(statTeam -> TeamUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
 
         return teamToReturn;
     }
@@ -91,33 +83,25 @@ public class TeamService {
         teamToReturn.setId(-1L);
         teamToReturn.setName("Opponents");
 
-        if(season.equals("all")){
-            team.getStatTeams().stream()
-                    .map(TeamUtils::getOpponentStats)
-                    .forEach(stats -> TeamUtils.updateStatsTotals(teamToReturn, stats));
-        }
-        else if(season.matches("\\d{4}-\\d{4}")){
-            List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+        List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
-            filteredStatTeams.stream()
-                    .map(TeamUtils::getOpponentStats)
-                    .forEach(stats -> TeamUtils.updateStatsTotals(teamToReturn, stats));
-        }
-        else{
-            throw new RuntimeException("Season does not match format 'rrrr-rrrr' ");
-        }
+        filteredStatTeams.stream()
+                .map(TeamUtils::getOpponentStats)
+                .forEach(stats -> TeamUtils.updateStatsTotals(teamToReturn, stats));
 
 
         return teamToReturn;
     }
 
-    public TeamWithRecordsDto findTeamWithRecordsDto(Long id) {
+    public TeamWithRecordsDto findTeamWithRecordsDto(Long id, String season) {
         Team team = findTeam(id);
         TeamWithRecordsDto teamWithRecordsDto = new TeamWithRecordsDto();
 
+        List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+
         List<Record> recordList = new LinkedList<>();
 
-        for (var statTeam : team.getStatTeams()) {
+        for (var statTeam : filteredStatTeams) {
             StatLine stats = statTeam.getStatLine();
             double twoPointPercentage = StatsUtils.calculatePercentage(stats.getTwoMade(), stats.getTwoAttempted());
             double threePointPercentage = StatsUtils.calculatePercentage(stats.getThreeMade(), stats.getThreeAttempted());
