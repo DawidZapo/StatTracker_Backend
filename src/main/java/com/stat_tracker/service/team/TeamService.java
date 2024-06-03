@@ -142,11 +142,12 @@ public class TeamService {
         return teamWithRecordsDto;
     }
 
-    public TeamWithPlayerStatsTotalsDto findTeamWithPlayerStatsTotals(Long id){
+    public TeamWithPlayerStatsTotalsDto findTeamWithPlayerStatsTotals(Long id, String season){
         Team team = findTeam(id);
         TeamWithPlayerStatsTotalsDto teamWithPlayerStatsTotalsDto =  new TeamWithPlayerStatsTotalsDto();
+        List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
-        for (var statTeam : team.getStatTeams()) {
+        for (var statTeam : filteredStatTeams) {
             for (var statPlayer : statTeam.getStatPlayers()) {
 
                 PlayerWithStatsTotalsDto playerDto = TeamUtils.findPlayerWithStatsTotalsInTeam(statPlayer.getPlayer().getId(), teamWithPlayerStatsTotalsDto);
