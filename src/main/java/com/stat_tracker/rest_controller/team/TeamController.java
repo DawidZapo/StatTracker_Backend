@@ -1,10 +1,10 @@
 package com.stat_tracker.rest_controller.team;
 
+import com.stat_tracker.dto.team.TeamDto;
 import com.stat_tracker.dto.team.TeamWithPlayersDto;
 import com.stat_tracker.dto.team.records.TeamWithRecordsDto;
 import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
 import com.stat_tracker.dto.team.totals.TeamWithStatsTotalsDto;
-import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +23,13 @@ public class TeamController {
         this.teamService = teamService;
     }
     @GetMapping("/team/all")
-    public ResponseEntity<List<Team>> getTeams(){
-        return ResponseEntity.ok(teamService.findAll());
+    public ResponseEntity<List<TeamDto>> getTeams(){
+        return ResponseEntity.ok(teamService.findAllTeamDto());
     }
 
     @GetMapping("/team/{id}")
-    public ResponseEntity<TeamWithPlayersDto> getTeamDto(@PathVariable Long id){
-        return ResponseEntity.ok(teamService.getTeamDto(id));
+    public ResponseEntity<TeamWithPlayersDto> getTeamWithPlayersDto(@PathVariable Long id){
+        return ResponseEntity.ok(teamService.getTeamWithPlayersDto(id));
     }
 
     @GetMapping("/team/totals/{id}/{season}")

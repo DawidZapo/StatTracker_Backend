@@ -1,10 +1,13 @@
 package com.stat_tracker.entity.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stat_tracker.entity.team.Team;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "player")
@@ -30,6 +33,10 @@ public class Player {
     @JoinColumn(name = "current_team_id")
     @JsonIgnore
     private Team currentTeam;
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<StatPlayer> statPlayers = new ArrayList<>();
+
 
     public Long getId() {
         return id;
@@ -115,5 +122,9 @@ public class Player {
 
     public void setTeam(Team team){
         this.currentTeam = team;
+    }
+
+    public List<StatPlayer> getStatPlayers() {
+        return statPlayers;
     }
 }

@@ -2,6 +2,7 @@ package com.stat_tracker.service.team;
 
 import com.stat_tracker.dto.player.PlayerDto;
 import com.stat_tracker.dto.player.PlayerWithStatsTotalsDto;
+import com.stat_tracker.dto.team.TeamDto;
 import com.stat_tracker.dto.team.TeamWithPlayersDto;
 import com.stat_tracker.dto.team.helper.Record;
 import com.stat_tracker.dto.team.records.TeamWithRecordsDto;
@@ -11,7 +12,6 @@ import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 import com.stat_tracker.repository.team.TeamRepository;
-import com.stat_tracker.utils.StatTeamUtils;
 import com.stat_tracker.utils.StatsUtils;
 import com.stat_tracker.utils.TeamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +32,13 @@ public class TeamService {
     public TeamService(TeamRepository teamRepository) {
         this.teamRepository = teamRepository;
     }
-    public List<Team> findAll(){
-        return teamRepository.findAll();
+    public List<TeamDto> findAllTeamDto(){
+        return teamRepository.findAll().stream()
+                .map(team -> new TeamDto(team.getId(), team.getName(), team.getLocation(), team.getArena(), team.getAddress()))
+                .collect(Collectors.toList());
     }
 
-    public TeamWithPlayersDto getTeamDto(Long id) {
+    public TeamWithPlayersDto getTeamWithPlayersDto(Long id) {
         Team team = findTeam(id);
 
         List<PlayerDto> playerDtos = team.getCurrentPlayers().stream()
@@ -69,7 +71,7 @@ public class TeamService {
 
         TeamWithStatsTotalsDto teamToReturn = TeamUtils.createTeamWithStatsTotalsToReturn(team);
 
-        List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+        List<StatTeam> filteredStatTeams = StatsUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
         filteredStatTeams.forEach(statTeam -> TeamUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
 
@@ -83,7 +85,7 @@ public class TeamService {
         teamToReturn.setId(-1L);
         teamToReturn.setName("Opponents");
 
-        List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+        List<StatTeam> filteredStatTeams = StatsUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
         filteredStatTeams.stream()
                 .map(TeamUtils::getOpponentStats)
@@ -97,7 +99,7 @@ public class TeamService {
         Team team = findTeam(id);
         TeamWithRecordsDto teamWithRecordsDto = new TeamWithRecordsDto();
 
-        List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+        List<StatTeam> filteredStatTeams = StatsUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
         List<Record> recordList = new LinkedList<>();
 
@@ -145,7 +147,7 @@ public class TeamService {
     public TeamWithPlayerStatsTotalsDto findTeamWithPlayerStatsTotals(Long id, String season){
         Team team = findTeam(id);
         TeamWithPlayerStatsTotalsDto teamWithPlayerStatsTotalsDto =  new TeamWithPlayerStatsTotalsDto();
-        List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+        List<StatTeam> filteredStatTeams = StatsUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
         for (var statTeam : filteredStatTeams) {
             for (var statPlayer : statTeam.getStatPlayers()) {
@@ -173,7 +175,7 @@ public class TeamService {
         Team team = findTeam(id);
         TeamWithRecordsDto teamWithRecordsDto = new TeamWithRecordsDto();
 
-        List<StatTeam> filteredStatTeams = StatTeamUtils.getFilteredStatTeams(team.getStatTeams(), season);
+        List<StatTeam> filteredStatTeams = StatsUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
         List<Record> recordList = new ArrayList<>();
 
