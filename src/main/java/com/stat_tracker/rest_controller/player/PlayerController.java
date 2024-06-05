@@ -1,6 +1,7 @@
 package com.stat_tracker.rest_controller.player;
 
 import com.stat_tracker.dto.player.PlayerDto;
+import com.stat_tracker.dto.player.PlayerWithStatsTotalsWithSeasonDto;
 import com.stat_tracker.dto.player.PlayerWithTeamDto;
 import com.stat_tracker.dto.team.helper.Record;
 import com.stat_tracker.entity.player.Player;
@@ -31,6 +32,10 @@ public class PlayerController {
     @GetMapping("/player/records/{id}/{season}")
     public ResponseEntity<List<Record>> findPlayerRecordsDto(@PathVariable("id")Long id, @PathVariable("season")String season){
         return ResponseEntity.ok(playerService.findPlayerRecords(id, season));
+    }
+    @GetMapping("/player/totals/{id}")
+    public ResponseEntity<List<PlayerWithStatsTotalsWithSeasonDto>> findPlayerWithStatsTotalsWithSeason(@PathVariable("id")Long id){
+        return ResponseEntity.ok(playerService.findPlayerWithStatsTotalsWithSeason(id));
     }
     @PostMapping("/player/save")
     public ResponseEntity<Player> savePlayer(@RequestBody Player player){

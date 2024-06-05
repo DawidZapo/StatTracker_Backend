@@ -73,7 +73,7 @@ public class TeamService {
 
         List<StatTeam> filteredStatTeams = StatsUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
-        filteredStatTeams.forEach(statTeam -> TeamUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
+        filteredStatTeams.forEach(statTeam -> StatsUtils.updateStatsTotals(teamToReturn, statTeam.getStatLine()));
 
         return teamToReturn;
     }
@@ -89,7 +89,7 @@ public class TeamService {
 
         filteredStatTeams.stream()
                 .map(TeamUtils::getOpponentStats)
-                .forEach(stats -> TeamUtils.updateStatsTotals(teamToReturn, stats));
+                .forEach(stats -> StatsUtils.updateStatsTotals(teamToReturn, stats));
 
 
         return teamToReturn;
@@ -159,7 +159,7 @@ public class TeamService {
                 }
 
                 StatLine statLine = statPlayer.getStatLine();
-                TeamUtils.updateStatsTotals(playerDto, statLine);
+                StatsUtils.updateStatsTotals(playerDto, statLine);
 
                 playerDto.setTimeOnCourt(playerDto.getTimeOnCourt() + statLine.getTimeOnCourtInMs());
                 if(statPlayer.getStartingFive()){

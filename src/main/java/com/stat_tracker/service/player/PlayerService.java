@@ -1,6 +1,7 @@
 package com.stat_tracker.service.player;
 
 import com.stat_tracker.dto.player.PlayerDto;
+import com.stat_tracker.dto.player.PlayerWithStatsTotalsWithSeasonDto;
 import com.stat_tracker.dto.player.PlayerWithTeamDto;
 import com.stat_tracker.dto.team.helper.Record;
 import com.stat_tracker.entity.player.Player;
@@ -13,9 +14,7 @@ import com.stat_tracker.utils.TeamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -56,7 +55,7 @@ public class PlayerService {
 
     public List<Record> findPlayerRecords(Long id, String season){
         Player player = findPlayer(id);
-        List<StatPlayer> filteredStatPlayers = StatsUtils.getFilteredStatPlayer(player.getStatPlayers(), season);
+        List<StatPlayer> filteredStatPlayers = StatsUtils.getFilteredStatPlayers(player.getStatPlayers(), season);
 
         List<Record> recordList = new ArrayList<>();
 
@@ -98,8 +97,30 @@ public class PlayerService {
         recordList = recordList.stream().sorted(Comparator.comparing(Record::getOrder))
                 .collect(Collectors.toList());
 
-
-
         return recordList;
+    }
+
+    public List<PlayerWithStatsTotalsWithSeasonDto> findPlayerWithStatsTotalsWithSeason(Long id) {
+        Player player = findPlayer(id);
+
+        Map<String, PlayerWithStatsTotalsWithSeasonDto> seasonStatsMap = new HashMap<>();
+
+        for(var statPlayer : player.getStatPlayers()){
+            String season = StatsUtils.getSeasonFromStatPlayer(statPlayer);
+
+            PlayerWithStatsTotalsWithSeasonDto playerDto = PlayerUtils.createPlayerWithStatsTotalsWithSeasonDto(statPlayer,season, seasonStatsMap);
+
+            StatLine stats = statPlayer.getStatLine();
+            StatsUtils.updateStatsTotals(playerDto, stats);
+
+            playerDto.setTimeOnCourt(playerDto.getTimeOnCourt() + stats.getTimeOnCourtInMs());
+            if(statPlayer.getStartingFive()){
+                playerDto.incrementStartingFive();
+            }
+
+            seasonStatsMap.put(season, playerDto);
+        }
+
+        return new ArrayList<>(seasonStatsMap.values());
     }
 }

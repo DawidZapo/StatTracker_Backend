@@ -3,7 +3,6 @@ package com.stat_tracker.utils;
 import com.stat_tracker.dto.player.PlayerWithStatsTotalsDto;
 import com.stat_tracker.dto.team.TeamWithPlayersDto;
 import com.stat_tracker.dto.team.helper.Record;
-import com.stat_tracker.dto.team.helper.StatsTotals;
 import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
 import com.stat_tracker.dto.team.totals.TeamWithStatsTotalsDto;
 import com.stat_tracker.entity.player.Player;
@@ -83,28 +82,6 @@ public class TeamUtils {
         teamToReturn.setId(team.getId());
         teamToReturn.setName(team.getName());
         return teamToReturn;
-    }
-
-    public static void updateStatsTotals(StatsTotals item, StatLine stats) {
-        item.setTotalPoints(item.getTotalPoints() + stats.getTotalPoints());
-        item.setTwoPointShotsAttempted(item.getTwoPointShotsAttempted() + stats.getTwoAttempted());
-        item.setTwoPointShotsMade(item.getTwoPointShotsMade() + stats.getTwoMade());
-        item.setThreePointShotsAttempted(item.getThreePointShotsAttempted() + stats.getThreeAttempted());
-        item.setThreePointShotsMade(item.getThreePointShotsMade() + stats.getThreeMade());
-        item.setFreeThrowsAttempted(item.getFreeThrowsAttempted() + stats.getFreeThrowAttempted());
-        item.setFreeThrowsMade(item.getFreeThrowsMade() + stats.getFreeThrowMade());
-        item.setOffRebounds(item.getOffRebounds() + stats.getOffRebounds());
-        item.setDefRebounds(item.getDefRebounds() + stats.getDefRebounds());
-        item.setAssists(item.getAssists() + stats.getAssists());
-        item.setFouls(item.getFouls() + stats.getFouls());
-        item.setForcedFouls(item.getForcedFouls() + stats.getForcedFouls());
-        item.setTurnOvers(item.getTurnOvers() + stats.getTurnovers());
-        item.setSteals(item.getSteals() + stats.getSteals());
-        item.setBlocks(item.getBlocks() + stats.getBlocks());
-        item.setBlocksReceived(item.getBlocksReceived() + stats.getBlocksReceived());
-        item.setEvaluation(item.getEvaluation() + stats.getEval());
-        item.setPossessions(item.getPossessions() + stats.getPossessions());
-        item.setNumberOfGames(item.getNumberOfGames() + 1);
     }
 
     public static StatLine getOpponentStats(StatTeam statTeam) {

@@ -27,6 +27,9 @@ public class PlayerWithStatsTotalsDto implements StatsTotals {
     private int evaluation = 0;
     private int possessions = 0;
 
+    public PlayerWithStatsTotalsDto() {
+    }
+
     public String getFullName() {
         return fullName;
     }
