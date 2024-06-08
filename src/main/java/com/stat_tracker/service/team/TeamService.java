@@ -8,6 +8,7 @@ import com.stat_tracker.dto.team.helper.Record;
 import com.stat_tracker.dto.team.records.TeamWithRecordsDto;
 import com.stat_tracker.dto.team.totals.TeamWithPlayerStatsTotalsDto;
 import com.stat_tracker.dto.team.totals.TeamWithStatsTotalsDto;
+import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
@@ -144,31 +145,34 @@ public class TeamService {
         return teamWithRecordsDto;
     }
 
-    public TeamWithPlayerStatsTotalsDto findTeamWithPlayerStatsTotals(Long id, String season){
+    public TeamWithPlayerStatsTotalsDto findTeamWithPlayerStatsTotals(Long id, String season) {
         Team team = findTeam(id);
-        TeamWithPlayerStatsTotalsDto teamWithPlayerStatsTotalsDto =  new TeamWithPlayerStatsTotalsDto();
+        TeamWithPlayerStatsTotalsDto teamWithPlayerStatsTotalsDto = new TeamWithPlayerStatsTotalsDto();
         List<StatTeam> filteredStatTeams = StatsUtils.getFilteredStatTeams(team.getStatTeams(), season);
 
-        for (var statTeam : filteredStatTeams) {
-            for (var statPlayer : statTeam.getStatPlayers()) {
-
-                PlayerWithStatsTotalsDto playerDto = TeamUtils.findPlayerWithStatsTotalsInTeam(statPlayer.getPlayer().getId(), teamWithPlayerStatsTotalsDto);
-                if (playerDto == null) {
-                    playerDto = TeamUtils.createPlayerWithStatsTotalsDto(statPlayer);
-                    teamWithPlayerStatsTotalsDto.addPlayer(playerDto);
-                }
-
-                StatLine statLine = statPlayer.getStatLine();
-                StatsUtils.updateStatsTotals(playerDto, statLine);
-
-                playerDto.setTimeOnCourt(playerDto.getTimeOnCourt() + statLine.getTimeOnCourtInMs());
-                if(statPlayer.getStartingFive()){
-                    playerDto.incrementStartingFive();
-                }
-            }
-        }
+        filteredStatTeams.forEach(statTeam -> processStatTeam(statTeam, teamWithPlayerStatsTotalsDto));
 
         return teamWithPlayerStatsTotalsDto;
+    }
+
+    private void processStatTeam(StatTeam statTeam, TeamWithPlayerStatsTotalsDto teamWithPlayerStatsTotalsDto) {
+        statTeam.getStatPlayers().forEach(statPlayer -> processStatPlayer(statPlayer, teamWithPlayerStatsTotalsDto));
+    }
+
+    private void processStatPlayer(StatPlayer statPlayer, TeamWithPlayerStatsTotalsDto teamWithPlayerStatsTotalsDto) {
+        PlayerWithStatsTotalsDto playerDto = TeamUtils.findPlayerWithStatsTotalsInTeam(statPlayer.getPlayer().getId(), teamWithPlayerStatsTotalsDto);
+        if (playerDto == null) {
+            playerDto = TeamUtils.createPlayerWithStatsTotalsDto(statPlayer);
+            teamWithPlayerStatsTotalsDto.addPlayer(playerDto);
+        }
+
+        StatLine statLine = statPlayer.getStatLine();
+        StatsUtils.updateStatsTotals(playerDto, statLine);
+
+        playerDto.setTimeOnCourt(playerDto.getTimeOnCourt() + statLine.getTimeOnCourtInMs());
+        if (statPlayer.getStartingFive()) {
+            playerDto.incrementStartingFive();
+        }
     }
 
     public TeamWithRecordsDto findTeamWithPlayerRecordsDto(Long id, String season){
