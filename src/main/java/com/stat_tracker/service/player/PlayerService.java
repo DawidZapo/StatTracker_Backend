@@ -121,6 +121,10 @@ public class PlayerService {
             seasonStatsMap.put(season, playerDto);
         }
 
-        return new ArrayList<>(seasonStatsMap.values());
+        List<PlayerWithStatsTotalsWithSeasonDto> sortedListBySeason =  seasonStatsMap.values().stream()
+                .sorted(Comparator.comparing(PlayerWithStatsTotalsWithSeasonDto::getSeason).reversed())
+                .collect(Collectors.toList());
+
+        return sortedListBySeason;
     }
 }
