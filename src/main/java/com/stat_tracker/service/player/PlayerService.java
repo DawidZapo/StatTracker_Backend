@@ -113,7 +113,7 @@ public class PlayerService {
             StatLine stats = statPlayer.getStatLine();
             StatsUtils.updateStatsTotals(playerDto, stats);
 
-            playerDto.setTimeOnCourt(playerDto.getTimeOnCourt() + stats.getTimeOnCourtInMs());
+            playerDto.setTimeOnCourtInMs(playerDto.getTimeOnCourtInMs() + stats.getTimeOnCourtInMs());
             if(statPlayer.getStartingFive()){
                 playerDto.incrementStartingFive();
             }

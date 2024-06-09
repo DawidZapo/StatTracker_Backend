@@ -6,7 +6,7 @@ public class PlayerWithStatsTotalsDto implements StatsTotals {
     private Long id;
     private String fullName;
     private int numberOfGames = 0;
-    private long timeOnCourt = 0L;
+    private long timeOnCourtInMs = 0L;
     private int startingFive = 0;
     private int totalPoints = 0;
     private int twoPointShotsAttempted = 0;
@@ -200,12 +200,12 @@ public class PlayerWithStatsTotalsDto implements StatsTotals {
         this.possessions = possessions;
     }
 
-    public long getTimeOnCourt() {
-        return timeOnCourt;
+    public long getTimeOnCourtInMs() {
+        return timeOnCourtInMs;
     }
 
-    public void setTimeOnCourt(long timeOnCourt) {
-        this.timeOnCourt = timeOnCourt;
+    public void setTimeOnCourtInMs(long timeOnCourtInMs) {
+        this.timeOnCourtInMs = timeOnCourtInMs;
     }
 
     public int getStartingFive() {
