@@ -41,10 +41,13 @@ public class PlayerController {
     public ResponseEntity<Player> savePlayer(@RequestBody Player player){
         return ResponseEntity.ok(playerService.savePlayer(player));
     }
-
     @PostMapping("/player/remove_team")
     public ResponseEntity<String> removePlayerFromTeam(@RequestBody PlayerDto playerDto){
         playerService.removePlayerFromTeam(playerDto);
         return ResponseEntity.ok("Player removed from team successfully");
+    }
+    @GetMapping("/player/seasons/{id}")
+    public ResponseEntity<List<String>> getPossibleSeasonFromPlayer(@PathVariable("id") Long id){
+        return ResponseEntity.ok(playerService.getPossibleSeasonFromTeam(id));
     }
 }

@@ -127,4 +127,31 @@ public class PlayerService {
 
         return sortedListBySeason;
     }
+
+    public List<String> getPossibleSeasonFromTeam(Long id) {
+        Player player = findPlayer(id);
+        Set<String> seasons = new HashSet<>();
+
+        for(var statPlayer : player.getStatPlayers()){
+            if(statPlayer.getStatTeam().getHomeGame() != null){
+                seasons.add(statPlayer.getStatTeam().getHomeGame().getSeason());
+            }
+            else if(statPlayer.getStatTeam().getAwayGame() != null){
+                seasons.add(statPlayer.getStatTeam().getAwayGame().getSeason());
+            }
+            else{
+                throw new RuntimeException("StatTeam does not belong to either home or away game");
+            }
+        }
+        List<String> seasonsList = seasons.stream().toList();
+
+        seasonsList = seasonsList.stream()
+                .sorted((a, b) -> {
+                    int startYearA = Integer.parseInt(a.split("-")[0]);
+                    int startYearB = Integer.parseInt(b.split("-")[0]);
+                    return Integer.compare(startYearB, startYearA);
+                }).collect(Collectors.toList());
+
+        return seasonsList;
+    }
 }

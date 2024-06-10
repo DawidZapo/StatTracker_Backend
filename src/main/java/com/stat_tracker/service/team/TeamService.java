@@ -19,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -236,7 +233,7 @@ public class TeamService {
 
     public List<String> getPossibleSeasonFromTeam(Long id){
         Team team = findTeam(id);
-        List<String> seasons = new ArrayList<>();
+        Set<String> seasons = new HashSet<>();
 
         for(var statTeam : team.getStatTeams()){
             if(statTeam.getHomeGame() != null){
@@ -249,15 +246,16 @@ public class TeamService {
                 throw new RuntimeException("StatTeam does not belong to either home or away game");
             }
         }
+        List<String> seasonsList = seasons.stream().toList();
 
-        seasons = seasons.stream()
+        seasonsList = seasonsList.stream()
                 .sorted((a, b) -> {
                     int startYearA = Integer.parseInt(a.split("-")[0]);
                     int startYearB = Integer.parseInt(b.split("-")[0]);
                     return Integer.compare(startYearB, startYearA);
                 }).collect(Collectors.toList());
 
-        return seasons;
+        return seasonsList;
     }
 
 }
