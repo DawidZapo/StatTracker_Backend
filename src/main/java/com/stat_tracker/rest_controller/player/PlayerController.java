@@ -4,7 +4,6 @@ import com.stat_tracker.dto.player.PlayerDto;
 import com.stat_tracker.dto.player.PlayerWithStatsTotalsWithSeasonDto;
 import com.stat_tracker.dto.player.PlayerWithTeamDto;
 import com.stat_tracker.dto.team.helper.Record;
-import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.service.player.PlayerService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -37,10 +36,6 @@ public class PlayerController {
     public ResponseEntity<List<PlayerWithStatsTotalsWithSeasonDto>> findPlayerWithStatsTotalsWithSeason(@PathVariable("id")Long id){
         return ResponseEntity.ok(playerService.findPlayerWithStatsTotalsWithSeason(id));
     }
-    @PostMapping("/player/save")
-    public ResponseEntity<Player> savePlayer(@RequestBody Player player){
-        return ResponseEntity.ok(playerService.savePlayer(player));
-    }
     @PostMapping("/player/remove_team")
     public ResponseEntity<String> removePlayerFromTeam(@RequestBody PlayerDto playerDto){
         playerService.removePlayerFromTeam(playerDto);
@@ -49,5 +44,13 @@ public class PlayerController {
     @GetMapping("/player/seasons/{id}")
     public ResponseEntity<List<String>> getPossibleSeasonFromPlayer(@PathVariable("id") Long id){
         return ResponseEntity.ok(playerService.getPossibleSeasonFromTeam(id));
+    }
+
+    @PostMapping("/player/save")
+    public ResponseEntity<String> saveTeamWithPlayersDto(@RequestBody PlayerWithTeamDto playerWithTeamDto){
+        //save player to do
+
+        System.out.println(playerWithTeamDto);
+        return ResponseEntity.ok("Team saved successfully");
     }
 }

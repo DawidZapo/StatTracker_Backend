@@ -32,6 +32,7 @@ public class PlayerUtils {
         playerWithTeamDto.setBirth(player.getBirth());
         playerWithTeamDto.setPosition(player.getPosition());
         playerWithTeamDto.setTeamName(player.getCurrentTeam().getName());
+        playerWithTeamDto.setTeamId(player.getCurrentTeam().getId());
 
         return playerWithTeamDto;
     }

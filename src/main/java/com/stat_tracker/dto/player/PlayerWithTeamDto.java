@@ -6,12 +6,14 @@ import java.time.LocalDate;
 
 public class PlayerWithTeamDto extends PlayerDto{
     private String teamName;
+    private Long teamId;
     public PlayerWithTeamDto(){
     }
 
-    public PlayerWithTeamDto(Long id, String firstName, String lastName, Double height, Double weight, Position position, LocalDate birth, String teamName) {
+    public PlayerWithTeamDto(Long id, String firstName, String lastName, Double height, Double weight, Position position, LocalDate birth, String teamName, Long teamId) {
         super(id, firstName, lastName, height, weight, position, birth);
         this.teamName = teamName;
+        this.teamId = teamId;
     }
 
     public String getTeamName() {
@@ -20,5 +22,21 @@ public class PlayerWithTeamDto extends PlayerDto{
 
     public void setTeamName(String teamName) {
         this.teamName = teamName;
+    }
+
+    public Long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(Long teamId) {
+        this.teamId = teamId;
+    }
+
+    @Override
+    public String toString() {
+        return "PlayerWithTeamDto{" +
+                "teamName='" + teamName + '\'' +
+                ", teamId=" + teamId +
+                "} " + super.toString();
     }
 }
