@@ -2,13 +2,16 @@ package com.stat_tracker.service.game;
 
 import com.stat_tracker.dto.game.GameWithPlaysDto;
 import com.stat_tracker.dto.game.GameWithStatTeamsDto;
+import com.stat_tracker.dto.game.GameWithTeamNamesDto;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.repository.game.GameRepository;
+import com.stat_tracker.utils.GameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GameService {
@@ -32,7 +35,8 @@ public class GameService {
         }
         return new GameWithStatTeamsDto(game.get().getId(), game.get().getHome(),game.get().getAway());
     }
-    public List<Game> getAllGames(){
-        return gameRepository.findAll();
+    public List<GameWithTeamNamesDto> getAllGamesWithTeamNamesDto(){
+        List<Game> games = gameRepository.findAll();
+        return games.stream().map(game -> GameUtils.createGameWithTeamNamesDto(game)).collect(Collectors.toList());
     }
 }
