@@ -8,6 +8,7 @@ import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.repository.player.PlayerRepository;
+import com.stat_tracker.service.team.TeamService;
 import com.stat_tracker.utils.PlayerUtils;
 import com.stat_tracker.utils.StatsUtils;
 import com.stat_tracker.utils.TeamUtils;
@@ -20,10 +21,12 @@ import java.util.stream.Collectors;
 @Service
 public class PlayerService {
     private PlayerRepository playerRepository;
+    private TeamService teamService;
 
     @Autowired
-    public PlayerService(PlayerRepository playerRepository) {
+    public PlayerService(PlayerRepository playerRepository, TeamService teamService) {
         this.playerRepository = playerRepository;
+        this.teamService = teamService;
     }
 
     public Player findPlayer(Long id){
@@ -153,5 +156,19 @@ public class PlayerService {
                 }).collect(Collectors.toList());
 
         return seasonsList;
+    }
+
+    public void savePlayerWithTeamDto(PlayerWithTeamDto playerWithTeamDto) {
+        Player player = findPlayer(playerWithTeamDto.getId());
+        player.setFirstName(playerWithTeamDto.getFirstName());
+        player.setLastName(playerWithTeamDto.getLastName());
+        player.setHeight(playerWithTeamDto.getHeight());
+        player.setWeight(playerWithTeamDto.getWeight());
+        player.setPosition(playerWithTeamDto.getPosition());
+        player.setBirth(playerWithTeamDto.getBirth());
+        player.setTeam(teamService.findTeam(playerWithTeamDto.getTeamId()));
+
+        playerRepository.save(player);
+
     }
 }

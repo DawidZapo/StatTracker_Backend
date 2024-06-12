@@ -48,8 +48,7 @@ public class PlayerController {
 
     @PostMapping("/player/save")
     public ResponseEntity<String> saveTeamWithPlayersDto(@RequestBody PlayerWithTeamDto playerWithTeamDto){
-        //save player to do
-
+        playerService.savePlayerWithTeamDto(playerWithTeamDto);
         System.out.println(playerWithTeamDto);
         return ResponseEntity.ok("Team saved successfully");
     }

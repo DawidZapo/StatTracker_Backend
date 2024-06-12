@@ -35,7 +35,6 @@ public class PlayerWithTeamDto extends PlayerDto{
     @Override
     public String toString() {
         return "PlayerWithTeamDto{" +
-                "teamName='" + teamName + '\'' +
                 ", teamId=" + teamId +
                 "} " + super.toString();
     }
