@@ -29,7 +29,7 @@ public class GameController {
         return ResponseEntity.ok(gameService.getGameWithPlays(id));
     }
 
-    @GetMapping("/game_with_stat_teams/{id}")
+    @GetMapping("/game/stat_teams/{id}")
     public ResponseEntity<GameWithStatTeamsDto> getGameWithStatTeams(@PathVariable Long id){
         return ResponseEntity.ok(gameService.getGameWithStatsTeam(id));
     }

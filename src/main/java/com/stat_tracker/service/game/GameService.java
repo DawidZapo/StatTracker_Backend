@@ -21,6 +21,10 @@ public class GameService {
     public GameService(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
+    public Game findGame(Long id){
+        return gameRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Game not found id: " + id));
+    }
     public GameWithPlaysDto getGameWithPlays(Long id){
         Optional<Game> game = gameRepository.findById(id);
         if(!game.isPresent()){
@@ -29,11 +33,8 @@ public class GameService {
         return new GameWithPlaysDto(game.get().getId(), game.get().getPlays());
     }
     public GameWithStatTeamsDto getGameWithStatsTeam(Long id){
-        Optional<Game> game = gameRepository.findById(id);
-        if(!game.isPresent()){
-            throw new RuntimeException("Game not found - id: " + id);
-        }
-        return new GameWithStatTeamsDto(game.get().getId(), game.get().getHome(),game.get().getAway());
+        Game game = findGame(id);
+        return GameUtils.createGameWithStatTeams(game);
     }
     public List<GameWithTeamNamesDto> getAllGamesWithTeamNamesDto(){
         List<Game> games = gameRepository.findAll();
