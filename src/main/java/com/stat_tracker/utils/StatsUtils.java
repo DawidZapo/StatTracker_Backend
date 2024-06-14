@@ -1,5 +1,6 @@
 package com.stat_tracker.utils;
 
+import com.stat_tracker.dto.stat.StatLineDto;
 import com.stat_tracker.dto.team.helper.StatsTotals;
 import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.stat.StatLine;
@@ -96,6 +97,32 @@ public class StatsUtils {
             throw new RuntimeException("Stat team does not belong to either home or away game");
         }
         return season;
+    }
+
+    public static StatLineDto createStatLineDto(StatLine stats){
+        StatLineDto statLineDto = new StatLineDto();
+        statLineDto.setTimeOnCourtInMs(stats.getTimeOnCourtInMs());
+        statLineDto.setTwoAttempted(stats.getTwoAttempted());
+        statLineDto.setTwoMade(stats.getTwoMade());
+        statLineDto.setThreeAttempted(stats.getThreeAttempted());
+        statLineDto.setThreeMade(stats.getThreeMade());
+        statLineDto.setFreeThrowAttempted(stats.getFreeThrowAttempted());
+        statLineDto.setFreeThrowMade(stats.getFreeThrowMade());
+        statLineDto.setTotalPoints(stats.getTotalPoints());
+        statLineDto.setOffRebounds(stats.getOffRebounds());
+        statLineDto.setDefRebounds(stats.getDefRebounds());
+        statLineDto.setAssists(stats.getAssists());
+        statLineDto.setFouls(stats.getFouls());
+        statLineDto.setForcedFouls(stats.getForcedFouls());
+        statLineDto.setTurnovers(stats.getTurnovers());
+        statLineDto.setBlocks(stats.getBlocks());
+        statLineDto.setBlocksReceived(stats.getBlocksReceived());
+        statLineDto.setSteals(stats.getSteals());
+        statLineDto.setEval(stats.getEval());
+        statLineDto.setPlusMinus(stats.getPlusMinus());
+        statLineDto.setPossessions(stats.getPossessions());
+
+        return statLineDto;
     }
 
 }
