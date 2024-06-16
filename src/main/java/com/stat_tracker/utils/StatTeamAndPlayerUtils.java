@@ -6,7 +6,9 @@ import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.score.Score;
 import com.stat_tracker.entity.team.StatTeam;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StatTeamAndPlayerUtils {
     public static StatTeamDto createStatTeamDto(StatTeam statTeam){
@@ -17,8 +19,13 @@ public class StatTeamAndPlayerUtils {
         statTeamDto.setLocation(statTeam.getTeam().getLocation());
         statTeamDto.setArena(statTeam.getTeam().getArena());
 
-        List<Integer> scores = statTeam.getScores().stream().map(Score::getWorth).toList();
+        List<Integer> scores = statTeam.getScores().stream()
+                .sorted(Comparator.comparingInt(Score::getPart))
+                .map(Score::getWorth)
+                .collect(Collectors.toList());
+
         statTeamDto.setScores(scores);
+
 
         statTeamDto.setStatLine(StatsUtils.createStatLineDto(statTeam.getStatLine()));
 

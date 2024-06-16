@@ -18,7 +18,7 @@ public class StatLineDto {
     private Integer steals;
     private Integer blocks;
     private Integer blocksReceived;
-    private Integer eval;
+    private Integer evaluation;
     private Integer plusMinus;
     private Integer possessions;
 
@@ -158,12 +158,12 @@ public class StatLineDto {
         this.blocksReceived = blocksReceived;
     }
 
-    public Integer getEval() {
-        return eval;
+    public Integer getEvaluation() {
+        return evaluation;
     }
 
-    public void setEval(Integer eval) {
-        this.eval = eval;
+    public void setEvaluation(Integer evaluation) {
+        this.evaluation = evaluation;
     }
 
     public Integer getPlusMinus() {

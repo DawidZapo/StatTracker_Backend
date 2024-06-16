@@ -118,7 +118,7 @@ public class StatsUtils {
         statLineDto.setBlocks(stats.getBlocks());
         statLineDto.setBlocksReceived(stats.getBlocksReceived());
         statLineDto.setSteals(stats.getSteals());
-        statLineDto.setEval(stats.getEval());
+        statLineDto.setEvaluation(stats.getEval());
         statLineDto.setPlusMinus(stats.getPlusMinus());
         statLineDto.setPossessions(stats.getPossessions());
 
