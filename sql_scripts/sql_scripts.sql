@@ -104,6 +104,8 @@ CREATE TABLE game (
     is_official BOOLEAN,
     home_id BIGINT,
     away_id BIGINT,
+    quarter_length INT,
+    time_remaining BIGINT,
     FOREIGN KEY (home_id) REFERENCES stat_team(id),
     FOREIGN KEY (away_id) references stat_team(id)
 );

@@ -29,6 +29,10 @@ public class Game {
     @OneToMany(mappedBy = "game")
     @JsonManagedReference
     private List<Play> plays;
+    @Column(name = "quarter_length_min")
+    private Integer quarterLengthMin;
+    @Column(name = "time_remaining")
+    private Long timeRemaining;
 
     public Long getId() {
         return id;
@@ -56,5 +60,13 @@ public class Game {
 
     public String getSeason() {
         return season;
+    }
+
+    public Integer getQuarterLengthMin() {
+        return quarterLengthMin;
+    }
+
+    public Long getTimeRemaining() {
+        return timeRemaining;
     }
 }
