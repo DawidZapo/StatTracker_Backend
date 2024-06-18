@@ -1,5 +1,6 @@
 package com.stat_tracker.rest_controller.game;
 
+import com.stat_tracker.dto.game.GameCreatedDto;
 import com.stat_tracker.dto.game.GameWithPlaysDto;
 import com.stat_tracker.dto.game.GameWithStatTeamsDto;
 import com.stat_tracker.dto.game.GameWithTeamNamesDto;
@@ -28,10 +29,16 @@ public class GameController {
     public ResponseEntity<GameWithPlaysDto> getGameWithPlays(@PathVariable Long id) {
         return ResponseEntity.ok(gameService.getGameWithPlays(id));
     }
-
     @GetMapping("/game/stat_teams/{id}")
     public ResponseEntity<GameWithStatTeamsDto> getGameWithStatTeams(@PathVariable Long id){
         return ResponseEntity.ok(gameService.getGameWithStatsTeam(id));
+    }
+
+    @PostMapping("/game/create")
+    public ResponseEntity<String> createGame(@RequestBody GameCreatedDto gameCreatedDto){
+        System.out.println(gameCreatedDto);
+        // later logic to be added
+        return ResponseEntity.ok("OK!");
     }
 
 }
