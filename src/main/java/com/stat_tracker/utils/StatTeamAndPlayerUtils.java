@@ -1,11 +1,17 @@
 package com.stat_tracker.utils;
 
+import com.stat_tracker.dto.game.GameCreatedDto;
 import com.stat_tracker.dto.stat_player.StatPlayerDto;
 import com.stat_tracker.dto.stat_team.StatTeamDto;
+import com.stat_tracker.entity.game.Game;
+import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.score.Score;
+import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.StatTeam;
+import com.stat_tracker.entity.team.Team;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,5 +51,67 @@ public class StatTeamAndPlayerUtils {
         statPlayerDto.setStatLine(StatsUtils.createStatLineDto(player.getStatLine()));
 
         return statPlayerDto;
+    }
+
+    public static StatTeam createStatTeam(Team team, Game game, boolean setHome, GameCreatedDto gameCreatedDto, List<Player> players){
+        StatTeam statTeam = new StatTeam();
+        statTeam.setTeam(team);
+        team.addStatTeam(statTeam);
+        statTeam.setStatLine(new StatLine());
+        if(setHome){
+            statTeam.setHomeGame(game);
+        }
+        else{
+            statTeam.setAwayGame(game);
+        }
+
+        statTeam.setStatPlayers(createStatPlayers(gameCreatedDto,true,players,statTeam));
+
+        return statTeam;
+
+    }
+
+    public static List<StatPlayer> createStatPlayers(GameCreatedDto gameCreatedDto, boolean setHome, List<Player> players, StatTeam statTeam){
+        List<StatPlayer> statPlayers = new ArrayList<>();
+        for(var player : players){
+            StatPlayer statPlayer = new StatPlayer();
+            statPlayer.setStatTeam(statTeam);
+            statPlayer.setStatLine(new StatLine());
+            statPlayers.add(statPlayer);
+            statPlayer.setPlayer(player);
+        }
+
+        if(setHome){
+            for(var playerDto : gameCreatedDto.getHome().getPlayers()){
+                for(var statPlayer  : statPlayers){
+                    if(playerDto.getId().equals(statPlayer.getPlayer().getId())){
+                        statPlayer.setStartingFive(playerDto.isStartingFive());
+                        statPlayer.setShirtNumber(playerDto.getShirtNumber());
+                    }
+                }
+            }
+        }
+        else{
+            for(var playerDto : gameCreatedDto.getAway().getPlayers()){
+                for(var statPlayer  : statPlayers){
+                    if(playerDto.getId().equals(statPlayer.getPlayer().getId())){
+                        statPlayer.setStartingFive(playerDto.isStartingFive());
+                        statPlayer.setShirtNumber(playerDto.getShirtNumber());
+                    }
+                }
+            }
+        }
+
+        return statPlayers;
+    }
+    public static StatPlayer createStatPlayer(GameCreatedDto.PlayerDto playerDto, Player player, StatTeam statTeam){
+        StatPlayer statPlayer = new StatPlayer();
+        statPlayer.setPlayer(player);
+        statPlayer.setStatTeam(statTeam);
+        statPlayer.setStatLine(new StatLine());
+        statPlayer.setShirtNumber(playerDto.getShirtNumber());
+        statPlayer.setStartingFive(playerDto.isStartingFive());
+
+        return statPlayer;
     }
 }

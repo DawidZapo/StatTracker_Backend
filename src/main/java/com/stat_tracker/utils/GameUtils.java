@@ -1,10 +1,14 @@
 package com.stat_tracker.utils;
 
+import com.stat_tracker.dto.game.GameCreatedDto;
 import com.stat_tracker.dto.game.GameWithStatTeamsDto;
 import com.stat_tracker.dto.game.GameWithTeamNamesDto;
 import com.stat_tracker.entity.game.Game;
+import com.stat_tracker.entity.player.Player;
+import com.stat_tracker.entity.team.Team;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class GameUtils {
     public static GameWithTeamNamesDto createGameWithTeamNamesDto(Game game){
@@ -40,5 +44,21 @@ public class GameUtils {
         gameToReturn.setAway(StatTeamAndPlayerUtils.createStatTeamDto(game.getAway()));
 
         return gameToReturn;
+    }
+
+    public static Game createGame(GameCreatedDto gameCreatedDto, Team home, Team away, List<Player> homePlayers, List<Player> awayPlayers){
+        Game game = new Game();
+        game.setLocalDateTime(LocalDateTime.of(gameCreatedDto.getDate(), gameCreatedDto.getTime()));
+        game.setSeason(gameCreatedDto.getSeason());
+        game.setOfficial(gameCreatedDto.isOfficial());
+        game.setQuarterLengthMin(gameCreatedDto.getQuarterLengthMin());
+
+        Long gameDurationInMs = (long) gameCreatedDto.getQuarterLengthMin() * 4 * 60 * 1000;
+        game.setTimeRemainingMs(gameDurationInMs);
+
+        game.setHome(StatTeamAndPlayerUtils.createStatTeam(home,game,true, gameCreatedDto, homePlayers));
+        game.setAway(StatTeamAndPlayerUtils.createStatTeam(away,game, false, gameCreatedDto, awayPlayers));
+
+        return game;
     }
 }

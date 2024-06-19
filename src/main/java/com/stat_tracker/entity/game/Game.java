@@ -31,42 +31,93 @@ public class Game {
     private List<Play> plays;
     @Column(name = "quarter_length_min")
     private Integer quarterLengthMin;
-    @Column(name = "time_remaining")
-    private Long timeRemaining;
+    @Column(name = "time_remaining_ms")
+    private Long timeRemainingMs;
 
     public Long getId() {
         return id;
     }
 
-    public StatTeam getHome() {
-        return home;
-    }
-
-    public StatTeam getAway() {
-        return away;
-    }
-
-    public List<Play> getPlays() {
-        return plays;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
     }
 
-    public Boolean getOfficial() {
-        return isOfficial;
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     public String getSeason() {
         return season;
     }
 
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public Boolean getOfficial() {
+        return isOfficial;
+    }
+
+    public void setOfficial(Boolean official) {
+        isOfficial = official;
+    }
+
+    public StatTeam getHome() {
+        return home;
+    }
+
+    public void setHome(StatTeam home) {
+        this.home = home;
+    }
+
+    public StatTeam getAway() {
+        return away;
+    }
+
+    public void setAway(StatTeam away) {
+        this.away = away;
+    }
+
+    public List<Play> getPlays() {
+        return plays;
+    }
+
+    public void setPlays(List<Play> plays) {
+        this.plays = plays;
+    }
+
     public Integer getQuarterLengthMin() {
         return quarterLengthMin;
     }
 
-    public Long getTimeRemaining() {
-        return timeRemaining;
+    public void setQuarterLengthMin(Integer quarterLengthMin) {
+        this.quarterLengthMin = quarterLengthMin;
+    }
+
+    public Long getTimeRemainingMs() {
+        return timeRemainingMs;
+    }
+
+    public void setTimeRemainingMs(Long timeRemaining) {
+        this.timeRemainingMs = timeRemaining;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", localDateTime=" + localDateTime +
+                ", season='" + season + '\'' +
+                ", isOfficial=" + isOfficial +
+                ", home=" + home +
+                ", away=" + away +
+                ", plays=" + plays +
+                ", quarterLengthMin=" + quarterLengthMin +
+                ", timeRemainingMs=" + timeRemainingMs +
+                '}';
     }
 }

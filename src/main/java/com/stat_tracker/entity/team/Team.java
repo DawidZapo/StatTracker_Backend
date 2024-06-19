@@ -81,6 +81,13 @@ public class Team {
         return statTeams;
     }
 
+    public void setStatTeams(List<StatTeam> statTeams) {
+        this.statTeams = statTeams;
+    }
+    public void addStatTeam(StatTeam statTeam){
+        this.statTeams.add(statTeam);
+    }
+
     @Override
     public String toString() {
         return "Team{" +

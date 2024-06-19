@@ -105,7 +105,7 @@ CREATE TABLE game (
     home_id BIGINT,
     away_id BIGINT,
     quarter_length INT,
-    time_remaining BIGINT,
+    time_remaining_ms BIGINT,
     FOREIGN KEY (home_id) REFERENCES stat_team(id),
     FOREIGN KEY (away_id) references stat_team(id)
 );

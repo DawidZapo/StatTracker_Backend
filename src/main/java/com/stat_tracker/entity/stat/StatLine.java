@@ -13,45 +13,45 @@ public class StatLine {
     @Column(name = "id")
     private Long id;
     @Column(name = "time_on_court_in_ms")
-    private Long timeOnCourtInMs;
+    private Long timeOnCourtInMs = 0L;
     @Column(name = "two_attempted")
-    private Integer twoAttempted;
+    private Integer twoAttempted = 0;
     @Column(name = "two_made")
-    private Integer twoMade;
+    private Integer twoMade = 0;
     @Column(name = "three_attempted")
-    private Integer threeAttempted;
+    private Integer threeAttempted = 0;
     @Column(name = "three_made")
-    private Integer threeMade;
+    private Integer threeMade= 0;
     @Column(name = "free_throw_attempted")
-    private Integer freeThrowAttempted;
+    private Integer freeThrowAttempted= 0;
     @Column(name = "free_throw_made")
-    private Integer freeThrowMade;
+    private Integer freeThrowMade = 0;
     @Column(name = "total_points")
-    private Integer totalPoints;
+    private Integer totalPoints = 0;
     @Column(name = "off_rebounds")
-    private Integer offRebounds;
+    private Integer offRebounds = 0;
     @Column(name = "def_rebounds")
-    private Integer defRebounds;
+    private Integer defRebounds = 0;
     @Column(name = "assists")
-    private Integer assists;
+    private Integer assists = 0;
     @Column(name = "fouls")
-    private Integer fouls;
+    private Integer fouls = 0;
     @Column(name = "forced_fouls")
-    private Integer forcedFouls;
+    private Integer forcedFouls = 0;
     @Column(name = "turnovers")
-    private Integer turnovers;
+    private Integer turnovers = 0;
     @Column(name = "steals")
-    private Integer steals;
+    private Integer steals = 0;
     @Column(name = "blocks")
-    private Integer blocks;
+    private Integer blocks = 0;
     @Column(name = "blocks_received")
-    private Integer blocksReceived;
+    private Integer blocksReceived = 0;
     @Column(name = "eval")
-    private Integer eval;
+    private Integer eval = 0;
     @Column(name = "plus_minus")
-    private Integer plusMinus;
+    private Integer plusMinus = 0;
     @Column(name = "possessions")
-    private Integer possessions;
+    private Integer possessions = 0;
     @OneToOne(mappedBy = "statLine")
     @JsonIgnore
     private StatPlayer statPlayer;
@@ -241,5 +241,32 @@ public class StatLine {
 
     public void setStatTeam(StatTeam statTeam) {
         this.statTeam = statTeam;
+    }
+
+    @Override
+    public String toString() {
+        return "StatLine{" +
+                "id=" + id +
+                ", timeOnCourtInMs=" + timeOnCourtInMs +
+                ", twoAttempted=" + twoAttempted +
+                ", twoMade=" + twoMade +
+                ", threeAttempted=" + threeAttempted +
+                ", threeMade=" + threeMade +
+                ", freeThrowAttempted=" + freeThrowAttempted +
+                ", freeThrowMade=" + freeThrowMade +
+                ", totalPoints=" + totalPoints +
+                ", offRebounds=" + offRebounds +
+                ", defRebounds=" + defRebounds +
+                ", assists=" + assists +
+                ", fouls=" + fouls +
+                ", forcedFouls=" + forcedFouls +
+                ", turnovers=" + turnovers +
+                ", steals=" + steals +
+                ", blocks=" + blocks +
+                ", blocksReceived=" + blocksReceived +
+                ", eval=" + eval +
+                ", plusMinus=" + plusMinus +
+                ", possessions=" + possessions +
+                '}';
     }
 }

@@ -171,4 +171,13 @@ public class PlayerService {
         playerRepository.save(player);
 
     }
+
+    public List<Player> findPlayerWithIds(List<Long> ids){
+        List<Player> players = new ArrayList<>();
+        for(var id : ids){
+            players.add(findPlayer(id));
+        }
+
+        return players;
+    }
 }

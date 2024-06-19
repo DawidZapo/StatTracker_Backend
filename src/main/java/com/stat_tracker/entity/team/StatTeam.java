@@ -43,28 +43,66 @@ public class StatTeam {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Team getTeam() {
         return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 
     public List<StatPlayer> getStatPlayers() {
         return statPlayers;
     }
 
+    public void setStatPlayers(List<StatPlayer> statPlayers) {
+        this.statPlayers = statPlayers;
+    }
+
     public Game getHomeGame() {
         return homeGame;
+    }
+
+    public void setHomeGame(Game homeGame) {
+        this.homeGame = homeGame;
     }
 
     public Game getAwayGame() {
         return awayGame;
     }
 
+    public void setAwayGame(Game awayGame) {
+        this.awayGame = awayGame;
+    }
+
     public List<Score> getScores() {
         return scores;
+    }
+
+    public void setScores(List<Score> scores) {
+        this.scores = scores;
     }
 
     public StatLine getStatLine() {
         return statLine;
     }
 
+    public void setStatLine(StatLine statLine) {
+        this.statLine = statLine;
+    }
+
+    @Override
+    public String toString() {
+        return "StatTeam{" +
+                "id=" + id +
+                ", team=" + team +
+                ", statPlayers=" + statPlayers +
+                ", scores=" + scores +
+                ", statLine=" + statLine +
+                '}';
+    }
 }
