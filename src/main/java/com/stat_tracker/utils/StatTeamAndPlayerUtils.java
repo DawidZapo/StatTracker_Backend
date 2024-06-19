@@ -65,7 +65,7 @@ public class StatTeamAndPlayerUtils {
             statTeam.setAwayGame(game);
         }
 
-        statTeam.setStatPlayers(createStatPlayers(gameCreatedDto,true,players,statTeam));
+        statTeam.setStatPlayers(createStatPlayers(gameCreatedDto,setHome,players,statTeam));
 
         return statTeam;
 
