@@ -1,7 +1,6 @@
 package com.stat_tracker.entity.team;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.StatPlayer;
@@ -25,11 +24,11 @@ public class StatTeam {
     @OneToMany(mappedBy = "statTeam", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<StatPlayer> statPlayers;
-    @OneToOne(mappedBy = "home")
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "home_game_id")
     private Game homeGame;
-    @OneToOne(mappedBy = "away")
-    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "away_game_id")
     private Game awayGame;
     @OneToMany(mappedBy = "statTeam", cascade = CascadeType.ALL)
     @JsonManagedReference

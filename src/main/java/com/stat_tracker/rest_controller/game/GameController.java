@@ -36,8 +36,6 @@ public class GameController {
 
     @PostMapping("/game/create")
     public ResponseEntity<String> createGame(@RequestBody GameCreatedDto gameCreatedDto){
-//        System.out.println(gameCreatedDto);
-        // later logic to be added
         gameService.createGame(gameCreatedDto);
         return ResponseEntity.ok("OK!");
     }

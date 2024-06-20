@@ -46,8 +46,8 @@ public class StatLine {
     private Integer blocks = 0;
     @Column(name = "blocks_received")
     private Integer blocksReceived = 0;
-    @Column(name = "eval")
-    private Integer eval = 0;
+    @Column(name = "evaluation")
+    private Integer evaluation = 0;
     @Column(name = "plus_minus")
     private Integer plusMinus = 0;
     @Column(name = "possessions")
@@ -203,12 +203,12 @@ public class StatLine {
         this.blocksReceived = blocksReceived;
     }
 
-    public Integer getEval() {
-        return eval;
+    public Integer getEvaluation() {
+        return evaluation;
     }
 
-    public void setEval(Integer eval) {
-        this.eval = eval;
+    public void setEvaluation(Integer eval) {
+        this.evaluation = eval;
     }
 
     public Integer getPlusMinus() {
@@ -264,7 +264,7 @@ public class StatLine {
                 ", steals=" + steals +
                 ", blocks=" + blocks +
                 ", blocksReceived=" + blocksReceived +
-                ", eval=" + eval +
+                ", eval=" + evaluation +
                 ", plusMinus=" + plusMinus +
                 ", possessions=" + possessions +
                 '}';

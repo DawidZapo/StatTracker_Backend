@@ -80,7 +80,7 @@ public class StatsUtils {
         item.setSteals(item.getSteals() + stats.getSteals());
         item.setBlocks(item.getBlocks() + stats.getBlocks());
         item.setBlocksReceived(item.getBlocksReceived() + stats.getBlocksReceived());
-        item.setEvaluation(item.getEvaluation() + stats.getEval());
+        item.setEvaluation(item.getEvaluation() + stats.getEvaluation());
         item.setPossessions(item.getPossessions() + stats.getPossessions());
         item.setNumberOfGames(item.getNumberOfGames() + 1);
     }
@@ -118,7 +118,7 @@ public class StatsUtils {
         statLineDto.setBlocks(stats.getBlocks());
         statLineDto.setBlocksReceived(stats.getBlocksReceived());
         statLineDto.setSteals(stats.getSteals());
-        statLineDto.setEvaluation(stats.getEval());
+        statLineDto.setEvaluation(stats.getEvaluation());
         statLineDto.setPlusMinus(stats.getPlusMinus());
         statLineDto.setPossessions(stats.getPossessions());
 

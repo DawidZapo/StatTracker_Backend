@@ -71,8 +71,7 @@ public class GameService {
         game.getHome().setHomeGame(game);
         game.getAway().setAwayGame(game);
 
-//        gameRepository.saveAndFlush(game);
-        System.out.println(game);
+        gameRepository.save(game);
     }
 
 }

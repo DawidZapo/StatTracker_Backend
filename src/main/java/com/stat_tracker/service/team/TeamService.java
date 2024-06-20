@@ -130,7 +130,7 @@ public class TeamService {
             TeamUtils.updateRecord(recordList, "Steals",20, stats.getSteals(), statTeam, null);
             TeamUtils.updateRecord(recordList, "Blocks",21, stats.getBlocks(), statTeam, null);
             TeamUtils.updateRecord(recordList, "Block Received",22, stats.getBlocksReceived(), statTeam, null);
-            TeamUtils.updateRecord(recordList, "Eval",23, stats.getEval(), statTeam, null);
+            TeamUtils.updateRecord(recordList, "Eval",23, stats.getEvaluation(), statTeam, null);
             TeamUtils.updateRecord(recordList, "+/-",24, stats.getPlusMinus(), statTeam, null);
             TeamUtils.updateRecord(recordList, "Possessions",25, stats.getPossessions(), statTeam, null);
         }
@@ -213,7 +213,7 @@ public class TeamService {
                 TeamUtils.updateRecord(recordList, "Steals",20, stats.getSteals(), statTeam, playerFullName);
                 TeamUtils.updateRecord(recordList, "Blocks",21, stats.getBlocks(), statTeam, playerFullName);
                 TeamUtils.updateRecord(recordList, "Block Received",22, stats.getBlocksReceived(), statTeam, playerFullName);
-                TeamUtils.updateRecord(recordList, "Eval",23, stats.getEval(), statTeam, playerFullName);
+                TeamUtils.updateRecord(recordList, "Eval",23, stats.getEvaluation(), statTeam, playerFullName);
                 TeamUtils.updateRecord(recordList, "+/-",24, stats.getPlusMinus(), statTeam, playerFullName);
                 TeamUtils.updateRecord(recordList, "Possessions",25, stats.getPossessions(), statTeam, playerFullName);
             }

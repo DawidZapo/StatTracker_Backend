@@ -20,12 +20,12 @@ public class Game {
     private String season;
     @Column(name = "is_official")
     private Boolean isOfficial;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "home_id")
+    @OneToOne(mappedBy = "homeGame", cascade = CascadeType.ALL)
     private StatTeam home;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "away_id")
+
+    @OneToOne(mappedBy = "awayGame", cascade = CascadeType.ALL)
     private StatTeam away;
+
     @OneToMany(mappedBy = "game")
     @JsonManagedReference
     private List<Play> plays;

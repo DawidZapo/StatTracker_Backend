@@ -92,7 +92,7 @@ public class PlayerService {
             TeamUtils.updateRecord(recordList, "Steals",20, stats.getSteals(), statPlayer.getStatTeam(), playerFullName);
             TeamUtils.updateRecord(recordList, "Blocks",21, stats.getBlocks(), statPlayer.getStatTeam(), playerFullName);
             TeamUtils.updateRecord(recordList, "Block Received",22, stats.getBlocksReceived(), statPlayer.getStatTeam(), playerFullName);
-            TeamUtils.updateRecord(recordList, "Eval",23, stats.getEval(), statPlayer.getStatTeam(), playerFullName);
+            TeamUtils.updateRecord(recordList, "Eval",23, stats.getEvaluation(), statPlayer.getStatTeam(), playerFullName);
             TeamUtils.updateRecord(recordList, "+/-",24, stats.getPlusMinus(), statPlayer.getStatTeam(), playerFullName);
             TeamUtils.updateRecord(recordList, "Possessions",25, stats.getPossessions(), statPlayer.getStatTeam(), playerFullName);
         }

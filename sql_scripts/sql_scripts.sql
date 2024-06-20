@@ -10,15 +10,11 @@ CREATE TABLE users (
     UNIQUE KEY (email),
     UNIQUE KEY (username)
 );
-
-
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(20),
     PRIMARY KEY (id)
 );
-
-
 CREATE TABLE user_roles (
     user_id BIGINT,
     role_id INT,
@@ -75,16 +71,28 @@ CREATE TABLE stat_line (
     possessions INT
 );
 
-CREATE TABLE stat_team (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    team_id BIGINT,
-    game_id BIGINT,
-    stat_line_id BIGINT,
-    FOREIGN KEY (team_id) REFERENCES Team(id),
-    FOREIGN KEY (game_id) REFERENCES game(id),
-    FOREIGN KEY (stat_line_id) REFERENCES stat_line(id)
+CREATE TABLE game (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    date_time DATETIME,
+    season VARCHAR(255),
+    is_official BOOLEAN,
+    quarter_length_min INT,
+    time_remaining_ms BIGINT,
+    PRIMARY KEY (id)
 );
 
+CREATE TABLE stat_team (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    team_id BIGINT,
+    home_game_id BIGINT,
+    away_game_id BIGINT,
+    stat_line_id BIGINT,
+    PRIMARY KEY (id),
+    FOREIGN KEY (team_id) REFERENCES team (id),
+    FOREIGN KEY (home_game_id) REFERENCES game (id),
+    FOREIGN KEY (away_game_id) REFERENCES game (id),
+    FOREIGN KEY (stat_line_id) REFERENCES stat_line (id)
+);
 CREATE TABLE stat_player (
 	id BIGINT auto_increment primary key,
     player_id BIGINT,
@@ -97,18 +105,6 @@ CREATE TABLE stat_player (
     foreign key (stat_line_id) references stat_line(id)
 );
 
-CREATE TABLE game (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    date_time datetime,
-    season VARCHAR(255),
-    is_official BOOLEAN,
-    home_id BIGINT,
-    away_id BIGINT,
-    quarter_length INT,
-    time_remaining_ms BIGINT,
-    FOREIGN KEY (home_id) REFERENCES stat_team(id),
-    FOREIGN KEY (away_id) references stat_team(id)
-);
 
 CREATE TABLE score (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
