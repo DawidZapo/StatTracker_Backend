@@ -13,6 +13,7 @@ import com.stat_tracker.service.team.TeamService;
 import com.stat_tracker.utils.GameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -50,6 +51,7 @@ public class GameService {
         return games.stream().map(game -> GameUtils.createGameWithTeamNamesDto(game)).collect(Collectors.toList());
     }
 
+    @Transactional
     public void createGame(GameCreatedDto gameCreatedDto){
         Team home = teamService.findTeam(gameCreatedDto.getHome().getId());
         Team away = teamService.findTeam(gameCreatedDto.getAway().getId());
@@ -66,6 +68,10 @@ public class GameService {
 
         Game game = GameUtils.createGame(gameCreatedDto,home, away, homePlayers, awayPlayers);
 
+        game.getHome().setHomeGame(game);
+        game.getAway().setAwayGame(game);
+
+//        gameRepository.saveAndFlush(game);
         System.out.println(game);
     }
 

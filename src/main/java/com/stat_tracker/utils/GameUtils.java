@@ -5,6 +5,7 @@ import com.stat_tracker.dto.game.GameWithStatTeamsDto;
 import com.stat_tracker.dto.game.GameWithTeamNamesDto;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.Player;
+import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 
 import java.time.LocalDateTime;
@@ -56,8 +57,12 @@ public class GameUtils {
         Long gameDurationInMs = (long) gameCreatedDto.getQuarterLengthMin() * 4 * 60 * 1000;
         game.setTimeRemainingMs(gameDurationInMs);
 
-        game.setHome(StatTeamAndPlayerUtils.createStatTeam(home,game,true, gameCreatedDto, homePlayers));
-        game.setAway(StatTeamAndPlayerUtils.createStatTeam(away,game, false, gameCreatedDto, awayPlayers));
+        StatTeam homeStatTeam = StatTeamAndPlayerUtils.createStatTeam(home,game,true, gameCreatedDto, homePlayers);
+        StatTeam awayStatTeam = StatTeamAndPlayerUtils.createStatTeam(away,game, false, gameCreatedDto, awayPlayers);
+
+        game.setHome(homeStatTeam);
+        game.setAway(awayStatTeam);
+
 
         return game;
     }

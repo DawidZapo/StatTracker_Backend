@@ -11,9 +11,7 @@ import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class StatTeamAndPlayerUtils {
@@ -60,9 +58,11 @@ public class StatTeamAndPlayerUtils {
         statTeam.setStatLine(new StatLine());
         if(setHome){
             statTeam.setHomeGame(game);
+            game.setHome(statTeam);
         }
         else{
             statTeam.setAwayGame(game);
+            game.setAway(statTeam);
         }
 
         statTeam.setStatPlayers(createStatPlayers(gameCreatedDto,setHome,players,statTeam));
@@ -73,32 +73,24 @@ public class StatTeamAndPlayerUtils {
 
     public static List<StatPlayer> createStatPlayers(GameCreatedDto gameCreatedDto, boolean setHome, List<Player> players, StatTeam statTeam){
         List<StatPlayer> statPlayers = new ArrayList<>();
-        for(var player : players){
+        Map<Long, StatPlayer> statPlayerMap = new HashMap<>();
+
+        for (Player player : players) {
             StatPlayer statPlayer = new StatPlayer();
             statPlayer.setStatTeam(statTeam);
             statPlayer.setStatLine(new StatLine());
-            statPlayers.add(statPlayer);
             statPlayer.setPlayer(player);
+            statPlayers.add(statPlayer);
+            statPlayerMap.put(player.getId(), statPlayer);
         }
 
-        if(setHome){
-            for(var playerDto : gameCreatedDto.getHome().getPlayers()){
-                for(var statPlayer  : statPlayers){
-                    if(playerDto.getId().equals(statPlayer.getPlayer().getId())){
-                        statPlayer.setStartingFive(playerDto.isStartingFive());
-                        statPlayer.setShirtNumber(playerDto.getShirtNumber());
-                    }
-                }
-            }
-        }
-        else{
-            for(var playerDto : gameCreatedDto.getAway().getPlayers()){
-                for(var statPlayer  : statPlayers){
-                    if(playerDto.getId().equals(statPlayer.getPlayer().getId())){
-                        statPlayer.setStartingFive(playerDto.isStartingFive());
-                        statPlayer.setShirtNumber(playerDto.getShirtNumber());
-                    }
-                }
+        List<GameCreatedDto.PlayerDto> playerDtos = setHome ? gameCreatedDto.getHome().getPlayers() : gameCreatedDto.getAway().getPlayers();
+
+        for (var playerDto : playerDtos) {
+            StatPlayer statPlayer = statPlayerMap.get(playerDto.getId());
+            if (statPlayer != null) {
+                statPlayer.setStartingFive(playerDto.isStartingFive());
+                statPlayer.setShirtNumber(playerDto.getShirtNumber());
             }
         }
 

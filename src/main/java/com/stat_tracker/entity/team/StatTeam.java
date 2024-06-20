@@ -22,7 +22,7 @@ public class StatTeam {
     @JoinColumn(name = "team_id")
     @JsonBackReference
     private Team team;
-    @OneToMany(mappedBy = "statTeam")
+    @OneToMany(mappedBy = "statTeam", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<StatPlayer> statPlayers;
     @OneToOne(mappedBy = "home")
@@ -31,7 +31,7 @@ public class StatTeam {
     @OneToOne(mappedBy = "away")
     @JsonIgnore
     private Game awayGame;
-    @OneToMany(mappedBy = "statTeam")
+    @OneToMany(mappedBy = "statTeam", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Score> scores;
     @OneToOne(cascade = CascadeType.ALL)

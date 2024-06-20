@@ -20,10 +20,10 @@ public class Game {
     private String season;
     @Column(name = "is_official")
     private Boolean isOfficial;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "home_id")
     private StatTeam home;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "away_id")
     private StatTeam away;
     @OneToMany(mappedBy = "game")
