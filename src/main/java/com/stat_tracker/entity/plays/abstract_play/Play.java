@@ -27,7 +27,10 @@ public abstract class Play {
     protected String comments;
     @Column(name = "hand")
     @Enumerated(EnumType.STRING)
-    private Hand hand;
+    protected Hand hand;
+
+    @Transient
+    protected String playType = writePlayType();
 
     public Long getId() {
         return id;
@@ -75,5 +78,22 @@ public abstract class Play {
 
     public void setHand(Hand hand) {
         this.hand = hand;
+    }
+
+    public void setPlayType(String playType) {
+        this.playType = playType;
+    }
+
+    public String getPlayType() {
+        return playType;
+    }
+
+    private String writePlayType() {
+        String className = this.getClass().getSimpleName().toUpperCase();
+
+        return switch (className) {
+            case "ASSIST", "BLOCK", "FOUL", "REBOUND", "SHOTPLAY", "STEAL", "TURNOVER" -> className;
+            default -> throw new RuntimeException("No play type match");
+        };
     }
 }

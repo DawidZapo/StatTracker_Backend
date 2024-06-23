@@ -1,6 +1,7 @@
 package com.stat_tracker.dto.game;
 
 import com.stat_tracker.dto.stat.StatLineDto;
+import com.stat_tracker.entity.plays.abstract_play.Play;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,12 +15,16 @@ public class GameToHandleDto {
     private TeamDto home;
     private TeamDto away;
 
+    // PlayDto to be introduced
+    private List<Play> plays;
 
     public static class TeamDto{
         private Long teamId;
         private Long statTeamId;
         private String name;
         List<PlayerDto> players;
+        List<ScoreDto> scores;
+        private StatLineDto stats;
 
         public Long getTeamId() {
             return teamId;
@@ -52,6 +57,22 @@ public class GameToHandleDto {
         public void setPlayers(List<PlayerDto> players) {
             this.players = players;
         }
+
+        public StatLineDto getStats() {
+            return stats;
+        }
+
+        public void setStats(StatLineDto stats) {
+            this.stats = stats;
+        }
+
+        public List<ScoreDto> getScores() {
+            return scores;
+        }
+
+        public void setScores(List<ScoreDto> scores) {
+            this.scores = scores;
+        }
     }
 
     public static class PlayerDto{
@@ -62,6 +83,9 @@ public class GameToHandleDto {
         private Integer shirtNumber;
         private Boolean startingFive;
         private StatLineDto stats;
+
+        // PlayDto to be introduced
+        private List<Play> plays;
 
         public Long getPlayerId() {
             return playerId;
@@ -117,6 +141,44 @@ public class GameToHandleDto {
 
         public void setStats(StatLineDto stats) {
             this.stats = stats;
+        }
+
+        public List<Play> getPlays() {
+            return plays;
+        }
+
+        public void setPlays(List<Play> plays) {
+            this.plays = plays;
+        }
+    }
+
+    public static class ScoreDto{
+        private Long id;
+        private Integer worth;
+        private Integer part;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public Integer getWorth() {
+            return worth;
+        }
+
+        public void setWorth(Integer worth) {
+            this.worth = worth;
+        }
+
+        public Integer getPart() {
+            return part;
+        }
+
+        public void setPart(Integer part) {
+            this.part = part;
         }
     }
 
@@ -174,5 +236,13 @@ public class GameToHandleDto {
 
     public void setAway(TeamDto away) {
         this.away = away;
+    }
+
+    public List<Play> getPlays() {
+        return plays;
+    }
+
+    public void setPlays(List<Play> plays) {
+        this.plays = plays;
     }
 }

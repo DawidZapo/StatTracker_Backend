@@ -7,6 +7,7 @@ import com.stat_tracker.dto.game.GameWithTeamNamesDto;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.entity.player.StatPlayer;
+import com.stat_tracker.entity.score.Score;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 
@@ -81,6 +82,9 @@ public class GameUtils {
         gameToHandleDto.setHome(createTeamDto(game.getHome()));
         gameToHandleDto.setAway(createTeamDto(game.getAway()));
 
+        gameToHandleDto.setPlays(game.getPlays());
+
+
         return gameToHandleDto;
     }
 
@@ -90,6 +94,8 @@ public class GameUtils {
         team.setStatTeamId(statTeam.getId());
         team.setName(statTeam.getTeam().getName());
         team.setPlayers(statTeam.getStatPlayers().stream().map(GameUtils::createPlayerDto).collect(Collectors.toList()));
+        team.setStats(StatsUtils.createStatLineDto(statTeam.getStatLine()));
+        team.setScores(statTeam.getScores().stream().map(GameUtils::createScoreDto).collect(Collectors.toList()));
 
         return team;
     }
@@ -103,7 +109,17 @@ public class GameUtils {
         player.setShirtNumber(statPlayer.getShirtNumber());
         player.setStartingFive(statPlayer.getStartingFive());
         player.setStats(StatsUtils.createStatLineDto(statPlayer.getStatLine()));
+        player.setPlays(statPlayer.getPlays());
 
         return player;
+    }
+
+    private static GameToHandleDto.ScoreDto createScoreDto(Score score){
+        GameToHandleDto.ScoreDto scoreDto = new GameToHandleDto.ScoreDto();
+        scoreDto.setId(score.getId());
+        scoreDto.setWorth(score.getWorth());
+        scoreDto.setPart(score.getPart());
+
+        return scoreDto;
     }
 }
