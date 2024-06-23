@@ -1,15 +1,18 @@
 package com.stat_tracker.utils;
 
 import com.stat_tracker.dto.game.GameCreatedDto;
+import com.stat_tracker.dto.game.GameToHandleDto;
 import com.stat_tracker.dto.game.GameWithStatTeamsDto;
 import com.stat_tracker.dto.game.GameWithTeamNamesDto;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.Player;
+import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GameUtils {
     public static GameWithTeamNamesDto createGameWithTeamNamesDto(Game game){
@@ -65,5 +68,42 @@ public class GameUtils {
 
 
         return game;
+    }
+
+    public static GameToHandleDto createGameToHandle(Game game){
+        GameToHandleDto gameToHandleDto = new GameToHandleDto();
+        gameToHandleDto.setId(game.getId());
+        gameToHandleDto.setDateTime(game.getLocalDateTime());
+        gameToHandleDto.setSeason(game.getSeason());
+        gameToHandleDto.setQuarterLengthMin(game.getQuarterLengthMin());
+        gameToHandleDto.setTimeRemainingMs(game.getTimeRemainingMs());
+
+        gameToHandleDto.setHome(createTeamDto(game.getHome()));
+        gameToHandleDto.setAway(createTeamDto(game.getAway()));
+
+        return gameToHandleDto;
+    }
+
+    private static GameToHandleDto.TeamDto createTeamDto(StatTeam statTeam){
+        GameToHandleDto.TeamDto team = new GameToHandleDto.TeamDto();
+        team.setTeamId(statTeam.getTeam().getId());
+        team.setStatTeamId(statTeam.getId());
+        team.setName(statTeam.getTeam().getName());
+        team.setPlayers(statTeam.getStatPlayers().stream().map(GameUtils::createPlayerDto).collect(Collectors.toList()));
+
+        return team;
+    }
+
+    private static GameToHandleDto.PlayerDto createPlayerDto(StatPlayer statPlayer){
+        GameToHandleDto.PlayerDto player = new GameToHandleDto.PlayerDto();
+        player.setPlayerId(statPlayer.getPlayer().getId());
+        player.setStatPlayerId(statPlayer.getId());
+        player.setFirstName(statPlayer.getPlayer().getFirstName());
+        player.setLastName(statPlayer.getPlayer().getLastName());
+        player.setShirtNumber(statPlayer.getShirtNumber());
+        player.setStartingFive(statPlayer.getStartingFive());
+        player.setStats(StatsUtils.createStatLineDto(statPlayer.getStatLine()));
+
+        return player;
     }
 }

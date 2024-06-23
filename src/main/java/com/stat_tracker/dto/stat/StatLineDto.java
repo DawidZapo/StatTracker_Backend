@@ -1,6 +1,7 @@
 package com.stat_tracker.dto.stat;
 
 public class StatLineDto {
+    private Long id;
     private Long timeOnCourtInMs;
     private Integer twoAttempted;
     private Integer twoMade;
@@ -21,6 +22,14 @@ public class StatLineDto {
     private Integer evaluation;
     private Integer plusMinus;
     private Integer possessions;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getTimeOnCourtInMs() {
         return timeOnCourtInMs;

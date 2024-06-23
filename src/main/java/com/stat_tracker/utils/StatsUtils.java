@@ -101,6 +101,7 @@ public class StatsUtils {
 
     public static StatLineDto createStatLineDto(StatLine stats){
         StatLineDto statLineDto = new StatLineDto();
+        statLineDto.setId(stats.getId());
         statLineDto.setTimeOnCourtInMs(stats.getTimeOnCourtInMs());
         statLineDto.setTwoAttempted(stats.getTwoAttempted());
         statLineDto.setTwoMade(stats.getTwoMade());

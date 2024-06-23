@@ -1,9 +1,6 @@
 package com.stat_tracker.service.game;
 
-import com.stat_tracker.dto.game.GameCreatedDto;
-import com.stat_tracker.dto.game.GameWithPlaysDto;
-import com.stat_tracker.dto.game.GameWithStatTeamsDto;
-import com.stat_tracker.dto.game.GameWithTeamNamesDto;
+import com.stat_tracker.dto.game.*;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.entity.team.Team;
@@ -52,7 +49,7 @@ public class GameService {
     }
 
     @Transactional
-    public void createGame(GameCreatedDto gameCreatedDto){
+    public Long createGame(GameCreatedDto gameCreatedDto){
         Team home = teamService.findTeam(gameCreatedDto.getHome().getId());
         Team away = teamService.findTeam(gameCreatedDto.getAway().getId());
 
@@ -71,7 +68,12 @@ public class GameService {
         game.getHome().setHomeGame(game);
         game.getAway().setAwayGame(game);
 
-        gameRepository.save(game);
+        return gameRepository.save(game).getId();
+    }
+
+    public GameToHandleDto findGameToHandle(Long id){
+        Game game = findGame(id);
+        return GameUtils.createGameToHandle(game);
     }
 
 }

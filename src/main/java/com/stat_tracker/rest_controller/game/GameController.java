@@ -1,9 +1,6 @@
 package com.stat_tracker.rest_controller.game;
 
-import com.stat_tracker.dto.game.GameCreatedDto;
-import com.stat_tracker.dto.game.GameWithPlaysDto;
-import com.stat_tracker.dto.game.GameWithStatTeamsDto;
-import com.stat_tracker.dto.game.GameWithTeamNamesDto;
+import com.stat_tracker.dto.game.*;
 import com.stat_tracker.service.game.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,9 +32,13 @@ public class GameController {
     }
 
     @PostMapping("/game/create")
-    public ResponseEntity<String> createGame(@RequestBody GameCreatedDto gameCreatedDto){
-        gameService.createGame(gameCreatedDto);
-        return ResponseEntity.ok("OK!");
+    public ResponseEntity<Long> createGame(@RequestBody GameCreatedDto gameCreatedDto){
+        return ResponseEntity.ok(gameService.createGame(gameCreatedDto));
+    }
+
+    @GetMapping("/game/to_handle/{id}")
+    public ResponseEntity<GameToHandleDto> getGameToHandle(@PathVariable("id")Long id){
+        return ResponseEntity.ok(gameService.findGameToHandle(id));
     }
 
 }
