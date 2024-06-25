@@ -2,14 +2,13 @@ package com.stat_tracker.dto.game;
 
 import com.stat_tracker.dto.plays.PlayDto;
 import com.stat_tracker.dto.stat.StatLineDto;
-import com.stat_tracker.entity.plays.abstract_play.Play;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class GameToHandleDto {
     private Long id;
-    private LocalDateTime dateTime;
+    private LocalDateTime localDateTime;
     private String season;
     private Integer quarterLengthMin;
     private Long timeRemainingMs;
@@ -191,12 +190,12 @@ public class GameToHandleDto {
         this.id = id;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     public String getSeason() {

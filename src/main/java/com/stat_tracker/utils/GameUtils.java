@@ -77,7 +77,7 @@ public class GameUtils {
     public static GameToHandleDto createGameToHandle(Game game){
         GameToHandleDto gameToHandleDto = new GameToHandleDto();
         gameToHandleDto.setId(game.getId());
-        gameToHandleDto.setDateTime(game.getLocalDateTime());
+        gameToHandleDto.setLocalDateTime(game.getLocalDateTime());
         gameToHandleDto.setSeason(game.getSeason());
         gameToHandleDto.setQuarterLengthMin(game.getQuarterLengthMin());
         gameToHandleDto.setTimeRemainingMs(game.getTimeRemainingMs());
