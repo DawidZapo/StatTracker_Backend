@@ -29,7 +29,7 @@ public class Foul extends Play {
         return type;
     }
 
-    public void setType(FoulType foulType) {
-        this.type = foulType;
+    public void setType(FoulType type) {
+        this.type = type;
     }
 }

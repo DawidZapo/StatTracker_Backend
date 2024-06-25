@@ -28,7 +28,6 @@ public abstract class Play {
     @Column(name = "hand")
     @Enumerated(EnumType.STRING)
     protected Hand hand;
-
     @Transient
     protected String playType = writePlayType();
 

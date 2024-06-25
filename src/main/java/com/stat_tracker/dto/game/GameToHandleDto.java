@@ -1,5 +1,6 @@
 package com.stat_tracker.dto.game;
 
+import com.stat_tracker.dto.plays.PlayDto;
 import com.stat_tracker.dto.stat.StatLineDto;
 import com.stat_tracker.entity.plays.abstract_play.Play;
 
@@ -16,7 +17,7 @@ public class GameToHandleDto {
     private TeamDto away;
 
     // PlayDto to be introduced
-    private List<Play> plays;
+    private List<PlayDto> plays;
 
     public static class TeamDto{
         private Long teamId;
@@ -85,7 +86,7 @@ public class GameToHandleDto {
         private StatLineDto stats;
 
         // PlayDto to be introduced
-        private List<Play> plays;
+        private List<PlayDto> plays;
 
         public Long getPlayerId() {
             return playerId;
@@ -143,11 +144,11 @@ public class GameToHandleDto {
             this.stats = stats;
         }
 
-        public List<Play> getPlays() {
+        public List<PlayDto> getPlays() {
             return plays;
         }
 
-        public void setPlays(List<Play> plays) {
+        public void setPlays(List<PlayDto> plays) {
             this.plays = plays;
         }
     }
@@ -238,11 +239,11 @@ public class GameToHandleDto {
         this.away = away;
     }
 
-    public List<Play> getPlays() {
+    public List<PlayDto> getPlays() {
         return plays;
     }
 
-    public void setPlays(List<Play> plays) {
+    public void setPlays(List<PlayDto> plays) {
         this.plays = plays;
     }
 }

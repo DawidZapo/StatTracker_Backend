@@ -4,9 +4,12 @@ import com.stat_tracker.dto.game.GameCreatedDto;
 import com.stat_tracker.dto.game.GameToHandleDto;
 import com.stat_tracker.dto.game.GameWithStatTeamsDto;
 import com.stat_tracker.dto.game.GameWithTeamNamesDto;
+import com.stat_tracker.dto.plays.*;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.entity.player.StatPlayer;
+import com.stat_tracker.entity.plays.*;
+import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.entity.score.Score;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
@@ -82,7 +85,7 @@ public class GameUtils {
         gameToHandleDto.setHome(createTeamDto(game.getHome()));
         gameToHandleDto.setAway(createTeamDto(game.getAway()));
 
-        gameToHandleDto.setPlays(game.getPlays());
+        gameToHandleDto.setPlays(createPlaysDto(game.getPlays()));
 
 
         return gameToHandleDto;
@@ -109,7 +112,7 @@ public class GameUtils {
         player.setShirtNumber(statPlayer.getShirtNumber());
         player.setStartingFive(statPlayer.getStartingFive());
         player.setStats(StatsUtils.createStatLineDto(statPlayer.getStatLine()));
-        player.setPlays(statPlayer.getPlays());
+        player.setPlays(createPlaysDto(statPlayer.getPlays()));
 
         return player;
     }
@@ -122,4 +125,22 @@ public class GameUtils {
 
         return scoreDto;
     }
+
+    private static List<PlayDto> createPlaysDto(List<Play> plays){
+        return plays.stream().map(GameUtils::createPlayDto).collect(Collectors.toList());
+    }
+
+    private static PlayDto createPlayDto(Play play) {
+        return switch (play) {
+            case Assist assist -> new AssistDto(assist);
+            case Block block -> new BlockDto(block);
+            case Foul foul -> new FoulDto(foul);
+            case Rebound rebound -> new ReboundDto(rebound);
+            case ShotPlay shotPlay -> new ShotPlayDto(shotPlay);
+            case Steal steal -> new StealDto(steal);
+            case Turnover turnover -> new TurnoverDto(turnover);
+            default -> throw new RuntimeException("Play not found as an instance of some class");
+        };
+    }
+
 }
