@@ -12,6 +12,8 @@ public class ShotPlay extends Play {
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
     private ShotType type;
+    @Column(name = "off_the_dribble")
+    private Boolean offTheDribble;
     @Column(name = "zone")
     @Enumerated(EnumType.STRING)
     private Zone zone;
@@ -63,4 +65,11 @@ public class ShotPlay extends Play {
         this.worth = worth;
     }
 
+    public Boolean getOffTheDribble() {
+        return offTheDribble;
+    }
+
+    public void setOffTheDribble(Boolean offTheDribble) {
+        this.offTheDribble = offTheDribble;
+    }
 }

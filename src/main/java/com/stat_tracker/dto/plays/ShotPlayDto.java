@@ -7,6 +7,7 @@ import com.stat_tracker.entity.plays.enums.Zone;
 
 public class ShotPlayDto extends PlayDto {
     private ShotType type;
+    private Boolean offTheDribble;
     private Zone zone;
     private Boolean made;
     private Contested contested;
@@ -21,6 +22,7 @@ public class ShotPlayDto extends PlayDto {
         this.made = shotPlay.getMade();
         this.contested = shotPlay.getContested();
         this.worth = shotPlay.getWorth();
+        this.offTheDribble = shotPlay.getOffTheDribble();
     }
 
     public ShotType getType() {
@@ -61,5 +63,13 @@ public class ShotPlayDto extends PlayDto {
 
     public void setWorth(Integer worth) {
         this.worth = worth;
+    }
+
+    public Boolean getOffTheDribble() {
+        return offTheDribble;
+    }
+
+    public void setOffTheDribble(Boolean offTheDribble) {
+        this.offTheDribble = offTheDribble;
     }
 }

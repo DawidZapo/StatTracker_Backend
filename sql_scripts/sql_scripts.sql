@@ -121,6 +121,7 @@ CREATE TABLE shot_play (
     duration BIGINT,
     comments TEXT,
     hand VARCHAR(255),
+    off_the_dribble BOOLEAN,
     `type` VARCHAR(255),
     zone VARCHAR(255),
     made BOOLEAN,
