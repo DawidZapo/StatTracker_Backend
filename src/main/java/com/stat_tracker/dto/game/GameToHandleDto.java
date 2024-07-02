@@ -14,8 +14,6 @@ public class GameToHandleDto {
     private Long timeRemainingMs;
     private TeamDto home;
     private TeamDto away;
-
-    // PlayDto to be introduced
     private List<PlayDto> plays;
 
     public static class TeamDto{
@@ -82,9 +80,8 @@ public class GameToHandleDto {
         private String lastName;
         private Integer shirtNumber;
         private Boolean startingFive;
+        private Boolean onCourt;
         private StatLineDto stats;
-
-        // PlayDto to be introduced
         private List<PlayDto> plays;
 
         public Long getPlayerId() {
@@ -149,6 +146,14 @@ public class GameToHandleDto {
 
         public void setPlays(List<PlayDto> plays) {
             this.plays = plays;
+        }
+
+        public Boolean getOnCourt() {
+            return onCourt;
+        }
+
+        public void setOnCourt(Boolean onCourt) {
+            this.onCourt = onCourt;
         }
     }
 

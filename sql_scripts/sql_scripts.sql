@@ -99,6 +99,7 @@ CREATE TABLE stat_player (
     stat_team_id BIGINT,
     shirt_number INT,
     starting_five boolean,
+    on_court boolean,
     stat_line_id BIGINT,
     foreign key (player_id) references player(id),
     foreign key (stat_team_id) references stat_team(id),

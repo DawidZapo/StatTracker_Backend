@@ -111,6 +111,7 @@ public class GameUtils {
         player.setLastName(statPlayer.getPlayer().getLastName());
         player.setShirtNumber(statPlayer.getShirtNumber());
         player.setStartingFive(statPlayer.getStartingFive());
+        player.setOnCourt(statPlayer.getOnCourt());
         player.setStats(StatsUtils.createStatLineDto(statPlayer.getStatLine()));
         player.setPlays(createPlaysDto(statPlayer.getPlays()));
 
