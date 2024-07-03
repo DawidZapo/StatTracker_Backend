@@ -61,8 +61,8 @@ public class GameUtils {
         game.setOfficial(gameCreatedDto.isOfficial());
         game.setQuarterLengthMin(gameCreatedDto.getQuarterLengthMin());
 
-        Long gameDurationInMs = (long) gameCreatedDto.getQuarterLengthMin() * 4 * 60 * 1000;
-        game.setTimeRemainingMs(gameDurationInMs);
+        game.setCurrentQuarterTimeMs(0L);
+        game.setCurrentQuarter(1);
 
         StatTeam homeStatTeam = StatTeamAndPlayerUtils.createStatTeam(home,game,true, gameCreatedDto, homePlayers);
         StatTeam awayStatTeam = StatTeamAndPlayerUtils.createStatTeam(away,game, false, gameCreatedDto, awayPlayers);
@@ -80,7 +80,8 @@ public class GameUtils {
         gameToHandleDto.setLocalDateTime(game.getLocalDateTime());
         gameToHandleDto.setSeason(game.getSeason());
         gameToHandleDto.setQuarterLengthMin(game.getQuarterLengthMin());
-        gameToHandleDto.setTimeRemainingMs(game.getTimeRemainingMs());
+        gameToHandleDto.setCurrentQuarterTimeMs(game.getCurrentQuarterTimeMs());
+        gameToHandleDto.setCurrentQuarter(game.getCurrentQuarter());
 
         gameToHandleDto.setHome(createTeamDto(game.getHome()));
         gameToHandleDto.setAway(createTeamDto(game.getAway()));

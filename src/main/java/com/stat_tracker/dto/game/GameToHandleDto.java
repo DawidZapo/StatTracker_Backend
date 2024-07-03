@@ -11,7 +11,8 @@ public class GameToHandleDto {
     private LocalDateTime localDateTime;
     private String season;
     private Integer quarterLengthMin;
-    private Long timeRemainingMs;
+    private Long currentQuarterTimeMs;
+    private Integer currentQuarter;
     private TeamDto home;
     private TeamDto away;
     private List<PlayDto> plays;
@@ -219,12 +220,20 @@ public class GameToHandleDto {
         this.quarterLengthMin = quarterLengthMin;
     }
 
-    public Long getTimeRemainingMs() {
-        return timeRemainingMs;
+    public Long getCurrentQuarterTimeMs() {
+        return currentQuarterTimeMs;
     }
 
-    public void setTimeRemainingMs(Long timeRemainingMs) {
-        this.timeRemainingMs = timeRemainingMs;
+    public void setCurrentQuarterTimeMs(Long currentQuarterTimeMs) {
+        this.currentQuarterTimeMs = currentQuarterTimeMs;
+    }
+
+    public Integer getCurrentQuarter() {
+        return currentQuarter;
+    }
+
+    public void setCurrentQuarter(Integer currentQuarter) {
+        this.currentQuarter = currentQuarter;
     }
 
     public TeamDto getHome() {

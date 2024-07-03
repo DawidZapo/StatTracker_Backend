@@ -31,8 +31,11 @@ public class Game {
     private List<Play> plays;
     @Column(name = "quarter_length_min")
     private Integer quarterLengthMin;
-    @Column(name = "time_remaining_ms")
-    private Long timeRemainingMs;
+    @Column(name = "current_quarter_time_ms")
+    private Long currentQuarterTimeMs;
+
+    @Column(name = "current_quarter")
+    private Integer currentQuarter;
 
     public Long getId() {
         return id;
@@ -98,26 +101,19 @@ public class Game {
         this.quarterLengthMin = quarterLengthMin;
     }
 
-    public Long getTimeRemainingMs() {
-        return timeRemainingMs;
+    public Long getCurrentQuarterTimeMs() {
+        return currentQuarterTimeMs;
     }
 
-    public void setTimeRemainingMs(Long timeRemaining) {
-        this.timeRemainingMs = timeRemaining;
+    public void setCurrentQuarterTimeMs(Long currentQuarterTimeMs) {
+        this.currentQuarterTimeMs = currentQuarterTimeMs;
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "id=" + id +
-                ", localDateTime=" + localDateTime +
-                ", season='" + season + '\'' +
-                ", isOfficial=" + isOfficial +
-                ", home=" + home +
-                ", away=" + away +
-                ", plays=" + plays +
-                ", quarterLengthMin=" + quarterLengthMin +
-                ", timeRemainingMs=" + timeRemainingMs +
-                '}';
+    public Integer getCurrentQuarter() {
+        return currentQuarter;
+    }
+
+    public void setCurrentQuarter(Integer currentQuarter) {
+        this.currentQuarter = currentQuarter;
     }
 }
