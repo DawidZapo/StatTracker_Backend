@@ -60,6 +60,7 @@ public class GameUtils {
         game.setSeason(gameCreatedDto.getSeason());
         game.setOfficial(gameCreatedDto.isOfficial());
         game.setQuarterLengthMin(gameCreatedDto.getQuarterLengthMin());
+        game.setOvertimeLengthMin(gameCreatedDto.getOvertimeLengthMin());
 
         game.setCurrentQuarterTimeMs(0L);
         game.setCurrentQuarter(1);
@@ -80,6 +81,7 @@ public class GameUtils {
         gameToHandleDto.setLocalDateTime(game.getLocalDateTime());
         gameToHandleDto.setSeason(game.getSeason());
         gameToHandleDto.setQuarterLengthMin(game.getQuarterLengthMin());
+        gameToHandleDto.setOvertimeLengthMin(game.getOvertimeLengthMin());
         gameToHandleDto.setCurrentQuarterTimeMs(game.getCurrentQuarterTimeMs());
         gameToHandleDto.setCurrentQuarter(game.getCurrentQuarter());
 

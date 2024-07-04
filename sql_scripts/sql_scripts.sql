@@ -77,6 +77,7 @@ CREATE TABLE game (
     season VARCHAR(255),
     is_official BOOLEAN,
     quarter_length_min INT,
+    overtime_length_min INT,
     current_quarter_time_ms BIGINT,
     current_quarter INT,
     PRIMARY KEY (id)

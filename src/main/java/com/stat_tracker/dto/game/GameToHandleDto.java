@@ -11,6 +11,7 @@ public class GameToHandleDto {
     private LocalDateTime localDateTime;
     private String season;
     private Integer quarterLengthMin;
+    private Integer overtimeLengthMin;
     private Long currentQuarterTimeMs;
     private Integer currentQuarter;
     private TeamDto home;
@@ -258,5 +259,13 @@ public class GameToHandleDto {
 
     public void setPlays(List<PlayDto> plays) {
         this.plays = plays;
+    }
+
+    public Integer getOvertimeLengthMin() {
+        return overtimeLengthMin;
+    }
+
+    public void setOvertimeLengthMin(Integer overtimeLengthMin) {
+        this.overtimeLengthMin = overtimeLengthMin;
     }
 }

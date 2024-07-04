@@ -11,6 +11,7 @@ public class GameCreatedDto {
     private String season;
     private boolean official;
     private int quarterLengthMin;
+    private int overtimeLengthMin;
     private TeamDto home;
     private TeamDto away;
 
@@ -90,6 +91,14 @@ public class GameCreatedDto {
 
     public void setAway(TeamDto away) {
         this.away = away;
+    }
+
+    public int getOvertimeLengthMin() {
+        return overtimeLengthMin;
+    }
+
+    public void setOvertimeLengthMin(int overtimeLengthMin) {
+        this.overtimeLengthMin = overtimeLengthMin;
     }
 
     public static class TeamDto {

@@ -31,6 +31,8 @@ public class Game {
     private List<Play> plays;
     @Column(name = "quarter_length_min")
     private Integer quarterLengthMin;
+    @Column(name = "overtime_length_min")
+    private Integer overtimeLengthMin;
     @Column(name = "current_quarter_time_ms")
     private Long currentQuarterTimeMs;
 
@@ -99,6 +101,14 @@ public class Game {
 
     public void setQuarterLengthMin(Integer quarterLengthMin) {
         this.quarterLengthMin = quarterLengthMin;
+    }
+
+    public Integer getOvertimeLengthMin() {
+        return overtimeLengthMin;
+    }
+
+    public void setOvertimeLengthMin(Integer overtimeLengthMin) {
+        this.overtimeLengthMin = overtimeLengthMin;
     }
 
     public Long getCurrentQuarterTimeMs() {
