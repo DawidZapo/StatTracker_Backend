@@ -2,6 +2,7 @@ package com.stat_tracker.entity.player;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.stat_tracker.entity.plays.enums.Hand;
 import com.stat_tracker.entity.team.Team;
 import jakarta.persistence.*;
 
@@ -24,6 +25,9 @@ public class Player {
     private Double height;
     @Column(name = "weight")
     private Double weight;
+    @Column(name = "dominant_hand")
+    @Enumerated(EnumType.STRING)
+    private Hand dominantHand;
     @Column(name = "position")
     @Enumerated(EnumType.STRING)
     private Position position;
@@ -126,5 +130,17 @@ public class Player {
 
     public List<StatPlayer> getStatPlayers() {
         return statPlayers;
+    }
+
+    public Hand getDominantHand() {
+        return dominantHand;
+    }
+
+    public void setDominantHand(Hand dominantHand) {
+        this.dominantHand = dominantHand;
+    }
+
+    public void setStatPlayers(List<StatPlayer> statPlayers) {
+        this.statPlayers = statPlayers;
     }
 }

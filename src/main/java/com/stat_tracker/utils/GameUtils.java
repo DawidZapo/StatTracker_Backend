@@ -117,6 +117,7 @@ public class GameUtils {
         player.setOnCourt(statPlayer.getOnCourt());
         player.setStats(StatsUtils.createStatLineDto(statPlayer.getStatLine()));
         player.setPlays(createPlaysDto(statPlayer.getPlays()));
+        player.setDominantHand(statPlayer.getPlayer().getDominantHand());
 
         return player;
     }

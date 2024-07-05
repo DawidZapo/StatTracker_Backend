@@ -41,6 +41,7 @@ CREATE TABLE player (
     last_name VARCHAR(50),
     height DOUBLE,
     weight DOUBLE,
+    hand VARCHAR(10),
     position VARCHAR(100),
     birth DATE,
     current_team_id BIGINT,

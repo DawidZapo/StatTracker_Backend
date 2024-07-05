@@ -2,6 +2,7 @@ package com.stat_tracker.dto.game;
 
 import com.stat_tracker.dto.plays.PlayDto;
 import com.stat_tracker.dto.stat.StatLineDto;
+import com.stat_tracker.entity.plays.enums.Hand;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -85,6 +86,7 @@ public class GameToHandleDto {
         private Boolean onCourt;
         private StatLineDto stats;
         private List<PlayDto> plays;
+        private Hand dominantHand;
 
         public Long getPlayerId() {
             return playerId;
@@ -156,6 +158,14 @@ public class GameToHandleDto {
 
         public void setOnCourt(Boolean onCourt) {
             this.onCourt = onCourt;
+        }
+
+        public Hand getDominantHand() {
+            return dominantHand;
+        }
+
+        public void setDominantHand(Hand dominantHand) {
+            this.dominantHand = dominantHand;
         }
     }
 
