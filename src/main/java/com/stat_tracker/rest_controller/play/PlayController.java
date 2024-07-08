@@ -26,7 +26,7 @@ public class PlayController {
     }
 
     @PostMapping("/play/save/shot_play")
-    public ShotPlayDto savePlay(@RequestBody ShotPlayDto shotPlayDto){
-        return playService.savePlay(shotPlayDto);
+    public ResponseEntity<Long> savePlay(@RequestBody ShotPlayDto shotPlayDto){
+        return ResponseEntity.ok(playService.savePlay(shotPlayDto));
     }
 }

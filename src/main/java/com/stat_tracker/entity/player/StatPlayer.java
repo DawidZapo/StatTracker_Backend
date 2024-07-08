@@ -112,4 +112,11 @@ public class StatPlayer {
                 ", statLine=" + statLine +
                 '}';
     }
+
+    public void addPlay(Play play){
+        if(plays == null){
+            plays = new ArrayList<>();
+        }
+        plays.add(play);
+    }
 }

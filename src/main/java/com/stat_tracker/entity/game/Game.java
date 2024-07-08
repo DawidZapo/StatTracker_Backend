@@ -6,6 +6,7 @@ import com.stat_tracker.entity.team.StatTeam;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 @Table(name = "game")
@@ -125,5 +126,12 @@ public class Game {
 
     public void setCurrentQuarter(Integer currentQuarter) {
         this.currentQuarter = currentQuarter;
+    }
+
+    public void addPlay(Play play){
+        if(plays == null){
+            plays = new ArrayList<>();
+        }
+        plays.add(play);
     }
 }

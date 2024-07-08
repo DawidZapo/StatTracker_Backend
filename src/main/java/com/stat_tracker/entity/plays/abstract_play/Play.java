@@ -8,9 +8,10 @@ import jakarta.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@SequenceGenerator(name = "play_seq_gen", sequenceName = "play_seq", allocationSize = 1)
 public abstract class Play {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "play_seq_gen")
     @Column(name = "id")
     protected Long id;
     @ManyToOne
@@ -95,4 +96,5 @@ public abstract class Play {
             default -> throw new RuntimeException("No play type match");
         };
     }
+
 }

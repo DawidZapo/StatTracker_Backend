@@ -28,7 +28,7 @@ public class GameService {
         this.teamService = teamService;
         this.playerService = playerService;
     }
-    public Game findGame(Long id){
+    public Game findById(Long id){
         return gameRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Game not found id: " + id));
     }
@@ -40,7 +40,7 @@ public class GameService {
         return new GameWithPlaysDto(game.get().getId(), game.get().getPlays());
     }
     public GameWithStatTeamsDto getGameWithStatsTeam(Long id){
-        Game game = findGame(id);
+        Game game = findById(id);
         return GameUtils.createGameWithStatTeams(game);
     }
     public List<GameWithTeamNamesDto> getAllGamesWithTeamNamesDto(){
@@ -72,7 +72,7 @@ public class GameService {
     }
 
     public GameToHandleDto findGameToHandle(Long id){
-        Game game = findGame(id);
+        Game game = findById(id);
         return GameUtils.createGameToHandle(game);
     }
 

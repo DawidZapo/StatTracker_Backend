@@ -210,3 +210,21 @@ CREATE TABLE turnover (
     FOREIGN KEY (steal_for_stat_player_id) REFERENCES stat_player(id)
 );
 
+
+CREATE TABLE play_seq (
+    next_val BIGINT NOT NULL
+);
+
+INSERT INTO play_seq VALUES (0);
+
+DELIMITER //
+
+CREATE PROCEDURE next_val_play_seq(OUT nextval BIGINT)
+BEGIN
+    UPDATE play_seq SET next_val = LAST_INSERT_ID(next_val + 1);
+    SELECT LAST_INSERT_ID() INTO nextval;
+END //
+
+DELIMITER ;
+
+

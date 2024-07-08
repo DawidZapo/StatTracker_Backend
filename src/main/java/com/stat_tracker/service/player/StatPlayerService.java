@@ -9,13 +9,18 @@ import java.util.List;
 
 @Service
 public class StatPlayerService {
-    private StatPlayerRepository statPlayerService;
+    private StatPlayerRepository statPlayerRepository;
     @Autowired
-    public StatPlayerService(StatPlayerRepository statPlayerService) {
-        this.statPlayerService = statPlayerService;
+    public StatPlayerService(StatPlayerRepository statPlayerRepository) {
+        this.statPlayerRepository = statPlayerRepository;
     }
 
     public List<StatPlayer> findAll(){
-        return statPlayerService.findAll();
+        return statPlayerRepository.findAll();
+    }
+
+    public StatPlayer findById(Long id){
+        return statPlayerRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("StatPlayer not found id: " + id));
     }
 }
