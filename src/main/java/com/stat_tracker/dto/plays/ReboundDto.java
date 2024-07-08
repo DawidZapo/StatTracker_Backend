@@ -3,7 +3,11 @@ package com.stat_tracker.dto.plays;
 import com.stat_tracker.entity.plays.Rebound;
 
 public class ReboundDto extends PlayDto{
-    private Boolean isOffensive;
+    private boolean isOffensive;
+
+    public ReboundDto() {
+        super();
+    }
 
     public ReboundDto(Rebound rebound) {
         super(rebound.getId(), rebound.getGame().getId(),
@@ -12,11 +16,11 @@ public class ReboundDto extends PlayDto{
         this.isOffensive = rebound.getOffensive();
     }
 
-    public Boolean getOffensive() {
+    public boolean isOffensive() {
         return isOffensive;
     }
 
-    public void setOffensive(Boolean offensive) {
+    public void setOffensive(boolean offensive) {
         isOffensive = offensive;
     }
 

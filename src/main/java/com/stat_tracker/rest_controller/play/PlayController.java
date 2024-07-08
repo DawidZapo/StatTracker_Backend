@@ -1,6 +1,6 @@
 package com.stat_tracker.rest_controller.play;
 
-import com.stat_tracker.dto.plays.ShotPlayDto;
+import com.stat_tracker.dto.plays.*;
 import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.service.play.PlayService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +29,35 @@ public class PlayController {
     public ResponseEntity<Long> savePlay(@RequestBody ShotPlayDto shotPlayDto){
         return ResponseEntity.ok(playService.savePlay(shotPlayDto));
     }
+
+    @PostMapping("/play/save/assist")
+    public ResponseEntity<Long> saveAssist(@RequestBody AssistDto assistDto){
+        return ResponseEntity.ok(playService.saveAssist(assistDto));
+    }
+
+    @PostMapping("/play/save/block")
+    public ResponseEntity<Long> saveBody(@RequestBody BlockDto blockDto){
+        return ResponseEntity.ok(playService.saveBlock(blockDto));
+    }
+
+    @PostMapping("/play/save/rebound")
+    public ResponseEntity<Long> saveRebound(@RequestBody ReboundDto reboundDto){
+        return ResponseEntity.ok(playService.saveRebound(reboundDto));
+    }
+
+    @PostMapping("/play/save/foul")
+    public ResponseEntity<Long> saveFoul(@RequestBody FoulDto foulDto){
+        return ResponseEntity.ok(playService.saveFoul(foulDto));
+    }
+
+    @PostMapping("/play/save/steal")
+    public ResponseEntity<Long> saveSteal(@RequestBody StealDto stealDto){
+        return ResponseEntity.ok(playService.saveSteal(stealDto));
+    }
+
+    @PostMapping("/play/save/turnover")
+    public ResponseEntity<Long> saveTurnover(@RequestBody TurnoverDto turnoverDto){
+        return ResponseEntity.ok(playService.saveTurnover(turnoverDto));
+    }
+
 }

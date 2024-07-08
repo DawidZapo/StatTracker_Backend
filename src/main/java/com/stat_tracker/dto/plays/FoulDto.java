@@ -5,14 +5,18 @@ import com.stat_tracker.entity.plays.enums.FoulType;
 
 public class FoulDto extends PlayDto{
     private Long foulOnStatPlayerId;
-    private FoulType foulType;
+    private FoulType type;
+
+    public FoulDto() {
+        super();
+    }
 
     public FoulDto(Foul foul) {
         super(foul.getId(), foul.getGame().getId(),
                 foul.getStatPlayer().getId(),foul.getDuration(), foul.getComments(),
                 foul.getPlayType(), foul.getHand());
         this.foulOnStatPlayerId = foul.getFoulOnStatPlayer().getId();
-        this.foulType = foul.getType();
+        this.type = foul.getType();
     }
 
     public Long getFoulOnStatPlayerId() {
@@ -23,19 +27,19 @@ public class FoulDto extends PlayDto{
         this.foulOnStatPlayerId = foulOnStatPlayerId;
     }
 
-    public FoulType getFoulType() {
-        return foulType;
+    public FoulType getType() {
+        return type;
     }
 
-    public void setFoulType(FoulType foulType) {
-        this.foulType = foulType;
+    public void setType(FoulType type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "FoulDto{" +
                 "foulOnStatPlayerId=" + foulOnStatPlayerId +
-                ", foulType=" + foulType +
+                ", type=" + type +
                 "} " + super.toString();
     }
 }

@@ -1,15 +1,22 @@
 package com.stat_tracker.dto.plays;
 
 import com.stat_tracker.entity.plays.Turnover;
+import com.stat_tracker.entity.plays.enums.TurnoverType;
 
 public class TurnoverDto extends PlayDto{
     private Long stealForStatPlayerId;
+    private TurnoverType type;
+
+    public TurnoverDto() {
+        super();
+    }
 
     public TurnoverDto(Turnover turnover){
         super(turnover.getId(), turnover.getGame().getId(),
                 turnover.getStatPlayer().getId(),turnover.getDuration(), turnover.getComments(),
                 turnover.getPlayType(), turnover.getHand());
         this.stealForStatPlayerId = turnover.getStealForStatPlayer().getId();
+        this.type = turnover.getType();
     }
 
     public Long getStealForStatPlayerId() {
@@ -18,6 +25,14 @@ public class TurnoverDto extends PlayDto{
 
     public void setStealForStatPlayerId(Long stealForStatPlayerId) {
         this.stealForStatPlayerId = stealForStatPlayerId;
+    }
+
+    public TurnoverType getType() {
+        return type;
+    }
+
+    public void setType(TurnoverType type) {
+        this.type = type;
     }
 
     @Override

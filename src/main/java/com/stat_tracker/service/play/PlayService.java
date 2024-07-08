@@ -1,9 +1,9 @@
 package com.stat_tracker.service.play;
 
-import com.stat_tracker.dto.plays.ShotPlayDto;
+import com.stat_tracker.dto.plays.*;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.StatPlayer;
-import com.stat_tracker.entity.plays.ShotPlay;
+import com.stat_tracker.entity.plays.*;
 import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.repository.play.PlayRepository;
 import com.stat_tracker.service.game.GameService;
@@ -32,14 +32,75 @@ public class PlayService {
     }
 
     public Long savePlay(ShotPlayDto shotPlayDto){
-        System.out.println(shotPlayDto);
         StatPlayer statPlayer = statPlayerService.findById(shotPlayDto.getStatPlayerId());
         Game game = gameService.findById(shotPlayDto.getGameId());
 
         ShotPlay shotPlay = PlayUtils.createShotPlay(shotPlayDto, game, statPlayer);
 
-        shotPlay = playRepository.save(shotPlay);
-        System.out.println(shotPlay);
-        return shotPlay.getId();
+        return playRepository.save(shotPlay).getId();
+    }
+
+    public Long saveAssist(AssistDto assistDto){
+        StatPlayer statPlayer = statPlayerService.findById(assistDto.getStatPlayerId());
+        StatPlayer toStatPlayer = statPlayerService.findById(assistDto.getToStatPlayerId());
+        Game game = gameService.findById(assistDto.getGameId());
+
+        Assist assist = PlayUtils.createAssist(assistDto, game, statPlayer, toStatPlayer);
+
+        return playRepository.save(assist).getId();
+    }
+
+    public Long saveBlock(BlockDto blockDto){
+        StatPlayer statPlayer = statPlayerService.findById(blockDto.getStatPlayerId());
+        StatPlayer blockedStatPlayer = statPlayerService.findById(blockDto.getBlockedStatPlayerId());
+
+        Game game = gameService.findById(blockDto.getGameId());
+
+        Block block = PlayUtils.createBlock(blockDto, game, statPlayer, blockedStatPlayer);
+
+        return playRepository.save(block).getId();
+    }
+
+    public Long saveRebound(ReboundDto reboundDto){
+        StatPlayer statPlayer = statPlayerService.findById(reboundDto.getStatPlayerId());
+
+        Game game = gameService.findById(reboundDto.getGameId());
+
+        Rebound rebound = PlayUtils.createRebound(reboundDto, game, statPlayer);
+
+        return playRepository.save(rebound).getId();
+    }
+
+    public Long saveFoul(FoulDto foulDto){
+        StatPlayer statPlayer = statPlayerService.findById(foulDto.getStatPlayerId());
+        StatPlayer foulOnStatPlayer = statPlayerService.findById(foulDto.getFoulOnStatPlayerId());
+
+        Game game = gameService.findById(foulDto.getGameId());
+
+        Foul foul = PlayUtils.createFoul(foulDto, game, statPlayer, foulOnStatPlayer);
+
+        return playRepository.save(foul).getId();
+    }
+
+    public Long saveSteal(StealDto stealDto){
+        StatPlayer statPlayer = statPlayerService.findById(stealDto.getStatPlayerId());
+        StatPlayer turnoverForStatPlayer = statPlayerService.findById(stealDto.getTurnoverForStatPlayerId());
+
+        Game game = gameService.findById(stealDto.getGameId());
+
+        Steal steal = PlayUtils.createSteal(stealDto, game, statPlayer, turnoverForStatPlayer);
+
+        return playRepository.save(steal).getId();
+    }
+
+    public Long saveTurnover(TurnoverDto turnoverDto){
+        StatPlayer statPlayer = statPlayerService.findById(turnoverDto.getStatPlayerId());
+        StatPlayer stealForStatPlayer = statPlayerService.findById(turnoverDto.getStealForStatPlayerId());
+
+        Game game = gameService.findById(turnoverDto.getGameId());
+
+        Turnover turnover = PlayUtils.createTurnover(turnoverDto, game, statPlayer, stealForStatPlayer);
+
+        return playRepository.save(turnover).getId();
     }
 }

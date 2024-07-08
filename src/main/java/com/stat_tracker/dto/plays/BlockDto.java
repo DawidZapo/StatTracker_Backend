@@ -6,6 +6,10 @@ public class BlockDto extends PlayDto{
     private Long blockedStatPlayerId;
     private Boolean withinPerimeter;
 
+    public BlockDto() {
+        super();
+    }
+
     public BlockDto(Block block) {
         super(block.getId(), block.getGame().getId(),
                 block.getStatPlayer().getId(),block.getDuration(), block.getComments(),

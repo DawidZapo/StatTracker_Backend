@@ -5,6 +5,10 @@ import com.stat_tracker.entity.plays.Steal;
 public class StealDto extends PlayDto {
     private Long turnoverForStatPlayerId;
 
+    public StealDto() {
+        super();
+    }
+
     public StealDto(Steal steal){
         super(steal.getId(), steal.getGame().getId(),
                 steal.getStatPlayer().getId(),steal.getDuration(), steal.getComments(),

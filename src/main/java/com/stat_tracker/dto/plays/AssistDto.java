@@ -5,14 +5,18 @@ import com.stat_tracker.entity.plays.enums.AssistType;
 
 public class AssistDto extends PlayDto{
     private Long toStatPlayerId;
-    private AssistType assistType;
+    private AssistType type;
+
+    public AssistDto() {
+        super();
+    }
 
     public AssistDto(Assist assist) {
         super(assist.getId(), assist.getGame().getId(),
                 assist.getStatPlayer().getId(),assist.getDuration(), assist.getComments(),
                 assist.getPlayType(), assist.getHand());
         this.toStatPlayerId = assist.getToStatPlayer().getId();
-        this.assistType = assist.getType();
+        this.type = assist.getType();
     }
 
     public Long getToStatPlayerId() {
@@ -23,19 +27,19 @@ public class AssistDto extends PlayDto{
         this.toStatPlayerId = toStatPlayerId;
     }
 
-    public AssistType getAssistType() {
-        return assistType;
+    public AssistType getType() {
+        return type;
     }
 
-    public void setAssistType(AssistType assistType) {
-        this.assistType = assistType;
+    public void setType(AssistType type) {
+        this.type = type;
     }
 
     @Override
     public String toString() {
         return "AssistDto{" +
                 "toStatPlayerId=" + toStatPlayerId +
-                ", assistType=" + assistType +
+                ", type=" + type +
                 "} " + super.toString();
     }
 }
