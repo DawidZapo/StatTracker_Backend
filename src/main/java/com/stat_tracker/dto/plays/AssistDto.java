@@ -30,4 +30,12 @@ public class AssistDto extends PlayDto{
     public void setAssistType(AssistType assistType) {
         this.assistType = assistType;
     }
+
+    @Override
+    public String toString() {
+        return "AssistDto{" +
+                "toStatPlayerId=" + toStatPlayerId +
+                ", assistType=" + assistType +
+                "} " + super.toString();
+    }
 }

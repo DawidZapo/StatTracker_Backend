@@ -13,6 +13,9 @@ public class ShotPlayDto extends PlayDto {
     private Contested contested;
     private Integer worth;
 
+    public ShotPlayDto(){
+        super();
+    }
     public ShotPlayDto(ShotPlay shotPlay){
         super(shotPlay.getId(), shotPlay.getGame().getId(),
                 shotPlay.getStatPlayer().getId(),shotPlay.getDuration(), shotPlay.getComments(),
@@ -71,5 +74,17 @@ public class ShotPlayDto extends PlayDto {
 
     public void setOffTheDribble(Boolean offTheDribble) {
         this.offTheDribble = offTheDribble;
+    }
+
+    @Override
+    public String toString() {
+        return "ShotPlayDto{" +
+                "type=" + type +
+                ", offTheDribble=" + offTheDribble +
+                ", zone=" + zone +
+                ", made=" + made +
+                ", contested=" + contested +
+                ", worth=" + worth +
+                "} " + super.toString();
     }
 }

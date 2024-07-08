@@ -79,4 +79,17 @@ public abstract class PlayDto {
     public void setHand(Hand hand) {
         this.hand = hand;
     }
+
+    @Override
+    public String toString() {
+        return "PlayDto{" +
+                "id=" + id +
+                ", gameId=" + gameId +
+                ", statPlayerId=" + statPlayerId +
+                ", duration=" + duration +
+                ", comments='" + comments + '\'' +
+                ", playType='" + playType + '\'' +
+                ", hand=" + hand +
+                '}';
+    }
 }

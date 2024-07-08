@@ -30,4 +30,12 @@ public class FoulDto extends PlayDto{
     public void setFoulType(FoulType foulType) {
         this.foulType = foulType;
     }
+
+    @Override
+    public String toString() {
+        return "FoulDto{" +
+                "foulOnStatPlayerId=" + foulOnStatPlayerId +
+                ", foulType=" + foulType +
+                "} " + super.toString();
+    }
 }

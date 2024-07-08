@@ -29,4 +29,12 @@ public class BlockDto extends PlayDto{
     public void setWithinPerimeter(Boolean withinPerimeter) {
         this.withinPerimeter = withinPerimeter;
     }
+
+    @Override
+    public String toString() {
+        return "BlockDto{" +
+                "blockedStatPlayerId=" + blockedStatPlayerId +
+                ", withinPerimeter=" + withinPerimeter +
+                "} " + super.toString();
+    }
 }

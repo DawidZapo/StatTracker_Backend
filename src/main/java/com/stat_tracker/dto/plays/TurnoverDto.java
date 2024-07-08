@@ -19,4 +19,11 @@ public class TurnoverDto extends PlayDto{
     public void setStealForStatPlayerId(Long stealForStatPlayerId) {
         this.stealForStatPlayerId = stealForStatPlayerId;
     }
+
+    @Override
+    public String toString() {
+        return "TurnoverDto{" +
+                "stealForStatPlayerId=" + stealForStatPlayerId +
+                "} " + super.toString();
+    }
 }

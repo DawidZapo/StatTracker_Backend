@@ -19,4 +19,11 @@ public class ReboundDto extends PlayDto{
     public void setOffensive(Boolean offensive) {
         isOffensive = offensive;
     }
+
+    @Override
+    public String toString() {
+        return "ReboundDto{" +
+                "isOffensive=" + isOffensive +
+                "} " + super.toString();
+    }
 }
