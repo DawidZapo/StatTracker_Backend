@@ -42,17 +42,18 @@ public class PlayService {
 
     public Long saveAssist(AssistDto assistDto){
         StatPlayer statPlayer = statPlayerService.findById(assistDto.getStatPlayerId());
-        StatPlayer toStatPlayer = statPlayerService.findById(assistDto.getToStatPlayerId());
+        StatPlayer toStatPlayer = (assistDto.getToStatPlayerId() != null) ? statPlayerService.findById(assistDto.getToStatPlayerId()) : null;
         Game game = gameService.findById(assistDto.getGameId());
 
         Assist assist = PlayUtils.createAssist(assistDto, game, statPlayer, toStatPlayer);
-
+//        System.out.println(assist);
+//        return null;
         return playRepository.save(assist).getId();
     }
 
     public Long saveBlock(BlockDto blockDto){
         StatPlayer statPlayer = statPlayerService.findById(blockDto.getStatPlayerId());
-        StatPlayer blockedStatPlayer = statPlayerService.findById(blockDto.getBlockedStatPlayerId());
+        StatPlayer blockedStatPlayer = (blockDto.getBlockedStatPlayerId() != null) ? statPlayerService.findById(blockDto.getBlockedStatPlayerId()) : null;
 
         Game game = gameService.findById(blockDto.getGameId());
 
@@ -73,7 +74,7 @@ public class PlayService {
 
     public Long saveFoul(FoulDto foulDto){
         StatPlayer statPlayer = statPlayerService.findById(foulDto.getStatPlayerId());
-        StatPlayer foulOnStatPlayer = statPlayerService.findById(foulDto.getFoulOnStatPlayerId());
+        StatPlayer foulOnStatPlayer = (foulDto.getFoulOnStatPlayerId() != null) ? statPlayerService.findById(foulDto.getFoulOnStatPlayerId()) : null;
 
         Game game = gameService.findById(foulDto.getGameId());
 
@@ -84,7 +85,7 @@ public class PlayService {
 
     public Long saveSteal(StealDto stealDto){
         StatPlayer statPlayer = statPlayerService.findById(stealDto.getStatPlayerId());
-        StatPlayer turnoverForStatPlayer = statPlayerService.findById(stealDto.getTurnoverForStatPlayerId());
+        StatPlayer turnoverForStatPlayer = (stealDto.getTurnoverForStatPlayerId() != null) ? statPlayerService.findById(stealDto.getTurnoverForStatPlayerId()) : null;
 
         Game game = gameService.findById(stealDto.getGameId());
 
@@ -95,7 +96,7 @@ public class PlayService {
 
     public Long saveTurnover(TurnoverDto turnoverDto){
         StatPlayer statPlayer = statPlayerService.findById(turnoverDto.getStatPlayerId());
-        StatPlayer stealForStatPlayer = statPlayerService.findById(turnoverDto.getStealForStatPlayerId());
+        StatPlayer stealForStatPlayer = (turnoverDto.getStealForStatPlayerId() != null) ? statPlayerService.findById(turnoverDto.getStealForStatPlayerId()) : null;
 
         Game game = gameService.findById(turnoverDto.getGameId());
 
