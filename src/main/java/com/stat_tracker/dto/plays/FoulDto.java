@@ -15,7 +15,9 @@ public class FoulDto extends PlayDto{
         super(foul.getId(), foul.getGame().getId(),
                 foul.getStatPlayer().getId(),foul.getDuration(), foul.getComments(),
                 foul.getPlayType(), foul.getHand());
-        this.foulOnStatPlayerId = foul.getFoulOnStatPlayer().getId();
+//        this.foulOnStatPlayerId = foul.getFoulOnStatPlayer().getId();
+        this.foulOnStatPlayerId = (foul.getFoulOnStatPlayer() != null) ? foul.getFoulOnStatPlayer().getId() : null;
+
         this.type = foul.getType();
     }
 

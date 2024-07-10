@@ -76,6 +76,7 @@ public class PlayService {
         StatPlayer statPlayer = statPlayerService.findById(foulDto.getStatPlayerId());
         StatPlayer foulOnStatPlayer = (foulDto.getFoulOnStatPlayerId() != null) ? statPlayerService.findById(foulDto.getFoulOnStatPlayerId()) : null;
 
+
         Game game = gameService.findById(foulDto.getGameId());
 
         Foul foul = PlayUtils.createFoul(foulDto, game, statPlayer, foulOnStatPlayer);

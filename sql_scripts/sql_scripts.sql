@@ -166,7 +166,7 @@ CREATE TABLE `block` (
     comments TEXT,
     hand VARCHAR(255),
     blocked_stat_player_id BIGINT,
-    within_perimeter BOOLEAN,
+    in_the_paint BOOLEAN,
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id),
     FOREIGN KEY (blocked_stat_player_id) REFERENCES stat_player(id)

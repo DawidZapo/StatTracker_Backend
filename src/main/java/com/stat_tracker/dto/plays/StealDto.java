@@ -13,7 +13,9 @@ public class StealDto extends PlayDto {
         super(steal.getId(), steal.getGame().getId(),
                 steal.getStatPlayer().getId(),steal.getDuration(), steal.getComments(),
                 steal.getPlayType(), steal.getHand());
-        this.turnoverForStatPlayerId = steal.getTurnoverForStatPlayer().getId();
+//        this.turnoverForStatPlayerId = steal.getTurnoverForStatPlayer().getId();
+        this.turnoverForStatPlayerId = (steal.getTurnoverForStatPlayer() != null) ? steal.getTurnoverForStatPlayer().getId() : null;
+
     }
 
     public Long getTurnoverForStatPlayerId() {

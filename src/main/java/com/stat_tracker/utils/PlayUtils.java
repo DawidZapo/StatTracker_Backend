@@ -42,7 +42,7 @@ public class PlayUtils {
         setCommonFields(block, blockDto, game, statPlayer);
 
         block.setBlockedStatPlayer(blockedStatPlayer);
-        block.setWithinPerimeter(blockDto.getWithinPerimeter());
+        block.setInThePaint(blockDto.getInThePaint());
 
         return block;
     }

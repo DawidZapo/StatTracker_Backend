@@ -12,8 +12,8 @@ public class Block extends Play {
     @JoinColumn(name = "blocked_stat_player_id")
     @JsonBackReference
     private StatPlayer blockedStatPlayer;
-    @Column(name = "within_perimeter")
-    private Boolean withinPerimeter;
+    @Column(name = "in_the_paint")
+    private Boolean inThePaint;
 
     public StatPlayer getBlockedStatPlayer() {
         return blockedStatPlayer;
@@ -23,11 +23,11 @@ public class Block extends Play {
         this.blockedStatPlayer = blockedStatPlayer;
     }
 
-    public Boolean getWithinPerimeter() {
-        return withinPerimeter;
+    public Boolean getInThePaint() {
+        return inThePaint;
     }
 
-    public void setWithinPerimeter(Boolean withinPerimeter) {
-        this.withinPerimeter = withinPerimeter;
+    public void setInThePaint(Boolean withinPerimeter) {
+        this.inThePaint = withinPerimeter;
     }
 }
