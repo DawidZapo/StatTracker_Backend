@@ -190,4 +190,31 @@ public class StatLineDto {
     public void setPossessions(Integer possessions) {
         this.possessions = possessions;
     }
+
+    @Override
+    public String toString() {
+        return "StatLineDto{" +
+                "id=" + id +
+                ", timeOnCourtInMs=" + timeOnCourtInMs +
+                ", twoAttempted=" + twoAttempted +
+                ", twoMade=" + twoMade +
+                ", threeAttempted=" + threeAttempted +
+                ", threeMade=" + threeMade +
+                ", freeThrowAttempted=" + freeThrowAttempted +
+                ", freeThrowMade=" + freeThrowMade +
+                ", totalPoints=" + totalPoints +
+                ", offRebounds=" + offRebounds +
+                ", defRebounds=" + defRebounds +
+                ", assists=" + assists +
+                ", fouls=" + fouls +
+                ", forcedFouls=" + forcedFouls +
+                ", turnovers=" + turnovers +
+                ", steals=" + steals +
+                ", blocks=" + blocks +
+                ", blocksReceived=" + blocksReceived +
+                ", evaluation=" + evaluation +
+                ", plusMinus=" + plusMinus +
+                ", possessions=" + possessions +
+                '}';
+    }
 }

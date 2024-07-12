@@ -62,7 +62,7 @@ public class GameUtils {
         game.setQuarterLengthMin(gameCreatedDto.getQuarterLengthMin());
         game.setOvertimeLengthMin(gameCreatedDto.getOvertimeLengthMin());
 
-        game.setCurrentQuarterTimeRemainingMs(0L);
+        game.setCurrentQuarterTimeRemainingMs(gameCreatedDto.getQuarterLengthMin() * 60000L);
         game.setCurrentQuarter(1);
 
         StatTeam homeStatTeam = StatTeamAndPlayerUtils.createStatTeam(home,game,true, gameCreatedDto, homePlayers);
@@ -146,6 +146,10 @@ public class GameUtils {
             case Turnover turnover -> new TurnoverDto(turnover);
             default -> throw new RuntimeException("Play not found as an instance of some class");
         };
+    }
+
+    public static void updateGame(Game game, GameToHandleDto gameToHandleDto){
+
     }
 
 }

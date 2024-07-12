@@ -26,38 +26,38 @@ public class PlayController {
     }
 
     @PostMapping("/play/save/shot_play")
-    public ResponseEntity<Long> savePlay(@RequestBody ShotPlayDto shotPlayDto){
+    public ResponseEntity<ShotPlayDto> savePlay(@RequestBody ShotPlayDto shotPlayDto){
         return ResponseEntity.ok(playService.savePlay(shotPlayDto));
     }
 
     @PostMapping("/play/save/assist")
-    public ResponseEntity<Long> saveAssist(@RequestBody AssistDto assistDto){
+    public ResponseEntity<AssistDto> saveAssist(@RequestBody AssistDto assistDto){
         System.out.println(assistDto);
         return ResponseEntity.ok(playService.saveAssist(assistDto));
     }
 
     @PostMapping("/play/save/block")
-    public ResponseEntity<Long> saveBody(@RequestBody BlockDto blockDto){
+    public ResponseEntity<BlockDto> saveBody(@RequestBody BlockDto blockDto){
         return ResponseEntity.ok(playService.saveBlock(blockDto));
     }
 
     @PostMapping("/play/save/rebound")
-    public ResponseEntity<Long> saveRebound(@RequestBody ReboundDto reboundDto){
+    public ResponseEntity<ReboundDto> saveRebound(@RequestBody ReboundDto reboundDto){
         return ResponseEntity.ok(playService.saveRebound(reboundDto));
     }
 
     @PostMapping("/play/save/foul")
-    public ResponseEntity<Long> saveFoul(@RequestBody FoulDto foulDto){
+    public ResponseEntity<FoulDto> saveFoul(@RequestBody FoulDto foulDto){
         return ResponseEntity.ok(playService.saveFoul(foulDto));
     }
 
     @PostMapping("/play/save/steal")
-    public ResponseEntity<Long> saveSteal(@RequestBody StealDto stealDto){
+    public ResponseEntity<StealDto> saveSteal(@RequestBody StealDto stealDto){
         return ResponseEntity.ok(playService.saveSteal(stealDto));
     }
 
     @PostMapping("/play/save/turnover")
-    public ResponseEntity<Long> saveTurnover(@RequestBody TurnoverDto turnoverDto){
+    public ResponseEntity<TurnoverDto> saveTurnover(@RequestBody TurnoverDto turnoverDto){
         return ResponseEntity.ok(playService.saveTurnover(turnoverDto));
     }
 

@@ -74,6 +74,18 @@ public class GameToHandleDto {
         public void setScores(List<ScoreDto> scores) {
             this.scores = scores;
         }
+
+        @Override
+        public String toString() {
+            return "TeamDto{" +
+                    "teamId=" + teamId +
+                    ", statTeamId=" + statTeamId +
+                    ", name='" + name + '\'' +
+                    ", players=" + players +
+                    ", scores=" + scores +
+                    ", stats=" + stats +
+                    '}';
+        }
     }
 
     public static class PlayerDto{
@@ -166,6 +178,22 @@ public class GameToHandleDto {
 
         public void setDominantHand(Hand dominantHand) {
             this.dominantHand = dominantHand;
+        }
+
+        @Override
+        public String toString() {
+            return "PlayerDto{" +
+                    "playerId=" + playerId +
+                    ", statPlayerId=" + statPlayerId +
+                    ", firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", shirtNumber=" + shirtNumber +
+                    ", startingFive=" + startingFive +
+                    ", onCourt=" + onCourt +
+                    ", stats=" + stats +
+                    ", plays=" + plays +
+                    ", dominantHand=" + dominantHand +
+                    '}';
         }
     }
 
@@ -277,5 +305,21 @@ public class GameToHandleDto {
 
     public void setOvertimeLengthMin(Integer overtimeLengthMin) {
         this.overtimeLengthMin = overtimeLengthMin;
+    }
+
+    @Override
+    public String toString() {
+        return "GameToHandleDto{" +
+                "id=" + id +
+                ", localDateTime=" + localDateTime +
+                ", season='" + season + '\'' +
+                ", quarterLengthMin=" + quarterLengthMin +
+                ", overtimeLengthMin=" + overtimeLengthMin +
+                ", currentQuarterTimeRemainingMs=" + currentQuarterTimeRemainingMs +
+                ", currentQuarter=" + currentQuarter +
+                ", home=" + home +
+                ", away=" + away +
+                ", plays=" + plays +
+                '}';
     }
 }

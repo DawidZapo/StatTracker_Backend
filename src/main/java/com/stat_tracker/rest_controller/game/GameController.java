@@ -41,4 +41,10 @@ public class GameController {
         return ResponseEntity.ok(gameService.findGameToHandle(id));
     }
 
+    @PostMapping("/game/save")
+    public ResponseEntity<GameToHandleDto> saveGame(@RequestBody GameToHandleDto gameToHandle){
+       // to be finished
+        return ResponseEntity.ok(gameService.saveGameToHandle(gameToHandle));
+    }
+
 }

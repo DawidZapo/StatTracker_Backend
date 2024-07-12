@@ -90,6 +90,7 @@ public class StatTeamAndPlayerUtils {
             StatPlayer statPlayer = statPlayerMap.get(playerDto.getId());
             if (statPlayer != null) {
                 statPlayer.setStartingFive(playerDto.isStartingFive());
+                statPlayer.setOnCourt(playerDto.isStartingFive());
                 statPlayer.setShirtNumber(playerDto.getShirtNumber());
             }
         }

@@ -2,7 +2,7 @@ package com.stat_tracker.dto.plays;
 
 import com.stat_tracker.entity.plays.enums.Hand;
 
-public abstract class PlayDto {
+public class PlayDto {
     protected Long id;
     protected Long gameId;
     protected Long statPlayerId;
