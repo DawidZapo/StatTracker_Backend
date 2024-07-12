@@ -22,8 +22,10 @@ public abstract class Play {
     @JoinColumn(name = "stat_player_id")
     @JsonBackReference
     protected StatPlayer statPlayer;
-    @Column(name = "duration")
-    protected Long duration;
+    @Column(name = "time_remaining")
+    protected Long timeRemaining;
+    @Column(name = "quarter")
+    protected Integer quarter;
     @Column(name = "comments")
     protected String comments;
     @Column(name = "hand")
@@ -31,6 +33,14 @@ public abstract class Play {
     protected Hand hand;
     @Transient
     protected String playType = writePlayType();
+
+    public Integer getQuarter() {
+        return quarter;
+    }
+
+    public void setQuarter(Integer quarter) {
+        this.quarter = quarter;
+    }
 
     public Long getId() {
         return id;
@@ -56,12 +66,12 @@ public abstract class Play {
         this.statPlayer = statPlayer;
     }
 
-    public Long getDuration() {
-        return duration;
+    public Long getTimeRemaining() {
+        return timeRemaining;
     }
 
-    public void setDuration(Long duration) {
-        this.duration = duration;
+    public void setTimeRemaining(Long duration) {
+        this.timeRemaining = duration;
     }
 
     public String getComments() {

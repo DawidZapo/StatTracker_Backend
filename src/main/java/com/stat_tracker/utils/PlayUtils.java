@@ -100,7 +100,8 @@ public class PlayUtils {
         play.setStatPlayer(statPlayer);
         statPlayer.addPlay(play);
 
-        play.setDuration(playDto.getDuration());
+        play.setTimeRemaining(playDto.getTimeRemaining());
+        play.setQuarter(playDto.getQuarter());
         play.setComments(playDto.getComments());
         play.setHand(playDto.getHand());
     }

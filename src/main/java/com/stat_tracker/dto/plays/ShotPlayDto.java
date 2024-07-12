@@ -18,7 +18,8 @@ public class ShotPlayDto extends PlayDto {
     }
     public ShotPlayDto(ShotPlay shotPlay){
         super(shotPlay.getId(), shotPlay.getGame().getId(),
-                shotPlay.getStatPlayer().getId(),shotPlay.getDuration(), shotPlay.getComments(),
+                shotPlay.getStatPlayer().getId(), shotPlay.getStatPlayer().getPlayer().getFirstName(),
+                shotPlay.getStatPlayer().getPlayer().getLastName(), shotPlay.getTimeRemaining(), shotPlay.getQuarter() ,shotPlay.getComments(),
                 shotPlay.getPlayType(), shotPlay.getHand());
         this.type = shotPlay.getType();
         this.zone = shotPlay.getZone();

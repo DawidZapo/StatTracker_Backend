@@ -13,7 +13,7 @@ public class GameToHandleDto {
     private String season;
     private Integer quarterLengthMin;
     private Integer overtimeLengthMin;
-    private Long currentQuarterTimeMs;
+    private Long currentQuarterTimeRemainingMs;
     private Integer currentQuarter;
     private TeamDto home;
     private TeamDto away;
@@ -231,12 +231,12 @@ public class GameToHandleDto {
         this.quarterLengthMin = quarterLengthMin;
     }
 
-    public Long getCurrentQuarterTimeMs() {
-        return currentQuarterTimeMs;
+    public Long getCurrentQuarterTimeRemainingMs() {
+        return currentQuarterTimeRemainingMs;
     }
 
-    public void setCurrentQuarterTimeMs(Long currentQuarterTimeMs) {
-        this.currentQuarterTimeMs = currentQuarterTimeMs;
+    public void setCurrentQuarterTimeRemainingMs(Long currentQuarterTimeRemainingMs) {
+        this.currentQuarterTimeRemainingMs = currentQuarterTimeRemainingMs;
     }
 
     public Integer getCurrentQuarter() {

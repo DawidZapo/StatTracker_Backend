@@ -12,7 +12,8 @@ public class BlockDto extends PlayDto{
 
     public BlockDto(Block block) {
         super(block.getId(), block.getGame().getId(),
-                block.getStatPlayer().getId(),block.getDuration(), block.getComments(),
+                block.getStatPlayer().getId(), block.getStatPlayer().getPlayer().getFirstName(),
+                block.getStatPlayer().getPlayer().getLastName(), block.getTimeRemaining(), block.getQuarter(), block.getComments(),
                 block.getPlayType(), block.getHand());
 //        this.blockedStatPlayerId = block.getBlockedStatPlayer().getId();
         this.blockedStatPlayerId = (block.getBlockedStatPlayer() != null) ? block.getBlockedStatPlayer().getId() : null;

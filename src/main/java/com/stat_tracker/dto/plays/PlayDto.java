@@ -6,7 +6,10 @@ public abstract class PlayDto {
     protected Long id;
     protected Long gameId;
     protected Long statPlayerId;
-    protected Long duration;
+    protected String firstName;
+    protected String lastName;
+    protected Long timeRemaining;
+    protected Integer quarter;
     protected String comments;
     protected String playType;
     protected Hand hand;
@@ -14,14 +17,33 @@ public abstract class PlayDto {
     public PlayDto() {
     }
 
-    public PlayDto(Long id, Long gameId, Long statPlayerId, Long duration, String comments, String playType, Hand hand) {
+    public PlayDto(Long id, Long gameId, Long statPlayerId, String firstName, String lastName, Long timeRemaining, Integer quarter, String comments, String playType, Hand hand) {
         this.id = id;
         this.gameId = gameId;
         this.statPlayerId = statPlayerId;
-        this.duration = duration;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.timeRemaining = timeRemaining;
+        this.quarter = quarter;
         this.comments = comments;
         this.playType = playType;
         this.hand = hand;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -48,12 +70,12 @@ public abstract class PlayDto {
         this.statPlayerId = statPlayerId;
     }
 
-    public Long getDuration() {
-        return duration;
+    public Long getTimeRemaining() {
+        return timeRemaining;
     }
 
-    public void setDuration(Long duration) {
-        this.duration = duration;
+    public void setTimeRemaining(Long timeRemaining) {
+        this.timeRemaining = timeRemaining;
     }
 
     public String getComments() {
@@ -80,13 +102,22 @@ public abstract class PlayDto {
         this.hand = hand;
     }
 
+    public Integer getQuarter() {
+        return quarter;
+    }
+
+    public void setQuarter(Integer quarter) {
+        this.quarter = quarter;
+    }
+
     @Override
     public String toString() {
         return "PlayDto{" +
                 "id=" + id +
                 ", gameId=" + gameId +
                 ", statPlayerId=" + statPlayerId +
-                ", duration=" + duration +
+                ", timeRemaining=" + timeRemaining +
+                ", quarter=" + quarter +
                 ", comments='" + comments + '\'' +
                 ", playType='" + playType + '\'' +
                 ", hand=" + hand +

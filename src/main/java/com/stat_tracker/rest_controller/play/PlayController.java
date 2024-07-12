@@ -32,6 +32,7 @@ public class PlayController {
 
     @PostMapping("/play/save/assist")
     public ResponseEntity<Long> saveAssist(@RequestBody AssistDto assistDto){
+        System.out.println(assistDto);
         return ResponseEntity.ok(playService.saveAssist(assistDto));
     }
 

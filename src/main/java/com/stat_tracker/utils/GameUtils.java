@@ -62,7 +62,7 @@ public class GameUtils {
         game.setQuarterLengthMin(gameCreatedDto.getQuarterLengthMin());
         game.setOvertimeLengthMin(gameCreatedDto.getOvertimeLengthMin());
 
-        game.setCurrentQuarterTimeMs(0L);
+        game.setCurrentQuarterTimeRemainingMs(0L);
         game.setCurrentQuarter(1);
 
         StatTeam homeStatTeam = StatTeamAndPlayerUtils.createStatTeam(home,game,true, gameCreatedDto, homePlayers);
@@ -82,7 +82,7 @@ public class GameUtils {
         gameToHandleDto.setSeason(game.getSeason());
         gameToHandleDto.setQuarterLengthMin(game.getQuarterLengthMin());
         gameToHandleDto.setOvertimeLengthMin(game.getOvertimeLengthMin());
-        gameToHandleDto.setCurrentQuarterTimeMs(game.getCurrentQuarterTimeMs());
+        gameToHandleDto.setCurrentQuarterTimeRemainingMs(game.getCurrentQuarterTimeRemainingMs());
         gameToHandleDto.setCurrentQuarter(game.getCurrentQuarter());
 
         gameToHandleDto.setHome(createTeamDto(game.getHome()));
