@@ -149,7 +149,29 @@ public class GameUtils {
     }
 
     public static void updateGame(Game game, GameToHandleDto gameToHandleDto){
+        //to be finished
+        game.setLocalDateTime(gameToHandleDto.getLocalDateTime());
 
+//        official to be added
+//        game.setOfficial(gameToHandleDto.get);
+
+        game.setSeason(gameToHandleDto.getSeason());
+        game.setCurrentQuarter(gameToHandleDto.getCurrentQuarter());
+        game.setOvertimeLengthMin(gameToHandleDto.getOvertimeLengthMin());
+        game.setQuarterLengthMin(gameToHandleDto.getQuarterLengthMin());
+        game.setCurrentQuarterTimeRemainingMs(gameToHandleDto.getCurrentQuarterTimeRemainingMs());
+    }
+
+    public static void updateStatTeam(StatTeam statTeam, GameToHandleDto.TeamDto teamDto){
+        // to be finished
+    }
+
+    public static void updatePlay(Play play, PlayDto playDto){
+        // to be finished
+    }
+
+    public static void updateStatPlayer(StatPlayer statPlayer, GameToHandleDto.PlayerDto playerDto){
+        // to be finished
     }
 
 }
