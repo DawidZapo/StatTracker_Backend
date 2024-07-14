@@ -107,4 +107,6 @@ public abstract class Play {
         };
     }
 
+    public abstract StatPlayer getMinorPlayer();
+
 }

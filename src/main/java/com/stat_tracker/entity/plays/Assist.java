@@ -32,4 +32,9 @@ public class Assist extends Play {
     public void setType(AssistType assistType) {
         this.type = assistType;
     }
+
+    @Override
+    public StatPlayer getMinorPlayer() {
+        return this.toStatPlayer;
+    }
 }

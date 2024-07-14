@@ -5,17 +5,21 @@ import com.stat_tracker.dto.game.GameToHandleDto;
 import com.stat_tracker.dto.game.GameWithStatTeamsDto;
 import com.stat_tracker.dto.game.GameWithTeamNamesDto;
 import com.stat_tracker.dto.plays.*;
+import com.stat_tracker.dto.stat.StatLineDto;
 import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.Player;
 import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.plays.*;
 import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.entity.score.Score;
+import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GameUtils {
@@ -148,7 +152,7 @@ public class GameUtils {
         };
     }
 
-    public static void updateGame(Game game, GameToHandleDto gameToHandleDto){
+    public static void updateGame(Game game, GameToHandleDto gameToHandleDto, Set<StatPlayer> statPlayerSet){
         //to be finished
         game.setLocalDateTime(gameToHandleDto.getLocalDateTime());
 
@@ -160,18 +164,104 @@ public class GameUtils {
         game.setOvertimeLengthMin(gameToHandleDto.getOvertimeLengthMin());
         game.setQuarterLengthMin(gameToHandleDto.getQuarterLengthMin());
         game.setCurrentQuarterTimeRemainingMs(gameToHandleDto.getCurrentQuarterTimeRemainingMs());
+
+//        updateStatTeam(game.getHome(), gameToHandleDto.getHome(), statPlayerSet);
+//        updateStatTeam(game.getAway(), gameToHandleDto.getAway(), statPlayerSet);
+
+
+        for (Play play : game.getPlays()) {
+            Optional<PlayDto> matchingPlayDto = PlayUtils.findMatchingPlayDto(play, gameToHandleDto.getPlays());
+            matchingPlayDto.ifPresent(playDto -> updatePlay(play, playDto, statPlayerSet));
+        }
+
     }
 
-    public static void updateStatTeam(StatTeam statTeam, GameToHandleDto.TeamDto teamDto){
-        // to be finished
+    public static void updateStatTeam(StatTeam statTeam, GameToHandleDto.TeamDto teamDto, Set<StatPlayer> statPlayerSet){
+
+        for(var statPlayer : statTeam.getStatPlayers()){
+            Optional<GameToHandleDto.PlayerDto> matchingStatPlayer = PlayUtils.findMatchingStatPlayer(statPlayer,teamDto.getPlayers());
+            matchingStatPlayer.ifPresent(playerDto -> updateStatPlayer(statPlayer, playerDto, statPlayerSet));
+        }
+
+        updateStatLine(statTeam.getStatLine(), teamDto.getStats());
+
+        // update scores, to be added to DTO
+
     }
 
-    public static void updatePlay(Play play, PlayDto playDto){
-        // to be finished
+    public static void updatePlay(Play play, PlayDto playDto, Set<StatPlayer> set){
+        StatPlayer minorPlayer = null;
+
+        // kicha obiekt playDto nie porownuje sie z intancja np assistDTo
+
+
+        // seems to work babe
+        if(play instanceof Assist assist){
+            minorPlayer = PlayUtils.findMinorStatPlayer(set,assist);
+            if(playDto instanceof AssistDto assistDto){
+                System.out.println("hello");
+                PlayUtils.updateAssist(assist, assistDto, minorPlayer);
+            }
+        }
+//        else if(play instanceof Block block){
+//            minorPlayer = PlayUtils.findMinorStatPlayer(set, block);
+//            PlayUtils.updateBlock(block, (BlockDto) playDto, minorPlayer);
+//        }
+//        else if(play instanceof Foul foul){
+//            minorPlayer = PlayUtils.findMinorStatPlayer(set, foul);
+//            PlayUtils.updateFoul(foul, (FoulDto) playDto, minorPlayer);
+//        }
+//        else if(play instanceof Rebound rebound){
+//            PlayUtils.updateRebound(rebound, (ReboundDto) playDto);
+//        }
+//        else if(play instanceof ShotPlay shotPlay){
+//            PlayUtils.updateShotPlay(shotPlay, (ShotPlayDto) playDto);
+//        }
+//        else if(play instanceof Steal steal){
+//            minorPlayer = PlayUtils.findMinorStatPlayer(set, steal);
+//            PlayUtils.updateSteal(steal, (StealDto) playDto, minorPlayer);
+//        }
+//        else if(play instanceof Turnover turnover){
+//            minorPlayer = PlayUtils.findMinorStatPlayer(set, turnover);
+//            PlayUtils.updateTurnover(turnover, (TurnoverDto) playDto, minorPlayer);
+//        }
     }
 
-    public static void updateStatPlayer(StatPlayer statPlayer, GameToHandleDto.PlayerDto playerDto){
-        // to be finished
+    public static void updateStatPlayer(StatPlayer statPlayer, GameToHandleDto.PlayerDto playerDto, Set<StatPlayer> statPlayerSet){
+        statPlayer.setOnCourt(playerDto.getOnCourt());
+        statPlayer.setShirtNumber(playerDto.getShirtNumber());
+        statPlayer.setStartingFive(playerDto.getStartingFive());
+        updateStatLine(statPlayer.getStatLine(), playerDto.getStats());
+
+        for (var play : statPlayer.getPlays()) {
+            Optional<PlayDto> matchingPlayDto = PlayUtils.findMatchingPlayDto(play, playerDto.getPlays());
+            matchingPlayDto.ifPresent(playDto -> updatePlay(play, playDto, statPlayerSet));
+        }
+
+        updateStatLine(statPlayer.getStatLine(), playerDto.getStats());
+    }
+
+    public static void updateStatLine(StatLine statLine, StatLineDto statLineDto){
+        statLine.setTimeOnCourtInMs(statLineDto.getTimeOnCourtInMs());
+        statLine.setTwoAttempted(statLineDto.getTwoAttempted());
+        statLine.setTwoMade(statLineDto.getTwoMade());
+        statLine.setThreeAttempted(statLineDto.getThreeAttempted());
+        statLine.setThreeMade(statLineDto.getThreeMade());
+        statLine.setFreeThrowAttempted(statLineDto.getFreeThrowAttempted());
+        statLine.setFreeThrowMade(statLineDto.getFreeThrowMade());
+        statLine.setTotalPoints(statLineDto.getTotalPoints());
+        statLine.setOffRebounds(statLineDto.getOffRebounds());
+        statLine.setDefRebounds(statLineDto.getDefRebounds());
+        statLine.setAssists(statLineDto.getAssists());
+        statLine.setFouls(statLineDto.getFouls());
+        statLine.setForcedFouls(statLineDto.getForcedFouls());
+        statLine.setTurnovers(statLineDto.getTurnovers());
+        statLine.setSteals(statLineDto.getSteals());
+        statLine.setBlocks(statLineDto.getBlocks());
+        statLine.setBlocksReceived(statLineDto.getBlocksReceived());
+        statLine.setEvaluation(statLineDto.getEvaluation());
+        statLine.setPlusMinus(statLineDto.getPlusMinus());
+        statLine.setPossessions(statLineDto.getPossessions());
     }
 
 }

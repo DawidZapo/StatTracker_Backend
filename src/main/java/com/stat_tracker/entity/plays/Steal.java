@@ -23,4 +23,9 @@ public class Steal extends Play {
     public void setTurnoverForStatPlayer(StatPlayer stolenFromStatPlayer) {
         this.turnoverForStatPlayer = stolenFromStatPlayer;
     }
+
+    @Override
+    public StatPlayer getMinorPlayer() {
+        return this.turnoverForStatPlayer;
+    }
 }

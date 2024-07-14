@@ -33,4 +33,9 @@ public class Turnover extends Play {
     public void setType(TurnoverType type) {
         this.type = type;
     }
+
+    @Override
+    public StatPlayer getMinorPlayer() {
+        return this.stealForStatPlayer;
+    }
 }

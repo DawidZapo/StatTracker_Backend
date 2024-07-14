@@ -32,4 +32,9 @@ public class Foul extends Play {
     public void setType(FoulType type) {
         this.type = type;
     }
+
+    @Override
+    public StatPlayer getMinorPlayer() {
+        return this.foulOnStatPlayer;
+    }
 }

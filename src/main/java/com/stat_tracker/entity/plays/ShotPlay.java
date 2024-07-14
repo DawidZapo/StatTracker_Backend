@@ -1,5 +1,6 @@
 package com.stat_tracker.entity.plays;
 
+import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.entity.plays.enums.Contested;
 import com.stat_tracker.entity.plays.enums.ShotType;
@@ -71,5 +72,10 @@ public class ShotPlay extends Play {
 
     public void setOffTheDribble(Boolean offTheDribble) {
         this.offTheDribble = offTheDribble;
+    }
+
+    @Override
+    public StatPlayer getMinorPlayer() {
+        return null;
     }
 }

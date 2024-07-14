@@ -75,9 +75,4 @@ public class GameService {
         Game game = findById(id);
         return GameUtils.createGameToHandle(game);
     }
-
-    public GameToHandleDto saveGameToHandle(GameToHandleDto gameToHandleDto) {
-        Game game = findById(gameToHandleDto.getId());
-        return null;
-    }
 }

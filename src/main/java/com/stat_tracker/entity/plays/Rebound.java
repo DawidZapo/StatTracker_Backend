@@ -1,5 +1,6 @@
 package com.stat_tracker.entity.plays;
 
+import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.plays.abstract_play.Play;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,5 +18,10 @@ public class Rebound extends Play {
 
     public void setOffensive(Boolean offensive) {
         isOffensive = offensive;
+    }
+
+    @Override
+    public StatPlayer getMinorPlayer() {
+        return null;
     }
 }

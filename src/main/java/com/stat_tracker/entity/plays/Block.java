@@ -30,4 +30,9 @@ public class Block extends Play {
     public void setInThePaint(Boolean withinPerimeter) {
         this.inThePaint = withinPerimeter;
     }
+
+    @Override
+    public StatPlayer getMinorPlayer() {
+        return this.blockedStatPlayer;
+    }
 }
