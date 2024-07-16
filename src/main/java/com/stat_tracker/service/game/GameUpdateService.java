@@ -36,7 +36,8 @@ public class GameUpdateService {
         Set<StatPlayer> minorPlayers = findMinorPlayer(game);
 
         GameUtils.updateGame(game, gameToHandleDto, minorPlayers);
-        return null;
+
+        return GameUtils.createGameToHandle(gameRepository.save(game));
     }
 
     private HashSet<StatPlayer> findMinorPlayer(Game game){

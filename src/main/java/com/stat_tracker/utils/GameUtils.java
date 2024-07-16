@@ -1,5 +1,6 @@
 package com.stat_tracker.utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stat_tracker.dto.game.GameCreatedDto;
 import com.stat_tracker.dto.game.GameToHandleDto;
 import com.stat_tracker.dto.game.GameWithStatTeamsDto;
@@ -165,8 +166,8 @@ public class GameUtils {
         game.setQuarterLengthMin(gameToHandleDto.getQuarterLengthMin());
         game.setCurrentQuarterTimeRemainingMs(gameToHandleDto.getCurrentQuarterTimeRemainingMs());
 
-//        updateStatTeam(game.getHome(), gameToHandleDto.getHome(), statPlayerSet);
-//        updateStatTeam(game.getAway(), gameToHandleDto.getAway(), statPlayerSet);
+        updateStatTeam(game.getHome(), gameToHandleDto.getHome(), statPlayerSet);
+        updateStatTeam(game.getAway(), gameToHandleDto.getAway(), statPlayerSet);
 
 
         for (Play play : game.getPlays()) {
@@ -192,39 +193,33 @@ public class GameUtils {
     public static void updatePlay(Play play, PlayDto playDto, Set<StatPlayer> set){
         StatPlayer minorPlayer = null;
 
-        // kicha obiekt playDto nie porownuje sie z intancja np assistDTo
-
-
         // seems to work babe
-        if(play instanceof Assist assist){
+        if(play instanceof Assist assist && playDto instanceof AssistDto assistDto){
             minorPlayer = PlayUtils.findMinorStatPlayer(set,assist);
-            if(playDto instanceof AssistDto assistDto){
-                System.out.println("hello");
-                PlayUtils.updateAssist(assist, assistDto, minorPlayer);
-            }
+            PlayUtils.updateAssist(assist, assistDto, minorPlayer);
         }
-//        else if(play instanceof Block block){
-//            minorPlayer = PlayUtils.findMinorStatPlayer(set, block);
-//            PlayUtils.updateBlock(block, (BlockDto) playDto, minorPlayer);
-//        }
-//        else if(play instanceof Foul foul){
-//            minorPlayer = PlayUtils.findMinorStatPlayer(set, foul);
-//            PlayUtils.updateFoul(foul, (FoulDto) playDto, minorPlayer);
-//        }
-//        else if(play instanceof Rebound rebound){
-//            PlayUtils.updateRebound(rebound, (ReboundDto) playDto);
-//        }
-//        else if(play instanceof ShotPlay shotPlay){
-//            PlayUtils.updateShotPlay(shotPlay, (ShotPlayDto) playDto);
-//        }
-//        else if(play instanceof Steal steal){
-//            minorPlayer = PlayUtils.findMinorStatPlayer(set, steal);
-//            PlayUtils.updateSteal(steal, (StealDto) playDto, minorPlayer);
-//        }
-//        else if(play instanceof Turnover turnover){
-//            minorPlayer = PlayUtils.findMinorStatPlayer(set, turnover);
-//            PlayUtils.updateTurnover(turnover, (TurnoverDto) playDto, minorPlayer);
-//        }
+        else if(play instanceof Block block && playDto instanceof BlockDto blockDto){
+            minorPlayer = PlayUtils.findMinorStatPlayer(set, block);
+            PlayUtils.updateBlock(block, blockDto, minorPlayer);
+        }
+        else if(play instanceof Foul foul && playDto instanceof FoulDto foulDto){
+            minorPlayer = PlayUtils.findMinorStatPlayer(set, foul);
+            PlayUtils.updateFoul(foul, foulDto, minorPlayer);
+        }
+        else if(play instanceof Rebound rebound && playDto instanceof ReboundDto reboundDto){
+            PlayUtils.updateRebound(rebound, reboundDto);
+        }
+        else if(play instanceof ShotPlay shotPlay && playDto instanceof ShotPlayDto shotPlayDto){
+            PlayUtils.updateShotPlay(shotPlay, shotPlayDto);
+        }
+        else if(play instanceof Steal steal && playDto instanceof StealDto stealDto){
+            minorPlayer = PlayUtils.findMinorStatPlayer(set, steal);
+            PlayUtils.updateSteal(steal, stealDto, minorPlayer);
+        }
+        else if(play instanceof Turnover turnover && playDto instanceof TurnoverDto turnoverDto){
+            minorPlayer = PlayUtils.findMinorStatPlayer(set, turnover);
+            PlayUtils.updateTurnover(turnover, turnoverDto, minorPlayer);
+        }
     }
 
     public static void updateStatPlayer(StatPlayer statPlayer, GameToHandleDto.PlayerDto playerDto, Set<StatPlayer> statPlayerSet){
@@ -262,6 +257,44 @@ public class GameUtils {
         statLine.setEvaluation(statLineDto.getEvaluation());
         statLine.setPlusMinus(statLineDto.getPlusMinus());
         statLine.setPossessions(statLineDto.getPossessions());
+    }
+
+    public static void convertPlaysToPlayDto(GameToHandleDto gameToHandle){
+        ObjectMapper objectMapper = new ObjectMapper();
+        for (int i = 0; i < gameToHandle.getPlays().size(); i++) {
+            PlayDto playDto = gameToHandle.getPlays().get(i);
+            switch (playDto.getPlayType()) {
+                case "ASSIST" -> {
+                    AssistDto assistDto = objectMapper.convertValue(playDto, AssistDto.class);
+                    gameToHandle.getPlays().set(i, assistDto);
+                }
+                case "BLOCK" -> {
+                    BlockDto blockDto = objectMapper.convertValue(playDto, BlockDto.class);
+                    gameToHandle.getPlays().set(i, blockDto);
+                }
+                case "FOUL" -> {
+                    FoulDto foulDto = objectMapper.convertValue(playDto, FoulDto.class);
+                    gameToHandle.getPlays().set(i, foulDto);
+                }
+                case "REBOUND" -> {
+                    ReboundDto reboundDto = objectMapper.convertValue(playDto, ReboundDto.class);
+                    gameToHandle.getPlays().set(i, reboundDto);
+                }
+                case "SHOTPLAY" -> {
+                    ShotPlayDto shotPlayDto = objectMapper.convertValue(playDto, ShotPlayDto.class);
+                    gameToHandle.getPlays().set(i, shotPlayDto);
+                }
+                case "STEAL" -> {
+                    StealDto stealDto = objectMapper.convertValue(playDto, StealDto.class);
+                    gameToHandle.getPlays().set(i, stealDto);
+                }
+                case "TURNOVER" -> {
+                    TurnoverDto turnoverDto = objectMapper.convertValue(playDto, TurnoverDto.class);
+                    gameToHandle.getPlays().set(i, turnoverDto);
+                }
+                default -> throw new RuntimeException("Play not recognized as any DTO class");
+            }
+        }
     }
 
 }
