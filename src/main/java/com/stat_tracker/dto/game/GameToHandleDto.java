@@ -11,6 +11,7 @@ public class GameToHandleDto {
     private Long id;
     private LocalDateTime localDateTime;
     private String season;
+    private Boolean isOfficial;
     private Integer quarterLengthMin;
     private Integer overtimeLengthMin;
     private Long currentQuarterTimeRemainingMs;
@@ -305,6 +306,14 @@ public class GameToHandleDto {
 
     public void setOvertimeLengthMin(Integer overtimeLengthMin) {
         this.overtimeLengthMin = overtimeLengthMin;
+    }
+
+    public Boolean getOfficial() {
+        return isOfficial;
+    }
+
+    public void setOfficial(Boolean official) {
+        isOfficial = official;
     }
 
     @Override

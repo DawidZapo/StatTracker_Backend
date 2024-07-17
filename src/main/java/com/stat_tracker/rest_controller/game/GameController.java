@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stat_tracker.dto.game.*;
 import com.stat_tracker.service.game.GameService;
 import com.stat_tracker.service.game.GameUpdateService;
-import com.stat_tracker.utils.GameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,9 +49,6 @@ public class GameController {
 
     @PostMapping("/game/save")
     public ResponseEntity<GameToHandleDto> saveGame(@RequestBody GameToHandleDto gameToHandle){
-
-        GameUtils.convertPlaysToPlayDto(gameToHandle);
-
         return ResponseEntity.ok(gameUpdateService.saveGameToHandle(gameToHandle));
     }
 

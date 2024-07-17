@@ -28,7 +28,7 @@ public class GameUpdateService {
     }
 
     public GameToHandleDto saveGameToHandle(GameToHandleDto gameToHandleDto) {
-        // to be finished
+        GameUtils.convertPlaysToPlayDto(gameToHandleDto);
 
         Game game = gameRepository.findById(gameToHandleDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Game not found"));

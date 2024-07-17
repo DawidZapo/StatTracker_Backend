@@ -85,6 +85,7 @@ public class GameUtils {
         gameToHandleDto.setId(game.getId());
         gameToHandleDto.setLocalDateTime(game.getLocalDateTime());
         gameToHandleDto.setSeason(game.getSeason());
+        gameToHandleDto.setOfficial(game.getOfficial());
         gameToHandleDto.setQuarterLengthMin(game.getQuarterLengthMin());
         gameToHandleDto.setOvertimeLengthMin(game.getOvertimeLengthMin());
         gameToHandleDto.setCurrentQuarterTimeRemainingMs(game.getCurrentQuarterTimeRemainingMs());
@@ -154,12 +155,8 @@ public class GameUtils {
     }
 
     public static void updateGame(Game game, GameToHandleDto gameToHandleDto, Set<StatPlayer> statPlayerSet){
-        //to be finished
         game.setLocalDateTime(gameToHandleDto.getLocalDateTime());
-
-//        official to be added
-//        game.setOfficial(gameToHandleDto.get);
-
+        game.setOfficial(gameToHandleDto.getOfficial());
         game.setSeason(gameToHandleDto.getSeason());
         game.setCurrentQuarter(gameToHandleDto.getCurrentQuarter());
         game.setOvertimeLengthMin(gameToHandleDto.getOvertimeLengthMin());
