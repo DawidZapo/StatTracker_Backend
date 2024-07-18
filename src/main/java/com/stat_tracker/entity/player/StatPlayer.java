@@ -30,6 +30,8 @@ public class StatPlayer {
     private Boolean startingFive;
     @Column(name = "on_court")
     private Boolean onCourt;
+    @Column(name = "position")
+    private Integer positionOnCourt;
     @OneToMany(mappedBy = "statPlayer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Play> plays = new ArrayList<>();
@@ -99,6 +101,14 @@ public class StatPlayer {
 
     public void setOnCourt(Boolean onCourt) {
         this.onCourt = onCourt;
+    }
+
+    public Integer getPositionOnCourt() {
+        return positionOnCourt;
+    }
+
+    public void setPositionOnCourt(Integer position) {
+        this.positionOnCourt = position;
     }
 
     @Override

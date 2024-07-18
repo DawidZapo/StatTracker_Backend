@@ -121,6 +121,7 @@ public class GameUtils {
         player.setShirtNumber(statPlayer.getShirtNumber());
         player.setStartingFive(statPlayer.getStartingFive());
         player.setOnCourt(statPlayer.getOnCourt());
+        player.setPositionOnCourt(statPlayer.getPositionOnCourt());
         player.setStats(StatsUtils.createStatLineDto(statPlayer.getStatLine()));
         player.setPlays(createPlaysDto(statPlayer.getPlays()));
         player.setDominantHand(statPlayer.getPlayer().getDominantHand());
@@ -223,6 +224,7 @@ public class GameUtils {
         statPlayer.setOnCourt(playerDto.getOnCourt());
         statPlayer.setShirtNumber(playerDto.getShirtNumber());
         statPlayer.setStartingFive(playerDto.getStartingFive());
+        statPlayer.setPositionOnCourt(playerDto.getPositionOnCourt());
         updateStatLine(statPlayer.getStatLine(), playerDto.getStats());
 
         for (var play : statPlayer.getPlays()) {

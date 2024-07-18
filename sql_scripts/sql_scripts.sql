@@ -42,7 +42,7 @@ CREATE TABLE player (
     height DOUBLE,
     weight DOUBLE,
     hand VARCHAR(10),
-    position VARCHAR(100),
+    positionOnCourt VARCHAR(100),
     birth DATE,
     current_team_id BIGINT,
     FOREIGN KEY (current_team_id) REFERENCES Team(id)
@@ -103,6 +103,7 @@ CREATE TABLE stat_player (
     shirt_number INT,
     starting_five boolean,
     on_court boolean,
+    positionOnCourt INT,
     stat_line_id BIGINT,
     foreign key (player_id) references player(id),
     foreign key (stat_team_id) references stat_team(id),

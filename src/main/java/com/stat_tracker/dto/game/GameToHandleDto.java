@@ -97,6 +97,7 @@ public class GameToHandleDto {
         private Integer shirtNumber;
         private Boolean startingFive;
         private Boolean onCourt;
+        private Integer positionOnCourt;
         private StatLineDto stats;
         private List<PlayDto> plays;
         private Hand dominantHand;
@@ -179,6 +180,14 @@ public class GameToHandleDto {
 
         public void setDominantHand(Hand dominantHand) {
             this.dominantHand = dominantHand;
+        }
+
+        public Integer getPositionOnCourt() {
+            return positionOnCourt;
+        }
+
+        public void setPositionOnCourt(Integer positionOnCourt) {
+            this.positionOnCourt = positionOnCourt;
         }
 
         @Override
