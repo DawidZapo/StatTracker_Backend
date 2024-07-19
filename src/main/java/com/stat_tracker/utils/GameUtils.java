@@ -18,6 +18,7 @@ import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -139,7 +140,11 @@ public class GameUtils {
     }
 
     private static List<PlayDto> createPlaysDto(List<Play> plays){
-        return plays.stream().map(GameUtils::createPlayDto).collect(Collectors.toList());
+        return plays.stream().sorted(
+                        Comparator.comparingInt(Play::getQuarter).reversed()
+                        .thenComparingLong(Play::getTimeRemaining).reversed())
+                        .map(GameUtils::createPlayDto)
+                        .collect(Collectors.toList());
     }
 
     private static PlayDto createPlayDto(Play play) {

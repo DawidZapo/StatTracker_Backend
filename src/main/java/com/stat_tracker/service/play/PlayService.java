@@ -105,4 +105,13 @@ public class PlayService {
 
         return new TurnoverDto(playRepository.save(turnover));
     }
+
+    public ShotPlayDto createShotPlayDtoWithoutSaving(ShotPlayDto shotPlayDto){
+        StatPlayer statPlayer = statPlayerService.findById(shotPlayDto.getStatPlayerId());
+        shotPlayDto.setFirstName(statPlayer.getPlayer().getFirstName());
+        shotPlayDto.setLastName(statPlayer.getPlayer().getLastName());
+        shotPlayDto.setPlayType(ShotPlayDto.class.getSimpleName());
+
+        return shotPlayDto;
+    }
 }
