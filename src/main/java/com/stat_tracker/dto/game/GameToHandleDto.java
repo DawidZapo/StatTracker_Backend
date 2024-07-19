@@ -209,6 +209,7 @@ public class GameToHandleDto {
 
     public static class ScoreDto{
         private Long id;
+        private Long statTeamId;
         private Integer worth;
         private Integer part;
 
@@ -234,6 +235,14 @@ public class GameToHandleDto {
 
         public void setPart(Integer part) {
             this.part = part;
+        }
+
+        public Long getStatTeamId() {
+            return statTeamId;
+        }
+
+        public void setStatTeamId(Long statTeamId) {
+            this.statTeamId = statTeamId;
         }
     }
 
