@@ -1,7 +1,23 @@
 package com.stat_tracker.dto.plays;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.stat_tracker.entity.plays.enums.Hand;
-
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        include = JsonTypeInfo.As.PROPERTY,
+        property = "playType",  // Property used to determine the concrete class
+        visible = true
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = AssistDto.class, name = "ASSIST"),
+        @JsonSubTypes.Type(value = BlockDto.class, name = "BLOCK"),
+        @JsonSubTypes.Type(value = FoulDto.class, name = "FOUL"),
+        @JsonSubTypes.Type(value = ReboundDto.class, name = "REBOUND"),
+        @JsonSubTypes.Type(value = ShotPlayDto.class, name = "SHOTPLAY"),
+        @JsonSubTypes.Type(value = StealDto.class, name = "STEAL"),
+        @JsonSubTypes.Type(value = TurnoverDto.class, name = "TURNOVER")
+})
 public class PlayDto {
     protected Long id;
     protected Long gameId;

@@ -1,6 +1,5 @@
 package com.stat_tracker.utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.stat_tracker.dto.game.GameCreatedDto;
 import com.stat_tracker.dto.game.GameToHandleDto;
 import com.stat_tracker.dto.game.GameWithStatTeamsDto;
@@ -17,6 +16,7 @@ import com.stat_tracker.entity.stat.StatLine;
 import com.stat_tracker.entity.team.StatTeam;
 import com.stat_tracker.entity.team.Team;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
@@ -213,6 +213,7 @@ public class GameUtils {
             PlayUtils.updateRebound(rebound, reboundDto);
         }
         else if(play instanceof ShotPlay shotPlay && playDto instanceof ShotPlayDto shotPlayDto){
+            System.out.println("updating shotplay");
             PlayUtils.updateShotPlay(shotPlay, shotPlayDto);
         }
         else if(play instanceof Steal steal && playDto instanceof StealDto stealDto){
@@ -222,6 +223,9 @@ public class GameUtils {
         else if(play instanceof Turnover turnover && playDto instanceof TurnoverDto turnoverDto){
             minorPlayer = PlayUtils.findMinorStatPlayer(set, turnover);
             PlayUtils.updateTurnover(turnover, turnoverDto, minorPlayer);
+        }
+        else{
+            throw new RuntimeException("Play not recognized as playDto");
         }
     }
 
@@ -263,41 +267,25 @@ public class GameUtils {
         statLine.setPossessions(statLineDto.getPossessions());
     }
 
-    public static void convertPlaysToPlayDto(GameToHandleDto gameToHandle){
-        ObjectMapper objectMapper = new ObjectMapper();
-        for (int i = 0; i < gameToHandle.getPlays().size(); i++) {
-            PlayDto playDto = gameToHandle.getPlays().get(i);
-            switch (playDto.getPlayType()) {
-                case "ASSIST" -> {
-                    AssistDto assistDto = objectMapper.convertValue(playDto, AssistDto.class);
-                    gameToHandle.getPlays().set(i, assistDto);
+    public static void convertPlaysToPlayDto(List<PlayDto> plays) {
+        for (int i = 0; i < plays.size(); i++) {
+            PlayDto playDto = plays.get(i);
+            PlayDto convertedDto = null;
+            try {
+                switch (playDto.getPlayType()) {
+                    case "ASSIST" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), AssistDto.class);
+                    case "BLOCK" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), BlockDto.class);
+                    case "FOUL" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), FoulDto.class);
+                    case "REBOUND" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), ReboundDto.class);
+                    case "SHOTPLAY" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), ShotPlayDto.class);
+                    case "STEAL" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), StealDto.class);
+                    case "TURNOVER" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), TurnoverDto.class);
+                    default -> throw new RuntimeException("Play not recognized as any DTO class");
                 }
-                case "BLOCK" -> {
-                    BlockDto blockDto = objectMapper.convertValue(playDto, BlockDto.class);
-                    gameToHandle.getPlays().set(i, blockDto);
-                }
-                case "FOUL" -> {
-                    FoulDto foulDto = objectMapper.convertValue(playDto, FoulDto.class);
-                    gameToHandle.getPlays().set(i, foulDto);
-                }
-                case "REBOUND" -> {
-                    ReboundDto reboundDto = objectMapper.convertValue(playDto, ReboundDto.class);
-                    gameToHandle.getPlays().set(i, reboundDto);
-                }
-                case "SHOTPLAY" -> {
-                    ShotPlayDto shotPlayDto = objectMapper.convertValue(playDto, ShotPlayDto.class);
-                    gameToHandle.getPlays().set(i, shotPlayDto);
-                }
-                case "STEAL" -> {
-                    StealDto stealDto = objectMapper.convertValue(playDto, StealDto.class);
-                    gameToHandle.getPlays().set(i, stealDto);
-                }
-                case "TURNOVER" -> {
-                    TurnoverDto turnoverDto = objectMapper.convertValue(playDto, TurnoverDto.class);
-                    gameToHandle.getPlays().set(i, turnoverDto);
-                }
-                default -> throw new RuntimeException("Play not recognized as any DTO class");
+            } catch (IOException e) {
+                throw new RuntimeException("Error converting playDto to specific type", e);
             }
+            plays.set(i, convertedDto);
         }
     }
 

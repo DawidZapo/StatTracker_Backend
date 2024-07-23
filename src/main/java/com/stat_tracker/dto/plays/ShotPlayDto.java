@@ -1,16 +1,23 @@
 package com.stat_tracker.dto.plays;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.stat_tracker.entity.plays.ShotPlay;
 import com.stat_tracker.entity.plays.enums.Contested;
 import com.stat_tracker.entity.plays.enums.ShotType;
 import com.stat_tracker.entity.plays.enums.Zone;
 
 public class ShotPlayDto extends PlayDto {
+    @JsonProperty("type")
     private ShotType type;
+    @JsonProperty("offTheDribble")
     private Boolean offTheDribble;
+    @JsonProperty("zone")
     private Zone zone;
+    @JsonProperty("made")
     private Boolean made;
+    @JsonProperty("contested")
     private Contested contested;
+    @JsonProperty("worth")
     private Integer worth;
 
     public ShotPlayDto(){
