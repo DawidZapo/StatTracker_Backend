@@ -11,6 +11,7 @@ import com.stat_tracker.service.player.StatPlayerService;
 import com.stat_tracker.utils.PlayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,13 +32,26 @@ public class PlayService {
         return playRepository.findAll();
     }
 
+    public Play findById(Long id){
+        return playRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Play not found id: " + id));
+    }
+
+    @Transactional
     public ShotPlayDto savePlay(ShotPlayDto shotPlayDto){
         StatPlayer statPlayer = statPlayerService.findById(shotPlayDto.getStatPlayerId());
         Game game = gameService.findById(shotPlayDto.getGameId());
 
-        ShotPlay shotPlay = PlayUtils.createShotPlay(shotPlayDto, game, statPlayer);
 
-        return new ShotPlayDto(playRepository.save(shotPlay));
+        if(shotPlayDto.getId() != null){
+            ShotPlay existingShotPlay = (ShotPlay) findById(shotPlayDto.getId());
+            PlayUtils.updateShotPlay(existingShotPlay, shotPlayDto);
+            return new ShotPlayDto(playRepository.save(existingShotPlay));
+        }
+        else{
+            ShotPlay shotPlay = PlayUtils.createShotPlay(shotPlayDto, game, statPlayer);
+            return new ShotPlayDto(playRepository.save(shotPlay));
+        }
     }
 
     public AssistDto saveAssist(AssistDto assistDto){

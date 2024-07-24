@@ -143,6 +143,7 @@ public class PlayUtils {
     }
 
     public static void updateShotPlay(ShotPlay shotPlay, ShotPlayDto shotPlayDto){
+        updateCommonPlayPart(shotPlay, shotPlayDto);
         shotPlay.setType(shotPlayDto.getType());
         shotPlay.setOffTheDribble(shotPlayDto.getOffTheDribble());
         shotPlay.setZone(shotPlayDto.getZone());
