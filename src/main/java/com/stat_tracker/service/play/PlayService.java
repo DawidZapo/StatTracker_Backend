@@ -59,10 +59,19 @@ public class PlayService {
         StatPlayer toStatPlayer = (assistDto.getToStatPlayerId() != null) ? statPlayerService.findById(assistDto.getToStatPlayerId()) : null;
         Game game = gameService.findById(assistDto.getGameId());
 
-        Assist assist = PlayUtils.createAssist(assistDto, game, statPlayer, toStatPlayer);
-//        System.out.println(assist);
-//        return null;
-        return new AssistDto(playRepository.save(assist));
+
+        if(assistDto.getId() != null){
+            Assist existingAssist = (Assist) findById(assistDto.getId());
+            PlayUtils.updateAssist(existingAssist, assistDto, toStatPlayer);
+            return new AssistDto(playRepository.save(existingAssist));
+        }
+        else{
+            Assist assist = PlayUtils.createAssist(assistDto, game, statPlayer, toStatPlayer);
+            return new AssistDto(playRepository.save(assist));
+        }
+
+//        Assist assist = PlayUtils.createAssist(assistDto, game, statPlayer, toStatPlayer);
+//        return new AssistDto(playRepository.save(assist));
     }
 
     public BlockDto saveBlock(BlockDto blockDto){
