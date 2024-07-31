@@ -138,19 +138,25 @@ public class PlayService {
             return new StealDto(playRepository.save(steal));
         }
 
-//        Steal steal = PlayUtils.createSteal(stealDto, game, statPlayer, turnoverForStatPlayer);
-//        return new StealDto(playRepository.save(steal));
     }
 
     public TurnoverDto saveTurnover(TurnoverDto turnoverDto){
         StatPlayer statPlayer = statPlayerService.findById(turnoverDto.getStatPlayerId());
         StatPlayer stealForStatPlayer = (turnoverDto.getStealForStatPlayerId() != null) ? statPlayerService.findById(turnoverDto.getStealForStatPlayerId()) : null;
-
         Game game = gameService.findById(turnoverDto.getGameId());
 
-        Turnover turnover = PlayUtils.createTurnover(turnoverDto, game, statPlayer, stealForStatPlayer);
+        if(turnoverDto.getId() != null){
+            Turnover existingTurnover = (Turnover) findById(turnoverDto.getId());
+            PlayUtils.updateTurnover(existingTurnover, turnoverDto, stealForStatPlayer);
+            return new TurnoverDto(playRepository.save(existingTurnover));
+        }
+        else{
+            Turnover turnover = PlayUtils.createTurnover(turnoverDto, game, statPlayer, stealForStatPlayer);
+            return new TurnoverDto(playRepository.save(turnover));
+        }
 
-        return new TurnoverDto(playRepository.save(turnover));
+//        Turnover turnover = PlayUtils.createTurnover(turnoverDto, game, statPlayer, stealForStatPlayer);
+//        return new TurnoverDto(playRepository.save(turnover));
     }
 
     public ShotPlayDto createShotPlayDtoWithoutSaving(ShotPlayDto shotPlayDto){

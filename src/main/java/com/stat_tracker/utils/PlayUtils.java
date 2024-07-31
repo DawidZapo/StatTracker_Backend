@@ -160,6 +160,7 @@ public class PlayUtils {
     public static void updateTurnover(Turnover turnover, TurnoverDto turnoverDto, StatPlayer stealForStatPlayer){
         updateCommonPlayPart(turnover, turnoverDto);
         turnover.setStealForStatPlayer(stealForStatPlayer);
+        turnover.setType(turnoverDto.getType());
     }
 
     public static Optional<PlayDto> findMatchingPlayDto(Play play, List<PlayDto> playDtos) {
