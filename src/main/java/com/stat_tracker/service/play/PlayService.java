@@ -102,8 +102,6 @@ public class PlayService {
             return new ReboundDto(playRepository.save(rebound));
         }
 
-//        Rebound rebound = PlayUtils.createRebound(reboundDto, game, statPlayer);
-//        return new ReboundDto(playRepository.save(rebound));
     }
 
     public FoulDto saveFoul(FoulDto foulDto){
@@ -128,12 +126,20 @@ public class PlayService {
     public StealDto saveSteal(StealDto stealDto){
         StatPlayer statPlayer = statPlayerService.findById(stealDto.getStatPlayerId());
         StatPlayer turnoverForStatPlayer = (stealDto.getTurnoverForStatPlayerId() != null) ? statPlayerService.findById(stealDto.getTurnoverForStatPlayerId()) : null;
-
         Game game = gameService.findById(stealDto.getGameId());
 
-        Steal steal = PlayUtils.createSteal(stealDto, game, statPlayer, turnoverForStatPlayer);
+        if(stealDto.getId() != null){
+            Steal existingSteal = (Steal) findById(stealDto.getId());
+            PlayUtils.updateSteal(existingSteal, stealDto, turnoverForStatPlayer);
+            return new StealDto(playRepository.save(existingSteal));
+        }
+        else{
+            Steal steal = PlayUtils.createSteal(stealDto, game, statPlayer, turnoverForStatPlayer);
+            return new StealDto(playRepository.save(steal));
+        }
 
-        return new StealDto(playRepository.save(steal));
+//        Steal steal = PlayUtils.createSteal(stealDto, game, statPlayer, turnoverForStatPlayer);
+//        return new StealDto(playRepository.save(steal));
     }
 
     public TurnoverDto saveTurnover(TurnoverDto turnoverDto){
