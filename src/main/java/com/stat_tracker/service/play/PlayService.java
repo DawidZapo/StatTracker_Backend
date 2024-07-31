@@ -90,12 +90,20 @@ public class PlayService {
 
     public ReboundDto saveRebound(ReboundDto reboundDto){
         StatPlayer statPlayer = statPlayerService.findById(reboundDto.getStatPlayerId());
-
         Game game = gameService.findById(reboundDto.getGameId());
 
-        Rebound rebound = PlayUtils.createRebound(reboundDto, game, statPlayer);
+        if(reboundDto.getId() != null){
+            Rebound existingRebound = (Rebound) findById(reboundDto.getId());
+            PlayUtils.updateRebound(existingRebound, reboundDto);
+            return new ReboundDto(playRepository.save(existingRebound));
+        }
+        else{
+            Rebound rebound = PlayUtils.createRebound(reboundDto, game, statPlayer);
+            return new ReboundDto(playRepository.save(rebound));
+        }
 
-        return new ReboundDto(playRepository.save(rebound));
+//        Rebound rebound = PlayUtils.createRebound(reboundDto, game, statPlayer);
+//        return new ReboundDto(playRepository.save(rebound));
     }
 
     public FoulDto saveFoul(FoulDto foulDto){
