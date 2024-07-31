@@ -70,19 +70,25 @@ public class PlayService {
             return new AssistDto(playRepository.save(assist));
         }
 
-//        Assist assist = PlayUtils.createAssist(assistDto, game, statPlayer, toStatPlayer);
-//        return new AssistDto(playRepository.save(assist));
     }
 
     public BlockDto saveBlock(BlockDto blockDto){
         StatPlayer statPlayer = statPlayerService.findById(blockDto.getStatPlayerId());
         StatPlayer blockedStatPlayer = (blockDto.getBlockedStatPlayerId() != null) ? statPlayerService.findById(blockDto.getBlockedStatPlayerId()) : null;
-
         Game game = gameService.findById(blockDto.getGameId());
 
-        Block block = PlayUtils.createBlock(blockDto, game, statPlayer, blockedStatPlayer);
+        if(blockDto.getId() != null){
+            Block existingBlock = (Block) findById(blockDto.getId());
+            PlayUtils.updateBlock(existingBlock, blockDto, blockedStatPlayer);
+            return new BlockDto(playRepository.save(existingBlock));
+        }
+        else{
+            Block block = PlayUtils.createBlock(blockDto, game, statPlayer, blockedStatPlayer);
+            return new BlockDto(playRepository.save(block));
+        }
 
-        return new BlockDto(playRepository.save(block));
+//        Block block = PlayUtils.createBlock(blockDto, game, statPlayer, blockedStatPlayer);
+//        return new BlockDto(playRepository.save(block));
     }
 
     public ReboundDto saveRebound(ReboundDto reboundDto){
