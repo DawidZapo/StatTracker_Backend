@@ -156,6 +156,7 @@ public class GameUtils {
             case ShotPlay shotPlay -> new ShotPlayDto(shotPlay);
             case Steal steal -> new StealDto(steal);
             case Turnover turnover -> new TurnoverDto(turnover);
+            case Violation violation -> new ViolationDto(violation);
             default -> throw new RuntimeException("Play not found as an instance of some class");
         };
     }
@@ -213,7 +214,6 @@ public class GameUtils {
             PlayUtils.updateRebound(rebound, reboundDto);
         }
         else if(play instanceof ShotPlay shotPlay && playDto instanceof ShotPlayDto shotPlayDto){
-            System.out.println("updating shotplay");
             PlayUtils.updateShotPlay(shotPlay, shotPlayDto);
         }
         else if(play instanceof Steal steal && playDto instanceof StealDto stealDto){
@@ -223,6 +223,9 @@ public class GameUtils {
         else if(play instanceof Turnover turnover && playDto instanceof TurnoverDto turnoverDto){
             minorPlayer = PlayUtils.findMinorStatPlayer(set, turnover);
             PlayUtils.updateTurnover(turnover, turnoverDto, minorPlayer);
+        }
+        else if(play instanceof Violation violation && playDto instanceof ViolationDto violationDto){
+            PlayUtils.updateViolation(violation, violationDto);
         }
         else{
             throw new RuntimeException("Play not recognized as playDto");
@@ -280,6 +283,7 @@ public class GameUtils {
                     case "SHOTPLAY" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), ShotPlayDto.class);
                     case "STEAL" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), StealDto.class);
                     case "TURNOVER" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), TurnoverDto.class);
+                    case "VIOLATION" -> convertedDto = JsonUtils.fromJson(JsonUtils.toJson(playDto), ViolationDto.class);
                     default -> throw new RuntimeException("Play not recognized as any DTO class");
                 }
             } catch (IOException e) {

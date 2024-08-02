@@ -99,6 +99,17 @@ public class PlayUtils {
         return turnover;
     }
 
+    public static Violation createViolation(ViolationDto violationDto, Game game, StatPlayer statPlayer){
+        Violation violation = new Violation();
+        violation.setId(null);
+
+        setCommonFields(violation, violationDto, game, statPlayer);
+
+        violation.setType(violationDto.getType());
+
+        return violation;
+    }
+
     private static void setCommonFields(Play play, PlayDto playDto, Game game, StatPlayer statPlayer) {
         play.setGame(game);
         game.addPlay(play);
@@ -140,6 +151,11 @@ public class PlayUtils {
     public static void updateRebound(Rebound rebound, ReboundDto reboundDto){
         updateCommonPlayPart(rebound, reboundDto);
         rebound.setOffensive(reboundDto.isOffensive());
+    }
+
+    public static void updateViolation(Violation violation, ViolationDto violationDto){
+        updateCommonPlayPart(violation, violationDto);
+        violation.setType(violationDto.getType());
     }
 
     public static void updateShotPlay(ShotPlay shotPlay, ShotPlayDto shotPlayDto){

@@ -104,6 +104,22 @@ public class PlayService {
 
     }
 
+    public ViolationDto saveViolation(ViolationDto violationDto){
+        StatPlayer statPlayer = statPlayerService.findById(violationDto.getStatPlayerId());
+        Game game = gameService.findById(violationDto.getGameId());
+
+        if(violationDto.getId() != null){
+            Violation existingViolation = (Violation) findById(violationDto.getId());
+            PlayUtils.updateViolation(existingViolation, violationDto);
+            return new ViolationDto(playRepository.save(existingViolation));
+        }
+        else{
+            Violation violation = PlayUtils.createViolation(violationDto, game, statPlayer);
+            return new ViolationDto(playRepository.save(violation));
+        }
+
+    }
+
     public FoulDto saveFoul(FoulDto foulDto){
         StatPlayer statPlayer = statPlayerService.findById(foulDto.getStatPlayerId());
         StatPlayer foulOnStatPlayer = (foulDto.getFoulOnStatPlayerId() != null) ? statPlayerService.findById(foulDto.getFoulOnStatPlayerId()) : null;
@@ -155,9 +171,8 @@ public class PlayService {
             return new TurnoverDto(playRepository.save(turnover));
         }
 
-//        Turnover turnover = PlayUtils.createTurnover(turnoverDto, game, statPlayer, stealForStatPlayer);
-//        return new TurnoverDto(playRepository.save(turnover));
     }
+
 
     public ShotPlayDto createShotPlayDtoWithoutSaving(ShotPlayDto shotPlayDto){
         StatPlayer statPlayer = statPlayerService.findById(shotPlayDto.getStatPlayerId());

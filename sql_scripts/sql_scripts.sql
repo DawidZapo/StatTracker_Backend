@@ -218,6 +218,19 @@ CREATE TABLE turnover (
     FOREIGN KEY (steal_for_stat_player_id) REFERENCES stat_player(id)
 );
 
+CREATE TABLE violation (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    game_id BIGINT,
+    stat_player_id BIGINT,
+    time_remaining BIGINT,
+    `quarter` INT,
+    comments TEXT,
+    hand VARCHAR(255),
+    `type` boolean,
+    FOREIGN KEY (game_id) REFERENCES game(id),
+    FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
+);
+
 
 CREATE TABLE play_seq (
     next_val BIGINT NOT NULL

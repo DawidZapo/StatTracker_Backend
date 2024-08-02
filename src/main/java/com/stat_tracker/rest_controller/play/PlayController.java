@@ -60,4 +60,9 @@ public class PlayController {
         return ResponseEntity.ok(playService.saveTurnover(turnoverDto));
     }
 
+    @PostMapping("/play/save/violation")
+    public ResponseEntity<ViolationDto> saveViolation(@RequestBody ViolationDto violationDto){
+        return ResponseEntity.ok(playService.saveViolation(violationDto));
+    }
+
 }

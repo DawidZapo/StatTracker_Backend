@@ -102,7 +102,7 @@ public abstract class Play {
         String className = this.getClass().getSimpleName().toUpperCase();
 
         return switch (className) {
-            case "ASSIST", "BLOCK", "FOUL", "REBOUND", "SHOTPLAY", "STEAL", "TURNOVER" -> className;
+            case "ASSIST", "BLOCK", "FOUL", "REBOUND", "SHOTPLAY", "STEAL", "TURNOVER", "VIOLATION" -> className;
             default -> throw new RuntimeException("No play type match");
         };
     }
