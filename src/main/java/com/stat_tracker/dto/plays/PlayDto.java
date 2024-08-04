@@ -16,7 +16,8 @@ import com.stat_tracker.entity.plays.enums.Hand;
         @JsonSubTypes.Type(value = ReboundDto.class, name = "REBOUND"),
         @JsonSubTypes.Type(value = ShotPlayDto.class, name = "SHOTPLAY"),
         @JsonSubTypes.Type(value = StealDto.class, name = "STEAL"),
-        @JsonSubTypes.Type(value = TurnoverDto.class, name = "TURNOVER")
+        @JsonSubTypes.Type(value = TurnoverDto.class, name = "TURNOVER"),
+        @JsonSubTypes.Type(value = ViolationDto.class, name = "VIOLATION")
 })
 public class PlayDto {
     protected Long id;

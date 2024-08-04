@@ -226,7 +226,7 @@ CREATE TABLE violation (
     `quarter` INT,
     comments TEXT,
     hand VARCHAR(255),
-    `type` boolean,
+    `type` VARCHAR(255),
     FOREIGN KEY (game_id) REFERENCES game(id),
     FOREIGN KEY (stat_player_id) REFERENCES stat_player(id)
 );
