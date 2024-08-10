@@ -13,7 +13,7 @@ public class ViolationDto extends PlayDto{
     public ViolationDto(Violation violation) {
         super(violation.getId(), violation.getGame().getId(),
                 violation.getStatPlayer().getId(), violation.getStatPlayer().getPlayer().getFirstName(),
-                violation.getStatPlayer().getPlayer().getLastName(),violation.getTimeRemaining(),violation.getQuarter(), violation.getComments(),
+                violation.getStatPlayer().getPlayer().getLastName(),violation.getTimeRemaining(),violation.getQuarter(), violation.getOrder(), violation.getComments(),
                 violation.getPlayType(), violation.getHand());
         this.type = violation.getType();
     }

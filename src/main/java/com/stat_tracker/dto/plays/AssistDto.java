@@ -14,7 +14,7 @@ public class AssistDto extends PlayDto{
     public AssistDto(Assist assist) {
         super(assist.getId(), assist.getGame().getId(),
                 assist.getStatPlayer().getId(), assist.getStatPlayer().getPlayer().getFirstName(),
-                assist.getStatPlayer().getPlayer().getLastName(),assist.getTimeRemaining(), assist.getQuarter(), assist.getComments(),
+                assist.getStatPlayer().getPlayer().getLastName(),assist.getTimeRemaining(), assist.getQuarter(), assist.getOrder(), assist.getComments(),
                 assist.getPlayType(), assist.getHand());
 //        this.toStatPlayerId = assist.getToStatPlayer().getId();
         this.toStatPlayerId = (assist.getToStatPlayer() != null) ? assist.getToStatPlayer().getId() : null;

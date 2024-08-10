@@ -27,6 +27,7 @@ public class PlayDto {
     protected String lastName;
     protected Long timeRemaining;
     protected Integer quarter;
+    protected Integer order;
     protected String comments;
     protected String playType;
     protected Hand hand;
@@ -34,7 +35,7 @@ public class PlayDto {
     public PlayDto() {
     }
 
-    public PlayDto(Long id, Long gameId, Long statPlayerId, String firstName, String lastName, Long timeRemaining, Integer quarter, String comments, String playType, Hand hand) {
+    public PlayDto(Long id, Long gameId, Long statPlayerId, String firstName, String lastName, Long timeRemaining, Integer quarter, Integer order, String comments, String playType, Hand hand) {
         this.id = id;
         this.gameId = gameId;
         this.statPlayerId = statPlayerId;
@@ -42,6 +43,7 @@ public class PlayDto {
         this.lastName = lastName;
         this.timeRemaining = timeRemaining;
         this.quarter = quarter;
+        this.order = order;
         this.comments = comments;
         this.playType = playType;
         this.hand = hand;
@@ -125,6 +127,14 @@ public class PlayDto {
 
     public void setQuarter(Integer quarter) {
         this.quarter = quarter;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     @Override

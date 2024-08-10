@@ -121,6 +121,7 @@ public class PlayUtils {
         play.setQuarter(playDto.getQuarter());
         play.setComments(playDto.getComments());
         play.setHand(playDto.getHand());
+        play.setOrder(playDto.getOrder());
     }
 
     private static void updateCommonPlayPart(Play play, PlayDto playDto){
@@ -128,6 +129,7 @@ public class PlayUtils {
         play.setHand(playDto.getHand());
         play.setComments(playDto.getComments());
         play.setTimeRemaining(playDto.getTimeRemaining());
+        play.setOrder(playDto.getOrder());
     }
 
     public static void updateAssist(Assist assist, AssistDto assistDto, StatPlayer toStatPlayer){

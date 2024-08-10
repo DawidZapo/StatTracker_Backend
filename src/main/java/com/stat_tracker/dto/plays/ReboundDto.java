@@ -12,7 +12,7 @@ public class ReboundDto extends PlayDto{
     public ReboundDto(Rebound rebound) {
         super(rebound.getId(), rebound.getGame().getId(),
                 rebound.getStatPlayer().getId(), rebound.getStatPlayer().getPlayer().getFirstName(),
-                rebound.getStatPlayer().getPlayer().getLastName(),rebound.getTimeRemaining(),rebound.getQuarter(), rebound.getComments(),
+                rebound.getStatPlayer().getPlayer().getLastName(),rebound.getTimeRemaining(),rebound.getQuarter(), rebound.getOrder(), rebound.getComments(),
                 rebound.getPlayType(), rebound.getHand());
         this.offensive = rebound.getOffensive();
     }

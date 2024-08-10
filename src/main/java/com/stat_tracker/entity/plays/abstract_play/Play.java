@@ -26,6 +26,8 @@ public abstract class Play {
     protected Long timeRemaining;
     @Column(name = "quarter")
     protected Integer quarter;
+    @Column(name = "possible_order")
+    protected Integer order;
     @Column(name = "comments")
     protected String comments;
     @Column(name = "hand")
@@ -96,6 +98,14 @@ public abstract class Play {
 
     public String getPlayType() {
         return playType;
+    }
+
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
     }
 
     private String writePlayType() {
