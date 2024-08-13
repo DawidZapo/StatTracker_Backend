@@ -70,7 +70,7 @@ public class PlayService {
         StatPlayer statPlayer = statPlayerService.findById(assistDto.getStatPlayerId());
         StatPlayer toStatPlayer = (assistDto.getToStatPlayerId() != null) ? statPlayerService.findById(assistDto.getToStatPlayerId()) : null;
         Game game = gameService.findById(assistDto.getGameId());
-
+        Integer orderForPlay = findOrderNumberOrMinusOne(assistDto.getTimeRemaining(), assistDto.getQuarter());
 
         if(assistDto.getId() != null){
             Assist existingAssist = (Assist) findById(assistDto.getId());
@@ -78,7 +78,7 @@ public class PlayService {
             return new AssistDto(playRepository.save(existingAssist));
         }
         else{
-            Assist assist = PlayUtils.createAssist(assistDto, game, statPlayer, toStatPlayer);
+            Assist assist = PlayUtils.createAssist(assistDto, orderForPlay, game, statPlayer, toStatPlayer);
             return new AssistDto(playRepository.save(assist));
         }
 
@@ -88,6 +88,8 @@ public class PlayService {
         StatPlayer statPlayer = statPlayerService.findById(blockDto.getStatPlayerId());
         StatPlayer blockedStatPlayer = (blockDto.getBlockedStatPlayerId() != null) ? statPlayerService.findById(blockDto.getBlockedStatPlayerId()) : null;
         Game game = gameService.findById(blockDto.getGameId());
+        Integer orderForPlay = findOrderNumberOrMinusOne(blockDto.getTimeRemaining(), blockDto.getQuarter());
+
 
         if(blockDto.getId() != null){
             Block existingBlock = (Block) findById(blockDto.getId());
@@ -95,7 +97,7 @@ public class PlayService {
             return new BlockDto(playRepository.save(existingBlock));
         }
         else{
-            Block block = PlayUtils.createBlock(blockDto, game, statPlayer, blockedStatPlayer);
+            Block block = PlayUtils.createBlock(blockDto, orderForPlay, game, statPlayer, blockedStatPlayer);
             return new BlockDto(playRepository.save(block));
         }
     }
@@ -103,6 +105,8 @@ public class PlayService {
     public ReboundDto saveRebound(ReboundDto reboundDto){
         StatPlayer statPlayer = statPlayerService.findById(reboundDto.getStatPlayerId());
         Game game = gameService.findById(reboundDto.getGameId());
+        Integer orderForPlay = findOrderNumberOrMinusOne(reboundDto.getTimeRemaining(), reboundDto.getQuarter());
+
 
         if(reboundDto.getId() != null){
             Rebound existingRebound = (Rebound) findById(reboundDto.getId());
@@ -110,7 +114,7 @@ public class PlayService {
             return new ReboundDto(playRepository.save(existingRebound));
         }
         else{
-            Rebound rebound = PlayUtils.createRebound(reboundDto, game, statPlayer);
+            Rebound rebound = PlayUtils.createRebound(reboundDto, orderForPlay, game, statPlayer);
             return new ReboundDto(playRepository.save(rebound));
         }
 
@@ -119,6 +123,8 @@ public class PlayService {
     public ViolationDto saveViolation(ViolationDto violationDto){
         StatPlayer statPlayer = statPlayerService.findById(violationDto.getStatPlayerId());
         Game game = gameService.findById(violationDto.getGameId());
+        Integer orderForPlay = findOrderNumberOrMinusOne(violationDto.getTimeRemaining(), violationDto.getQuarter());
+
 
         if(violationDto.getId() != null){
             Violation existingViolation = (Violation) findById(violationDto.getId());
@@ -126,7 +132,7 @@ public class PlayService {
             return new ViolationDto(playRepository.save(existingViolation));
         }
         else{
-            Violation violation = PlayUtils.createViolation(violationDto, game, statPlayer);
+            Violation violation = PlayUtils.createViolation(violationDto, orderForPlay, game, statPlayer);
             return new ViolationDto(playRepository.save(violation));
         }
 
@@ -136,6 +142,8 @@ public class PlayService {
         StatPlayer statPlayer = statPlayerService.findById(foulDto.getStatPlayerId());
         StatPlayer foulOnStatPlayer = (foulDto.getFoulOnStatPlayerId() != null) ? statPlayerService.findById(foulDto.getFoulOnStatPlayerId()) : null;
         Game game = gameService.findById(foulDto.getGameId());
+        Integer orderForPlay = findOrderNumberOrMinusOne(foulDto.getTimeRemaining(), foulDto.getQuarter());
+
 
         if(foulDto.getId() != null){
             Foul existingFoul = (Foul) findById(foulDto.getId());
@@ -143,7 +151,7 @@ public class PlayService {
             return new FoulDto(playRepository.save(existingFoul));
         }
         else{
-            Foul foul = PlayUtils.createFoul(foulDto, game, statPlayer, foulOnStatPlayer);
+            Foul foul = PlayUtils.createFoul(foulDto, orderForPlay, game, statPlayer, foulOnStatPlayer);
             return new FoulDto(playRepository.save(foul));
         }
 
@@ -155,6 +163,7 @@ public class PlayService {
         StatPlayer statPlayer = statPlayerService.findById(stealDto.getStatPlayerId());
         StatPlayer turnoverForStatPlayer = (stealDto.getTurnoverForStatPlayerId() != null) ? statPlayerService.findById(stealDto.getTurnoverForStatPlayerId()) : null;
         Game game = gameService.findById(stealDto.getGameId());
+        Integer orderForPlay = findOrderNumberOrMinusOne(stealDto.getTimeRemaining(), stealDto.getQuarter());
 
         if(stealDto.getId() != null){
             Steal existingSteal = (Steal) findById(stealDto.getId());
@@ -162,7 +171,7 @@ public class PlayService {
             return new StealDto(playRepository.save(existingSteal));
         }
         else{
-            Steal steal = PlayUtils.createSteal(stealDto, game, statPlayer, turnoverForStatPlayer);
+            Steal steal = PlayUtils.createSteal(stealDto, orderForPlay, game, statPlayer, turnoverForStatPlayer);
             return new StealDto(playRepository.save(steal));
         }
 
@@ -172,6 +181,8 @@ public class PlayService {
         StatPlayer statPlayer = statPlayerService.findById(turnoverDto.getStatPlayerId());
         StatPlayer stealForStatPlayer = (turnoverDto.getStealForStatPlayerId() != null) ? statPlayerService.findById(turnoverDto.getStealForStatPlayerId()) : null;
         Game game = gameService.findById(turnoverDto.getGameId());
+        Integer orderForPlay = findOrderNumberOrMinusOne(turnoverDto.getTimeRemaining(), turnoverDto.getQuarter());
+
 
         if(turnoverDto.getId() != null){
             Turnover existingTurnover = (Turnover) findById(turnoverDto.getId());
@@ -179,7 +190,7 @@ public class PlayService {
             return new TurnoverDto(playRepository.save(existingTurnover));
         }
         else{
-            Turnover turnover = PlayUtils.createTurnover(turnoverDto, game, statPlayer, stealForStatPlayer);
+            Turnover turnover = PlayUtils.createTurnover(turnoverDto, orderForPlay, game, statPlayer, stealForStatPlayer);
             return new TurnoverDto(playRepository.save(turnover));
         }
 

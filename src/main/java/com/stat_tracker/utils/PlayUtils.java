@@ -17,7 +17,7 @@ public class PlayUtils {
         ShotPlay shotPlay = new ShotPlay();
         shotPlay.setId(null);
 
-        setCommonFields(shotPlay, shotPlayDto, game, statPlayer);
+        setCommonFields(shotPlay, shotPlayDto, game, statPlayer, order);
 
         shotPlay.setType(shotPlayDto.getType());
         shotPlay.setOffTheDribble(shotPlayDto.getOffTheDribble());
@@ -25,16 +25,15 @@ public class PlayUtils {
         shotPlay.setMade(shotPlayDto.getMade());
         shotPlay.setContested(shotPlayDto.getContested());
         shotPlay.setWorth(shotPlayDto.getWorth());
-        shotPlay.setOrder(order);
 
         return shotPlay;
     }
 
-    public static Assist createAssist(AssistDto assistDto, Game game, StatPlayer statPlayer, StatPlayer toStatPlayer){
+    public static Assist createAssist(AssistDto assistDto, Integer order, Game game, StatPlayer statPlayer, StatPlayer toStatPlayer){
         Assist assist = new Assist();
         assist.setId(null);
 
-        setCommonFields(assist, assistDto, game, statPlayer);
+        setCommonFields(assist, assistDto, game, statPlayer, order);
 
         assist.setType(assistDto.getType());
         assist.setToStatPlayer(toStatPlayer);
@@ -42,11 +41,11 @@ public class PlayUtils {
         return assist;
     }
 
-    public static Block createBlock(BlockDto blockDto, Game game, StatPlayer statPlayer, StatPlayer blockedStatPlayer){
+    public static Block createBlock(BlockDto blockDto, Integer order, Game game, StatPlayer statPlayer, StatPlayer blockedStatPlayer){
         Block block = new Block();
         block.setId(null);
 
-        setCommonFields(block, blockDto, game, statPlayer);
+        setCommonFields(block, blockDto, game, statPlayer, order);
 
         block.setBlockedStatPlayer(blockedStatPlayer);
         block.setInThePaint(blockDto.getInThePaint());
@@ -54,11 +53,11 @@ public class PlayUtils {
         return block;
     }
 
-    public static Foul createFoul(FoulDto foulDto, Game game, StatPlayer statPlayer, StatPlayer foulOnStatPlayer){
+    public static Foul createFoul(FoulDto foulDto, Integer order, Game game, StatPlayer statPlayer, StatPlayer foulOnStatPlayer){
         Foul foul = new Foul();
         foul.setId(null);
 
-        setCommonFields(foul, foulDto, game, statPlayer);
+        setCommonFields(foul, foulDto, game, statPlayer, order);
 
         foul.setFoulOnStatPlayer(foulOnStatPlayer);
         foul.setType(foulDto.getType());
@@ -66,33 +65,33 @@ public class PlayUtils {
         return foul;
     }
 
-    public static Rebound createRebound(ReboundDto reboundDto, Game game, StatPlayer statPlayer){
+    public static Rebound createRebound(ReboundDto reboundDto, Integer order, Game game, StatPlayer statPlayer){
         Rebound rebound = new Rebound();
         rebound.setId(null);
 
-        setCommonFields(rebound, reboundDto, game, statPlayer);
+        setCommonFields(rebound, reboundDto, game, statPlayer, order);
 
         rebound.setOffensive(reboundDto.isOffensive());
 
         return rebound;
     }
 
-    public static Steal createSteal(StealDto stealDto, Game game, StatPlayer statPlayer, StatPlayer turnoverForStatPlayer){
+    public static Steal createSteal(StealDto stealDto, Integer order, Game game, StatPlayer statPlayer, StatPlayer turnoverForStatPlayer){
         Steal steal = new Steal();
         steal.setId(null);
 
-        setCommonFields(steal, stealDto, game, statPlayer);
+        setCommonFields(steal, stealDto, game, statPlayer, order);
 
         steal.setTurnoverForStatPlayer(turnoverForStatPlayer);
 
         return steal;
     }
 
-    public static Turnover createTurnover(TurnoverDto turnoverDto, Game game, StatPlayer statPlayer, StatPlayer stealForStatPlayer){
+    public static Turnover createTurnover(TurnoverDto turnoverDto, Integer order, Game game, StatPlayer statPlayer, StatPlayer stealForStatPlayer){
         Turnover turnover = new Turnover();
         turnover.setId(null);
 
-        setCommonFields(turnover, turnoverDto, game, statPlayer);
+        setCommonFields(turnover, turnoverDto, game, statPlayer, order);
 
         turnover.setStealForStatPlayer(stealForStatPlayer);
         turnover.setType(turnoverDto.getType());
@@ -100,18 +99,18 @@ public class PlayUtils {
         return turnover;
     }
 
-    public static Violation createViolation(ViolationDto violationDto, Game game, StatPlayer statPlayer){
+    public static Violation createViolation(ViolationDto violationDto, Integer order, Game game, StatPlayer statPlayer){
         Violation violation = new Violation();
         violation.setId(null);
 
-        setCommonFields(violation, violationDto, game, statPlayer);
+        setCommonFields(violation, violationDto, game, statPlayer, order);
 
         violation.setType(violationDto.getType());
 
         return violation;
     }
 
-    private static void setCommonFields(Play play, PlayDto playDto, Game game, StatPlayer statPlayer) {
+    private static void setCommonFields(Play play, PlayDto playDto, Game game, StatPlayer statPlayer, Integer order) {
         play.setGame(game);
         game.addPlay(play);
 
@@ -122,7 +121,7 @@ public class PlayUtils {
         play.setQuarter(playDto.getQuarter());
         play.setComments(playDto.getComments());
         play.setHand(playDto.getHand());
-        play.setOrder(playDto.getOrder());
+        play.setOrder(order);
     }
 
     private static void updateCommonPlayPart(Play play, PlayDto playDto){
