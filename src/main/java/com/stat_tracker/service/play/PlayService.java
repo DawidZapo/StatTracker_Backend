@@ -13,7 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class PlayService {
@@ -37,11 +40,20 @@ public class PlayService {
                 .orElseThrow(() -> new RuntimeException("Play not found id: " + id));
     }
 
+    private Integer findOrderNumberOrMinusOne(Long timeRemaining, Integer quarter){
+        List<Play> existingPlaysWithTheSameTimeRemaining = playRepository.findAllByTimeRemaining(timeRemaining, quarter);
+        Optional<Integer> maxOrderNumber = existingPlaysWithTheSameTimeRemaining.stream()
+                .map(Play::getOrder)
+                .filter(Objects::nonNull)
+                .max(Comparator.naturalOrder());
+        return maxOrderNumber.map(integer -> integer + 1).orElse(-1);
+    }
+
     @Transactional
     public ShotPlayDto savePlay(ShotPlayDto shotPlayDto){
         StatPlayer statPlayer = statPlayerService.findById(shotPlayDto.getStatPlayerId());
         Game game = gameService.findById(shotPlayDto.getGameId());
-
+        Integer orderForPlay = findOrderNumberOrMinusOne(shotPlayDto.getTimeRemaining(), shotPlayDto.getQuarter());
 
         if(shotPlayDto.getId() != null){
             ShotPlay existingShotPlay = (ShotPlay) findById(shotPlayDto.getId());
@@ -49,7 +61,7 @@ public class PlayService {
             return new ShotPlayDto(playRepository.save(existingShotPlay));
         }
         else{
-            ShotPlay shotPlay = PlayUtils.createShotPlay(shotPlayDto, game, statPlayer);
+            ShotPlay shotPlay = PlayUtils.createShotPlay(shotPlayDto, orderForPlay, game, statPlayer);
             return new ShotPlayDto(playRepository.save(shotPlay));
         }
     }

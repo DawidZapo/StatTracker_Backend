@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class PlayUtils {
-    public static ShotPlay createShotPlay(ShotPlayDto shotPlayDto, Game game, StatPlayer statPlayer){
+    public static ShotPlay createShotPlay(ShotPlayDto shotPlayDto, Integer order, Game game, StatPlayer statPlayer){
         ShotPlay shotPlay = new ShotPlay();
         shotPlay.setId(null);
 
@@ -25,6 +25,7 @@ public class PlayUtils {
         shotPlay.setMade(shotPlayDto.getMade());
         shotPlay.setContested(shotPlayDto.getContested());
         shotPlay.setWorth(shotPlayDto.getWorth());
+        shotPlay.setOrder(order);
 
         return shotPlay;
     }
