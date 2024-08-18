@@ -8,6 +8,7 @@ import com.stat_tracker.entity.plays.abstract_play.Play;
 import com.stat_tracker.repository.play.PlayRepository;
 import com.stat_tracker.service.game.GameService;
 import com.stat_tracker.service.player.StatPlayerService;
+import com.stat_tracker.service.stat.StatLineService;
 import com.stat_tracker.utils.PlayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,14 @@ public class PlayService {
     private PlayRepository playRepository;
     private GameService gameService;
     private StatPlayerService statPlayerService;
+    private StatLineService statLineService;
 
     @Autowired
-    public PlayService(PlayRepository playRepository, GameService gameService, StatPlayerService statPlayerService) {
+    public PlayService(PlayRepository playRepository, GameService gameService, StatPlayerService statPlayerService, StatLineService statLineService) {
         this.playRepository = playRepository;
         this.gameService = gameService;
         this.statPlayerService = statPlayerService;
+        this.statLineService = statLineService;
     }
 
     public List<Play> findAll(){
@@ -59,10 +62,18 @@ public class PlayService {
             ShotPlay existingShotPlay = (ShotPlay) findById(shotPlayDto.getId());
             PlayUtils.updateShotPlay(existingShotPlay, shotPlayDto);
             return new ShotPlayDto(playRepository.save(existingShotPlay));
+
+            // logic to be added while editing shotplay
         }
         else{
-            ShotPlay shotPlay = PlayUtils.createShotPlay(shotPlayDto, orderForPlay, game, statPlayer);
-            return new ShotPlayDto(playRepository.save(shotPlay));
+            ShotPlay newShotPlay = PlayUtils.createShotPlay(shotPlayDto, orderForPlay, game, statPlayer);
+
+            ShotPlay shotPlay = playRepository.save(newShotPlay);
+            PlayUtils.updateStatLine(shotPlay, statPlayer.getStatTeam(), statPlayer);
+            statLineService.save(statPlayer.getStatTeam().getStatLine());
+            statLineService.save(statPlayer.getStatLine());
+
+            return new ShotPlayDto(shotPlay);
         }
     }
 

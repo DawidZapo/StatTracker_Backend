@@ -141,8 +141,9 @@ public class GameUtils {
 
     private static List<PlayDto> createPlaysDto(List<Play> plays){
         return plays.stream().sorted(
-                        Comparator.comparingInt(Play::getQuarter).reversed()
-                        .thenComparingLong(Play::getTimeRemaining).reversed())
+                        Comparator.comparingInt(Play::getQuarter)
+                        .thenComparingLong(Play::getTimeRemaining).reversed()
+                                .thenComparingLong(Play::getOrder))
                         .map(GameUtils::createPlayDto)
                         .collect(Collectors.toList());
     }

@@ -6,6 +6,9 @@ import com.stat_tracker.entity.game.Game;
 import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.entity.plays.*;
 import com.stat_tracker.entity.plays.abstract_play.Play;
+import com.stat_tracker.entity.plays.enums.Contested;
+import com.stat_tracker.entity.stat.StatLine;
+import com.stat_tracker.entity.team.StatTeam;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.List;
@@ -200,7 +203,110 @@ public class PlayUtils {
         else{
             return null;
         }
+    }
 
+
+    public static void updateStatLine(Play play, StatTeam statTeam, StatPlayer statPlayer){
+        switch (play.getPlayType()){
+            case "ASSIST" -> updateAssistStatLine(statTeam.getStatLine(), statPlayer.getStatLine());
+            case "BLOCK" -> updateBlockStatLine(statTeam.getStatLine(), statPlayer.getStatLine());
+            case "FOUL" -> updateFoulStatLine(statTeam.getStatLine(), statPlayer.getStatLine());
+            case "REBOUND" -> updateReboundStatLine((Rebound) play, statTeam.getStatLine(), statPlayer.getStatLine());
+            case "SHOTPLAY" -> updateShotPlayStatLine((ShotPlay) play, statTeam.getStatLine(), statPlayer.getStatLine());
+            case "STEAL" -> updateStealStatLine(statPlayer.getStatLine(), statPlayer.getStatLine());
+            case "TURNOVER" -> updateTurnoverStatLine(statTeam.getStatLine(), statPlayer.getStatLine());
+            default -> throw new RuntimeException("Unknown play.getPlayType");
+        }
+    }
+
+    private static void updateShotPlayStatLine(ShotPlay shotPlay, StatLine teamStatLine, StatLine playerStatLine){
+        if(shotPlay.getWorth() == 1){
+            teamStatLine.setFreeThrowAttempted(teamStatLine.getFreeThrowAttempted() + 1);
+            playerStatLine.setFreeThrowAttempted(playerStatLine.getFreeThrowAttempted() + 1);
+            if(shotPlay.getMade()){
+                teamStatLine.setFreeThrowMade(teamStatLine.getFreeThrowMade() + 1);
+                playerStatLine.setFreeThrowMade(playerStatLine.getFreeThrowMade() + 1);
+
+                teamStatLine.setTotalPoints(teamStatLine.getTotalPoints() + 1);
+                playerStatLine.setTotalPoints(playerStatLine.getTotalPoints() + 1);
+            }
+        }
+        else if(shotPlay.getWorth() == 2){
+            teamStatLine.setTwoAttempted(teamStatLine.getTwoAttempted() + 1);
+            playerStatLine.setTwoAttempted(playerStatLine.getTwoAttempted() + 1);
+            if(shotPlay.getMade()){
+                teamStatLine.setTwoMade(teamStatLine.getTwoMade() + 1);
+                playerStatLine.setTwoMade(playerStatLine.getTwoMade() + 1);
+
+                teamStatLine.setTotalPoints(teamStatLine.getTotalPoints() + 2);
+                playerStatLine.setTotalPoints(playerStatLine.getTotalPoints() + 2);
+            }
+            else{
+                if(shotPlay.getContested().equals(Contested.BLOCKED)){
+                    teamStatLine.setBlocksReceived(teamStatLine.getBlocksReceived() + 1);
+                    playerStatLine.setBlocksReceived(playerStatLine.getBlocksReceived() + 1);
+                }
+            }
+        }
+        else if(shotPlay.getWorth() == 3){
+            teamStatLine.setThreeAttempted(teamStatLine.getThreeAttempted() + 1);
+            playerStatLine.setThreeAttempted(playerStatLine.getThreeAttempted() + 1);
+            if(shotPlay.getMade()){
+                teamStatLine.setThreeMade(teamStatLine.getThreeMade() + 1);
+                playerStatLine.setThreeMade(playerStatLine.getThreeMade() + 1);
+
+                teamStatLine.setTotalPoints(teamStatLine.getTotalPoints() + 3);
+                playerStatLine.setTotalPoints(playerStatLine.getTotalPoints() + 3);
+            }
+            else{
+                if(shotPlay.getContested().equals(Contested.BLOCKED)){
+                    teamStatLine.setBlocksReceived(teamStatLine.getBlocksReceived() + 1);
+                    playerStatLine.setBlocksReceived(playerStatLine.getBlocksReceived() + 1);
+                }
+            }
+        }
+        else{
+            throw new RuntimeException("Shotplay worth unknown");
+        }
+    }
+
+    private static void updateAssistStatLine(StatLine teamStatLine, StatLine playerStatLine){
+        teamStatLine.setAssists(teamStatLine.getAssists() + 1);
+        playerStatLine.setAssists(playerStatLine.getAssists() + 1);
+    }
+
+    private static void updateBlockStatLine(StatLine teamStatLine, StatLine playerStatLine){
+        teamStatLine.setBlocks(teamStatLine.getBlocks() + 1);
+        playerStatLine.setBlocks(playerStatLine.getBlocks() + 1);
+    }
+
+    private static void updateFoulStatLine(StatLine teamStatLine, StatLine playerStatLine){
+        teamStatLine.setFouls(teamStatLine.getFouls() + 1);
+        playerStatLine.setFouls(playerStatLine.getFouls() + 1);
+
+//        opponentStatLine.setForcedFouls(opponentStatLine.getForcedFouls() + 1);
+//        opponentPlayerStatLine.setForcedFouls(opponentPlayerStatLine.getForcedFouls() + 1);
+    }
+
+    private static void updateReboundStatLine(Rebound rebound, StatLine teamStatLine, StatLine playerStatLine){
+        if(rebound.getOffensive()){
+            teamStatLine.setOffRebounds(teamStatLine.getOffRebounds() + 1);
+            playerStatLine.setOffRebounds(playerStatLine.getOffRebounds() + 1);
+        }
+        else{
+            teamStatLine.setDefRebounds(teamStatLine.getDefRebounds() + 1);
+            playerStatLine.setDefRebounds(playerStatLine.getDefRebounds() + 1);
+        }
+    }
+
+    private static void updateStealStatLine(StatLine teamStatLine, StatLine playerStatLine){
+        teamStatLine.setSteals(teamStatLine.getSteals() + 1);
+        playerStatLine.setSteals(playerStatLine.getSteals() + 1);
+    }
+
+    private static void updateTurnoverStatLine(StatLine teamStatLine, StatLine playerStatLine){
+        teamStatLine.setTurnovers(teamStatLine.getTurnovers() + 1);
+        playerStatLine.setTurnovers(playerStatLine.getTurnovers() + 1);
     }
 
 }

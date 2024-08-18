@@ -18,4 +18,8 @@ public class StatLineService {
     public List<StatLine> findAllStatLines(){
         return statLineRepository.findAll();
     }
+
+    public StatLine save(StatLine statLine){
+        return statLineRepository.save(statLine);
+    }
 }
