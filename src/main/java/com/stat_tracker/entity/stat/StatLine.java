@@ -52,10 +52,10 @@ public class StatLine {
     private Integer plusMinus = 0;
     @Column(name = "possessions")
     private Integer possessions = 0;
-    @OneToOne(mappedBy = "statLine")
+    @OneToOne(mappedBy = "statLine", cascade = CascadeType.ALL)
     @JsonIgnore
     private StatPlayer statPlayer;
-    @OneToOne(mappedBy = "statLine")
+    @OneToOne(mappedBy = "statLine", cascade = CascadeType.ALL)
     @JsonIgnore
     private StatTeam statTeam;
 

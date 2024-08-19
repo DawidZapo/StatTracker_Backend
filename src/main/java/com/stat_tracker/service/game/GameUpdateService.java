@@ -6,10 +6,12 @@ import com.stat_tracker.entity.player.StatPlayer;
 import com.stat_tracker.repository.game.GameRepository;
 import com.stat_tracker.repository.play.PlayRepository;
 import com.stat_tracker.repository.player.StatPlayerRepository;
+import com.stat_tracker.service.stat.StatLineService;
 import com.stat_tracker.utils.GameUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -19,14 +21,17 @@ public class GameUpdateService {
     private GameRepository gameRepository;
     private StatPlayerRepository statPlayerRepository;
     private PlayRepository playRepository;
+    private StatLineService statLineService;
 
     @Autowired
-    public GameUpdateService(GameRepository gameRepository, StatPlayerRepository statPlayerRepository, PlayRepository playRepository) {
+    public GameUpdateService(GameRepository gameRepository, StatPlayerRepository statPlayerRepository, PlayRepository playRepository, StatLineService statLineService) {
         this.gameRepository = gameRepository;
         this.statPlayerRepository = statPlayerRepository;
         this.playRepository = playRepository;
+        this.statLineService = statLineService;
     }
 
+    @Transactional
     public GameToHandleDto saveGameToHandle(GameToHandleDto gameToHandleDto) {
         GameUtils.convertPlaysToPlayDto(gameToHandleDto.getPlays());
         gameToHandleDto.getHome().getPlayers().forEach(player -> GameUtils.convertPlaysToPlayDto(player.getPlays()));

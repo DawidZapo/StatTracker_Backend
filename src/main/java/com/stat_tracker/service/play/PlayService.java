@@ -67,9 +67,10 @@ public class PlayService {
         }
         else{
             ShotPlay newShotPlay = PlayUtils.createShotPlay(shotPlayDto, orderForPlay, game, statPlayer);
-
             ShotPlay shotPlay = playRepository.save(newShotPlay);
+
             PlayUtils.updateStatLine(shotPlay, statPlayer.getStatTeam(), statPlayer);
+
             statLineService.save(statPlayer.getStatTeam().getStatLine());
             statLineService.save(statPlayer.getStatLine());
 
@@ -77,6 +78,7 @@ public class PlayService {
         }
     }
 
+    @Transactional
     public AssistDto saveAssist(AssistDto assistDto){
         StatPlayer statPlayer = statPlayerService.findById(assistDto.getStatPlayerId());
         StatPlayer toStatPlayer = (assistDto.getToStatPlayerId() != null) ? statPlayerService.findById(assistDto.getToStatPlayerId()) : null;
@@ -87,14 +89,24 @@ public class PlayService {
             Assist existingAssist = (Assist) findById(assistDto.getId());
             PlayUtils.updateAssist(existingAssist, assistDto, toStatPlayer);
             return new AssistDto(playRepository.save(existingAssist));
+
+            // logic to be added while editing assist
         }
         else{
-            Assist assist = PlayUtils.createAssist(assistDto, orderForPlay, game, statPlayer, toStatPlayer);
-            return new AssistDto(playRepository.save(assist));
+            Assist newAssist = PlayUtils.createAssist(assistDto, orderForPlay, game, statPlayer, toStatPlayer);
+            Assist assist = playRepository.save(newAssist);
+
+            PlayUtils.updateStatLine(assist, statPlayer.getStatTeam(), statPlayer);
+
+            statLineService.save(statPlayer.getStatLine());
+            statLineService.save(statPlayer.getStatTeam().getStatLine());
+
+            return new AssistDto(assist);
         }
 
     }
 
+    @Transactional
     public BlockDto saveBlock(BlockDto blockDto){
         StatPlayer statPlayer = statPlayerService.findById(blockDto.getStatPlayerId());
         StatPlayer blockedStatPlayer = (blockDto.getBlockedStatPlayerId() != null) ? statPlayerService.findById(blockDto.getBlockedStatPlayerId()) : null;
@@ -106,13 +118,23 @@ public class PlayService {
             Block existingBlock = (Block) findById(blockDto.getId());
             PlayUtils.updateBlock(existingBlock, blockDto, blockedStatPlayer);
             return new BlockDto(playRepository.save(existingBlock));
+
+            //logic to be added while editing block
         }
         else{
-            Block block = PlayUtils.createBlock(blockDto, orderForPlay, game, statPlayer, blockedStatPlayer);
-            return new BlockDto(playRepository.save(block));
+            Block newBlock = PlayUtils.createBlock(blockDto, orderForPlay, game, statPlayer, blockedStatPlayer);
+            Block block = playRepository.save(newBlock);
+
+            PlayUtils.updateStatLine(block, statPlayer.getStatTeam(), statPlayer);
+
+            statLineService.save(statPlayer.getStatTeam().getStatLine());
+            statLineService.save(statPlayer.getStatLine());
+
+            return new BlockDto(block);
         }
     }
 
+    @Transactional
     public ReboundDto saveRebound(ReboundDto reboundDto){
         StatPlayer statPlayer = statPlayerService.findById(reboundDto.getStatPlayerId());
         Game game = gameService.findById(reboundDto.getGameId());
@@ -123,14 +145,24 @@ public class PlayService {
             Rebound existingRebound = (Rebound) findById(reboundDto.getId());
             PlayUtils.updateRebound(existingRebound, reboundDto);
             return new ReboundDto(playRepository.save(existingRebound));
+
+            // logic to be added
         }
         else{
-            Rebound rebound = PlayUtils.createRebound(reboundDto, orderForPlay, game, statPlayer);
-            return new ReboundDto(playRepository.save(rebound));
+            Rebound newRebound = PlayUtils.createRebound(reboundDto, orderForPlay, game, statPlayer);
+            Rebound rebound = playRepository.save(newRebound);
+
+            PlayUtils.updateStatLine(rebound, statPlayer.getStatTeam(), statPlayer);
+
+            statLineService.save(statPlayer.getStatTeam().getStatLine());
+            statLineService.save(statPlayer.getStatLine());
+
+            return new ReboundDto(rebound);
         }
 
     }
 
+    @Transactional
     public ViolationDto saveViolation(ViolationDto violationDto){
         StatPlayer statPlayer = statPlayerService.findById(violationDto.getStatPlayerId());
         Game game = gameService.findById(violationDto.getGameId());
@@ -141,14 +173,24 @@ public class PlayService {
             Violation existingViolation = (Violation) findById(violationDto.getId());
             PlayUtils.updateViolation(existingViolation, violationDto);
             return new ViolationDto(playRepository.save(existingViolation));
+
+            // logic to be added while editing violation
         }
         else{
-            Violation violation = PlayUtils.createViolation(violationDto, orderForPlay, game, statPlayer);
-            return new ViolationDto(playRepository.save(violation));
+            Violation newViolation = PlayUtils.createViolation(violationDto, orderForPlay, game, statPlayer);
+            Violation violation = playRepository.save(newViolation);
+
+            PlayUtils.updateStatLine(violation, statPlayer.getStatTeam(), statPlayer);
+
+            statLineService.save(statPlayer.getStatLine());
+            statLineService.save(statPlayer.getStatTeam().getStatLine());
+
+            return new ViolationDto(violation);
         }
 
     }
 
+    @Transactional
     public FoulDto saveFoul(FoulDto foulDto){
         StatPlayer statPlayer = statPlayerService.findById(foulDto.getStatPlayerId());
         StatPlayer foulOnStatPlayer = (foulDto.getFoulOnStatPlayerId() != null) ? statPlayerService.findById(foulDto.getFoulOnStatPlayerId()) : null;
@@ -160,16 +202,24 @@ public class PlayService {
             Foul existingFoul = (Foul) findById(foulDto.getId());
             PlayUtils.updateFoul(existingFoul, foulDto, foulOnStatPlayer);
             return new FoulDto(playRepository.save(existingFoul));
+
+            // logic to be added while editing foul
         }
         else{
-            Foul foul = PlayUtils.createFoul(foulDto, orderForPlay, game, statPlayer, foulOnStatPlayer);
-            return new FoulDto(playRepository.save(foul));
+            Foul newFoul = PlayUtils.createFoul(foulDto, orderForPlay, game, statPlayer, foulOnStatPlayer);
+            Foul foul = playRepository.save(newFoul);
+
+            PlayUtils.updateStatLine(foul, statPlayer.getStatTeam(), statPlayer);
+
+            statLineService.save(statPlayer.getStatTeam().getStatLine());
+            statLineService.save(statPlayer.getStatLine());
+
+            return new FoulDto(foul);
         }
 
-//        Foul foul = PlayUtils.createFoul(foulDto, game, statPlayer, foulOnStatPlayer);
-//        return new FoulDto(playRepository.save(foul));
     }
 
+    @Transactional
     public StealDto saveSteal(StealDto stealDto){
         StatPlayer statPlayer = statPlayerService.findById(stealDto.getStatPlayerId());
         StatPlayer turnoverForStatPlayer = (stealDto.getTurnoverForStatPlayerId() != null) ? statPlayerService.findById(stealDto.getTurnoverForStatPlayerId()) : null;
@@ -180,14 +230,24 @@ public class PlayService {
             Steal existingSteal = (Steal) findById(stealDto.getId());
             PlayUtils.updateSteal(existingSteal, stealDto, turnoverForStatPlayer);
             return new StealDto(playRepository.save(existingSteal));
+
+            // logic to be added while editing steal
         }
         else{
-            Steal steal = PlayUtils.createSteal(stealDto, orderForPlay, game, statPlayer, turnoverForStatPlayer);
-            return new StealDto(playRepository.save(steal));
+            Steal newSteal = PlayUtils.createSteal(stealDto, orderForPlay, game, statPlayer, turnoverForStatPlayer);
+            Steal steal = playRepository.save(newSteal);
+
+            PlayUtils.updateStatLine(steal, statPlayer.getStatTeam(), statPlayer);
+
+            statLineService.save(statPlayer.getStatTeam().getStatLine());
+            statLineService.save(statPlayer.getStatLine());
+
+            return new StealDto(steal);
         }
 
     }
 
+    @Transactional
     public TurnoverDto saveTurnover(TurnoverDto turnoverDto){
         StatPlayer statPlayer = statPlayerService.findById(turnoverDto.getStatPlayerId());
         StatPlayer stealForStatPlayer = (turnoverDto.getStealForStatPlayerId() != null) ? statPlayerService.findById(turnoverDto.getStealForStatPlayerId()) : null;
@@ -199,10 +259,19 @@ public class PlayService {
             Turnover existingTurnover = (Turnover) findById(turnoverDto.getId());
             PlayUtils.updateTurnover(existingTurnover, turnoverDto, stealForStatPlayer);
             return new TurnoverDto(playRepository.save(existingTurnover));
+
+            // logic to be added while editing turnover
         }
         else{
-            Turnover turnover = PlayUtils.createTurnover(turnoverDto, orderForPlay, game, statPlayer, stealForStatPlayer);
-            return new TurnoverDto(playRepository.save(turnover));
+            Turnover newTurnover = PlayUtils.createTurnover(turnoverDto, orderForPlay, game, statPlayer, stealForStatPlayer);
+            Turnover turnover = playRepository.save(newTurnover);
+
+            PlayUtils.updateStatLine(turnover, statPlayer.getStatTeam(), statPlayer);
+
+            statLineService.save(statPlayer.getStatTeam().getStatLine());
+            statLineService.save(statPlayer.getStatLine());
+
+            return new TurnoverDto(turnover);
         }
 
     }
