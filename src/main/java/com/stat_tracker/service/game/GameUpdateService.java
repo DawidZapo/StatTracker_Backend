@@ -43,6 +43,11 @@ public class GameUpdateService {
         Set<StatPlayer> minorPlayers = findMinorPlayer(game);
 
         GameUtils.updateGame(game, gameToHandleDto, minorPlayers);
+        statLineService.save(game.getHome().getStatLine());
+        statLineService.save(game.getAway().getStatLine());
+        game.getHome().getStatPlayers().forEach(player -> statLineService.save(player.getStatLine()));
+        game.getAway().getStatPlayers().forEach(player -> statLineService.save(player.getStatLine()));
+
 
         return GameUtils.createGameToHandle(gameRepository.save(game));
     }
