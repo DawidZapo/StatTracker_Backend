@@ -69,7 +69,7 @@ public class PlayService {
             ShotPlay newShotPlay = PlayUtils.createShotPlay(shotPlayDto, orderForPlay, game, statPlayer);
             ShotPlay shotPlay = playRepository.save(newShotPlay);
 
-            PlayUtils.updateStatLine(shotPlay, statPlayer.getStatTeam(), statPlayer);
+            PlayUtils.updateStatLine(shotPlay, statPlayer.getStatTeam(), statPlayer, null, null);
 
             statLineService.save(statPlayer.getStatTeam().getStatLine());
             statLineService.save(statPlayer.getStatLine());
@@ -96,7 +96,7 @@ public class PlayService {
             Assist newAssist = PlayUtils.createAssist(assistDto, orderForPlay, game, statPlayer, toStatPlayer);
             Assist assist = playRepository.save(newAssist);
 
-            PlayUtils.updateStatLine(assist, statPlayer.getStatTeam(), statPlayer);
+            PlayUtils.updateStatLine(assist, statPlayer.getStatTeam(), statPlayer, null, null);
 
             statLineService.save(statPlayer.getStatLine());
             statLineService.save(statPlayer.getStatTeam().getStatLine());
@@ -125,7 +125,7 @@ public class PlayService {
             Block newBlock = PlayUtils.createBlock(blockDto, orderForPlay, game, statPlayer, blockedStatPlayer);
             Block block = playRepository.save(newBlock);
 
-            PlayUtils.updateStatLine(block, statPlayer.getStatTeam(), statPlayer);
+            PlayUtils.updateStatLine(block, statPlayer.getStatTeam(), statPlayer, null, null);
 
             statLineService.save(statPlayer.getStatTeam().getStatLine());
             statLineService.save(statPlayer.getStatLine());
@@ -152,7 +152,7 @@ public class PlayService {
             Rebound newRebound = PlayUtils.createRebound(reboundDto, orderForPlay, game, statPlayer);
             Rebound rebound = playRepository.save(newRebound);
 
-            PlayUtils.updateStatLine(rebound, statPlayer.getStatTeam(), statPlayer);
+            PlayUtils.updateStatLine(rebound, statPlayer.getStatTeam(), statPlayer, null, null);
 
             statLineService.save(statPlayer.getStatTeam().getStatLine());
             statLineService.save(statPlayer.getStatLine());
@@ -180,7 +180,7 @@ public class PlayService {
             Violation newViolation = PlayUtils.createViolation(violationDto, orderForPlay, game, statPlayer);
             Violation violation = playRepository.save(newViolation);
 
-            PlayUtils.updateStatLine(violation, statPlayer.getStatTeam(), statPlayer);
+            PlayUtils.updateStatLine(violation, statPlayer.getStatTeam(), statPlayer, null, null);
 
             statLineService.save(statPlayer.getStatLine());
             statLineService.save(statPlayer.getStatTeam().getStatLine());
@@ -209,7 +209,7 @@ public class PlayService {
             Foul newFoul = PlayUtils.createFoul(foulDto, orderForPlay, game, statPlayer, foulOnStatPlayer);
             Foul foul = playRepository.save(newFoul);
 
-            PlayUtils.updateStatLine(foul, statPlayer.getStatTeam(), statPlayer);
+            PlayUtils.updateStatLine(foul, statPlayer.getStatTeam(), statPlayer, foulOnStatPlayer.getStatTeam(), foulOnStatPlayer);
 
             statLineService.save(statPlayer.getStatTeam().getStatLine());
             statLineService.save(statPlayer.getStatLine());
@@ -237,7 +237,7 @@ public class PlayService {
             Steal newSteal = PlayUtils.createSteal(stealDto, orderForPlay, game, statPlayer, turnoverForStatPlayer);
             Steal steal = playRepository.save(newSteal);
 
-            PlayUtils.updateStatLine(steal, statPlayer.getStatTeam(), statPlayer);
+            PlayUtils.updateStatLine(steal, statPlayer.getStatTeam(), statPlayer, null, null);
 
             statLineService.save(statPlayer.getStatTeam().getStatLine());
             statLineService.save(statPlayer.getStatLine());
@@ -266,7 +266,7 @@ public class PlayService {
             Turnover newTurnover = PlayUtils.createTurnover(turnoverDto, orderForPlay, game, statPlayer, stealForStatPlayer);
             Turnover turnover = playRepository.save(newTurnover);
 
-            PlayUtils.updateStatLine(turnover, statPlayer.getStatTeam(), statPlayer);
+            PlayUtils.updateStatLine(turnover, statPlayer.getStatTeam(), statPlayer, null, null);
 
             statLineService.save(statPlayer.getStatTeam().getStatLine());
             statLineService.save(statPlayer.getStatLine());

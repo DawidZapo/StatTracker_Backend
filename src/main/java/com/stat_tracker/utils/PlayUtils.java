@@ -206,11 +206,18 @@ public class PlayUtils {
     }
 
 
-    public static void updateStatLine(Play play, StatTeam statTeam, StatPlayer statPlayer){
+    public static void updateStatLine(Play play, StatTeam statTeam, StatPlayer statPlayer, StatTeam minorStatTeam, StatPlayer minorStatPlayer){
         switch (play.getPlayType()){
             case "ASSIST" -> updateAssistStatLine(statTeam.getStatLine(), statPlayer.getStatLine());
             case "BLOCK" -> updateBlockStatLine(statTeam.getStatLine(), statPlayer.getStatLine());
-            case "FOUL" -> updateFoulStatLine(statTeam.getStatLine(), statPlayer.getStatLine());
+            case "FOUL" -> {
+                if(minorStatPlayer != null & minorStatTeam != null){
+                    updateFoulStatLine(statTeam.getStatLine(), statPlayer.getStatLine(), minorStatTeam.getStatLine(), minorStatPlayer.getStatLine());
+                }
+                else{
+                    throw new RuntimeException("MinorStatPlayer and minorStatTeam are null for updateFoulStatLine (no foul on player)");
+                }
+            }
             case "REBOUND" -> updateReboundStatLine((Rebound) play, statTeam.getStatLine(), statPlayer.getStatLine());
             case "SHOTPLAY" -> updateShotPlayStatLine((ShotPlay) play, statTeam.getStatLine(), statPlayer.getStatLine());
             case "STEAL" -> updateStealStatLine(statPlayer.getStatLine(), statPlayer.getStatLine());
@@ -280,12 +287,12 @@ public class PlayUtils {
         playerStatLine.setBlocks(playerStatLine.getBlocks() + 1);
     }
 
-    private static void updateFoulStatLine(StatLine teamStatLine, StatLine playerStatLine){
+    private static void updateFoulStatLine(StatLine teamStatLine, StatLine playerStatLine, StatLine opponentTeamStatLine, StatLine opponentPlayerStatLine){
         teamStatLine.setFouls(teamStatLine.getFouls() + 1);
         playerStatLine.setFouls(playerStatLine.getFouls() + 1);
 
-//        opponentStatLine.setForcedFouls(opponentStatLine.getForcedFouls() + 1);
-//        opponentPlayerStatLine.setForcedFouls(opponentPlayerStatLine.getForcedFouls() + 1);
+        opponentTeamStatLine.setForcedFouls(opponentTeamStatLine.getForcedFouls() + 1);
+        opponentPlayerStatLine.setForcedFouls(opponentPlayerStatLine.getForcedFouls() + 1);
     }
 
     private static void updateReboundStatLine(Rebound rebound, StatLine teamStatLine, StatLine playerStatLine){
