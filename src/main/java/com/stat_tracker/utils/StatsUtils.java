@@ -126,5 +126,16 @@ public class StatsUtils {
         return statLineDto;
     }
 
+    public static Integer calculateNewEvaluation(StatLine statLine){
+//        (Points + Rebounds + Assists + Steals + Blocks + Fouls Drawn) -
+//         (Missed Field Goals + Missed Free Throws + Turnovers + Shots Rejected + Fouls Committed)
+        int positive =  statLine.getTotalPoints() + statLine.getOffRebounds() + statLine.getDefRebounds()
+                + statLine.getAssists() + statLine.getSteals() + statLine.getBlocks() + statLine.getForcedFouls();
+
+        int missedFieldGoalsAndFreeThrows = (statLine.getTwoAttempted() - statLine.getTwoMade()) + (statLine.getThreeAttempted() - statLine.getThreeMade()) + (statLine.getFreeThrowAttempted() - statLine.getFreeThrowMade());
+        int negative = statLine.getTurnovers() + statLine.getBlocksReceived() + statLine.getFouls();
+
+        return positive - (missedFieldGoalsAndFreeThrows + negative);
+    }
 
 }

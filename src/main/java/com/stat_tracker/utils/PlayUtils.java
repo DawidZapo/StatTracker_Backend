@@ -275,16 +275,20 @@ public class PlayUtils {
         else{
             throw new RuntimeException("Shotplay worth unknown");
         }
+
+        updateEval(teamStatLine, playerStatLine);
     }
 
     private static void updateAssistStatLine(StatLine teamStatLine, StatLine playerStatLine){
         teamStatLine.setAssists(teamStatLine.getAssists() + 1);
         playerStatLine.setAssists(playerStatLine.getAssists() + 1);
+        updateEval(teamStatLine, playerStatLine);
     }
 
     private static void updateBlockStatLine(StatLine teamStatLine, StatLine playerStatLine){
         teamStatLine.setBlocks(teamStatLine.getBlocks() + 1);
         playerStatLine.setBlocks(playerStatLine.getBlocks() + 1);
+        updateEval(teamStatLine, playerStatLine);
     }
 
     private static void updateFoulStatLine(StatLine teamStatLine, StatLine playerStatLine, StatLine opponentTeamStatLine, StatLine opponentPlayerStatLine){
@@ -293,6 +297,8 @@ public class PlayUtils {
 
         opponentTeamStatLine.setForcedFouls(opponentTeamStatLine.getForcedFouls() + 1);
         opponentPlayerStatLine.setForcedFouls(opponentPlayerStatLine.getForcedFouls() + 1);
+
+        updateEval(teamStatLine, playerStatLine);
     }
 
     private static void updateReboundStatLine(Rebound rebound, StatLine teamStatLine, StatLine playerStatLine){
@@ -304,16 +310,24 @@ public class PlayUtils {
             teamStatLine.setDefRebounds(teamStatLine.getDefRebounds() + 1);
             playerStatLine.setDefRebounds(playerStatLine.getDefRebounds() + 1);
         }
+        updateEval(teamStatLine, playerStatLine);
     }
 
     private static void updateStealStatLine(StatLine teamStatLine, StatLine playerStatLine){
         teamStatLine.setSteals(teamStatLine.getSteals() + 1);
         playerStatLine.setSteals(playerStatLine.getSteals() + 1);
+        updateEval(teamStatLine, playerStatLine);
     }
 
     private static void updateTurnoverStatLine(StatLine teamStatLine, StatLine playerStatLine){
         teamStatLine.setTurnovers(teamStatLine.getTurnovers() + 1);
         playerStatLine.setTurnovers(playerStatLine.getTurnovers() + 1);
+        updateEval(teamStatLine, playerStatLine);
+    }
+
+    private static void updateEval(StatLine teamStatLine, StatLine playerStatline){
+        teamStatLine.setEvaluation(StatsUtils.calculateNewEvaluation(teamStatLine));
+        playerStatline.setEvaluation(StatsUtils.calculateNewEvaluation(playerStatline));
     }
 
 }
