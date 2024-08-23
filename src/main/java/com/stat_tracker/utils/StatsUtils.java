@@ -135,6 +135,7 @@ public class StatsUtils {
         int missedFieldGoalsAndFreeThrows = (statLine.getTwoAttempted() - statLine.getTwoMade()) + (statLine.getThreeAttempted() - statLine.getThreeMade()) + (statLine.getFreeThrowAttempted() - statLine.getFreeThrowMade());
         int negative = statLine.getTurnovers() + statLine.getBlocksReceived() + statLine.getFouls();
 
+        System.out.println(positive - (missedFieldGoalsAndFreeThrows + negative));
         return positive - (missedFieldGoalsAndFreeThrows + negative);
     }
 
